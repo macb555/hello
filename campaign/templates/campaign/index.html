@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,29 +7,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Free Bootstrap Themes by 365Bootstrap dot com - Free Responsive Html5 Templates">
     <meta name="author" content="mahdi" >
-	
-    <title>Newspaper | Free Bootstrap Themes by 365Bootstrap.com</title>
-	
+
+    <title>Jabril Ibrahim Abdulle</title>
+
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css"  type="text/css">
-	
+    <link rel="stylesheet" href="{% static 'campaign/css/bootstrap.min.css' %}"  type="text/css">
+
 	<!-- Owl Carousel Assets -->
-    <link href="owl-carousel/owl.carousel.css" rel="stylesheet">
-    <link href="owl-carousel/owl.theme.css" rel="stylesheet">
-	
+    <link href="{% static 'campaign/owl-carousel/owl.carousel.css' %}" rel="stylesheet">
+    <link href="{% static 'campaign/owl-carousel/owl.theme.css' %}" rel="stylesheet">
+
 	<!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
-	 <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
-	
+    <link rel="stylesheet" href="{% static 'campaign/css/style.css' %}">
+	 <link href="{% static 'campaign/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen">
+
 	<!-- Custom Fonts -->
-    <link rel="stylesheet" href="font-awesome-4.4.0/css/font-awesome.min.css"  type="text/css">
-	
+    <link rel="stylesheet" href="{% static 'campaign/font-awesome-4.4.0/css/font-awesome.min.css' %}"  type="text/css">
+
 	<!-- jQuery and Modernizr-->
-	<script src="js/jquery-2.1.1.js"></script>
-	
-	<!-- Core JavaScript Files -->  	 
-    <script src="js/bootstrap.min.js"></script>
-	
+	<script src="{% static 'campaign/js/jquery-2.1.1.js' %}"></script>
+
+	<!-- Core JavaScript Files -->
+    <script src="{% static 'campaign/js/bootstrap.min.js' %}"></script>
+
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -39,144 +40,11 @@
 
 <body>
 <header>
-	<!--Top-->
-	<nav id="top">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6">
-					<strong>Welcome to the new down for Somalia!</strong>
-				</div>
-				<div class="col-md-6">
-					<ul class="list-inline top-link link">
-						<li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
-						<li><a href="contact.html"><i class="fa fa-comments"></i> Contact</a></li>
-						<li><a href="#"><i class="fa fa-question-circle"></i> Feedback</a></li>
-						<li><a href="#"><i class="fa fa-question-circle"></i> FAQ</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</nav>
-	
-	<!--Navigation-->
-    <nav id="menu" class="navbar container">
-		<div class="navbar-header">
-			<button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
-			<a class="navbar-brand" href="#">
-				<div class="logo"><span>Jabril Campaign </span></div>
-			</a>
-		</div>
-		<div class="collapse navbar-collapse navbar-ex1-collapse">
-			<ul class="nav navbar-nav">
-				<li><a href="index.html">Home</a></li>
-				<li><a href="index.html">Bio</a></li>
-				<li><a href="index.html">Issues</a></li>
-				<li><a href="index.html">Feed</a></li>
-				<li><a href="index.html">Events</a></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Supporter Account <i class="fa fa-arrow-circle-o-down"></i></a>
-					<div class="dropdown-menu">
-						<div class="dropdown-inner">
-							<ul class="list-unstyled">
-								<li><a href="archive.html">Login</a></li>
-								<li><a href="archive.html">Register</a></li>
-							</ul>
-						</div>
-					</div>
-				</li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Video <i class="fa fa-arrow-circle-o-down"></i></a>
-					<div class="dropdown-menu">
-						<div class="dropdown-inner">
-							<ul class="list-unstyled">
-								<li><a href="archive.html">Text 201</a></li>
-								<li><a href="archive.html">Text 202</a></li>
-								<li><a href="archive.html">Text 203</a></li>
-								<li><a href="archive.html">Text 204</a></li>
-								<li><a href="archive.html">Text 205</a></li>
-							</ul>
-						</div> 
-					</div>
-				</li>
-			</ul>
-			<ul class="list-inline navbar-right top-social">
-				<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-				<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-				<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-				<li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>
-				<li><a href="#"><i class="fa fa-youtube"></i></a></li>
-			</ul>
-		</div>
-	</nav>
-</header>	
-	<div class="featured container">
-		<div class="row">
-			<div class="col-sm-8">
-				<!-- Carousel -->
-				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-					<!-- Indicators -->
-					<ol class="carousel-indicators">
-						<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-						<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-						<li data-target="#carousel-example-generic" data-slide-to="2"></li>
-					</ol>
-					<!-- Wrapper for slides -->
-					<div class="carousel-inner">
-						<div class="item active">
-							<img src="images/1.jpg" alt="First slide">
-							<!-- Static Header -->
-							<div class="header-text hidden-xs">
-								<div class="col-md-12 text-center">
-									<h2>Aenean feugiat in ante et </h2>
-									<br>
-									<h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
-									<br>
-								</div>
-							</div><!-- /header-text -->
-						</div>
-						<div class="item">
-							<img src="images/2.jpg" alt="Second slide">
-							<!-- Static Header -->
-							<div class="header-text hidden-xs">
-								<div class="col-md-12 text-center">
-									<h2>Aenean feugiat in ante et blandit. Vestibulum</h2>
-									<br>
-									<h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
-									<br>
-								</div>
-							</div><!-- /header-text -->
-						</div>
-						<div class="item">
-							<img src="images/3.jpg" alt="Third slide">
-							<!-- Static Header -->
-							<div class="header-text hidden-xs">
-								<div class="col-md-12 text-center">
-									<h2>Curabitur tincidunt porta lorem vitae</h2>
-									<br>
-									<h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
-									<br>
-								</div>
-							</div><!-- /header-text -->
-						</div>
-					</div>
-					<!-- Controls -->
-					<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-						<span class="glyphicon glyphicon-chevron-left"></span>
-					</a>
-					<a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-						<span class="glyphicon glyphicon-chevron-right"></span>
-					</a>
-				</div><!-- /carousel -->
-			</div>
-			<div class="col-sm-4" >
-				<div id="owl-demo-1" class="owl-carousel">
-					<img src="images/slide-2.jpg" />
-					<img src="images/slide-1.jpg" />
-					<img src="images/slide-3.jpg" />
-				</div>
-				<img src="images/banner.jpg" />
-			</div>
-		</div>
-	</div>
-	
+	{% include "campaign/partials/header.html" %}
+</header>
+
+  {% include "campaign/partials/featured.html" %}
+
 	<!-- /////////////////////////////////////////Content -->
 	<div id="page-content" class="index-page container">
 		<div class="row">
@@ -196,7 +64,7 @@
 						<h3 class="vid-name"><a href="#">Video's Name</a></h3>
 						<div class="info">
 							<h5>By <a href="#">Kelvin</a></h5>
-							<span><i class="fa fa-calendar"></i>25/3/2015</span> 
+							<span><i class="fa fa-calendar"></i>25/3/2015</span>
 							<span><i class="fa fa-heart"></i>1,200</span>
 						</div>
 						<p class="more">Aenean feugiat in ante et blandit. Vestibulum posuere molestie risus, ac interdum magna porta non. Pellentesque rutrum fringilla elementum. Curabitur tincidunt porta lorem vitae accumsan.Aenean feugiat in ante et blandit. Vestibulum posuere molestie risus, ac interdum magna porta non.ac interdum magna porta non. Pellentesque rutrum fringilla elementum. Curabitur tincidunt porta lorem vitae accumsan</p>
@@ -222,7 +90,7 @@
 										<h3 class="vid-name"><a href="#">Video's Name</a></h3>
 										<div class="info">
 											<h5>By <a href="#">Kelvin</a></h5>
-											<span><i class="fa fa-calendar"></i>25/3/2015</span> 
+											<span><i class="fa fa-calendar"></i>25/3/2015</span>
 											<span><i class="fa fa-heart"></i>1,200</span>
 										</div>
 									</div>
@@ -694,21 +562,21 @@
 							<h6>Lorem Ipsum is simply dummy</h6>
 							<img src="images/22.jpg" />
 							<ul class="list-inline">
-								<li><i class="fa fa-calendar"></i>25/3/2015</li> 
+								<li><i class="fa fa-calendar"></i>25/3/2015</li>
 								<li><i class="fa fa-comments"></i>1,200</li>
 							</ul>
 							<p>Title should not overflow the content area A few things to check for: Non-breaking text in the...</p>
 							<h6>Lorem Ipsum is simply dummy</h6>
 							<img src="images/23.jpg" />
 							<ul class="list-inline">
-								<li><i class="fa fa-calendar"></i>25/3/2015</li> 
+								<li><i class="fa fa-calendar"></i>25/3/2015</li>
 								<li><i class="fa fa-comments"></i>1,200</li>
 							</ul>
 							<p>Title should not overflow the content area A few things to check for: Non-breaking text in the...</p>
 							<h6>Lorem Ipsum is simply dummy</h6>
 							<img src="images/24.jpg" />
 							<ul class="list-inline">
-								<li><i class="fa fa-calendar"></i>25/3/2015</li> 
+								<li><i class="fa fa-calendar"></i>25/3/2015</li>
 								<li><i class="fa fa-comments"></i>1,200</li>
 							</ul>
 							<p>Title should not overflow the content area A few things to check for: Non-breaking text in the...</p>
@@ -724,7 +592,7 @@
 							<span>Journey is about the journey <a href="#">your mind mind</a></span>
 							<span>Creativity is about the journey <a href="#">your mind takes</a></span>
 							<span>About the journey <a href="#">your mind</a></span>
-							
+
 						</div>
 					</div>
 				</div>
@@ -772,7 +640,7 @@
 								<div class="wrapper">
 									<a href="#"><h5>Curabitur tincidunt porta lorem.</h5></a>
 									<ul class="list-inline">
-										<li><i class="fa fa-calendar"></i>25/3/2015</li> 
+										<li><i class="fa fa-calendar"></i>25/3/2015</li>
 										<li><i class="fa fa-thumbs-up"></i>1,200</li>
 									</ul>
 								</div>
@@ -784,7 +652,7 @@
 								<div class="wrapper">
 									<a href="#"><h5>Curabitur tincidunt porta lorem.</h5></a>
 									<ul class="list-inline">
-										<li><i class="fa fa-calendar"></i>25/3/2015</li> 
+										<li><i class="fa fa-calendar"></i>25/3/2015</li>
 										<li><i class="fa fa-thumbs-up"></i>1,200</li>
 									</ul>
 								</div>
@@ -796,7 +664,7 @@
 								<div class="wrapper">
 									<a href="#"><h5>Curabitur tincidunt porta lorem.</h5></a>
 									<ul class="list-inline">
-										<li><i class="fa fa-calendar"></i>25/3/2015</li> 
+										<li><i class="fa fa-calendar"></i>25/3/2015</li>
 										<li><i class="fa fa-thumbs-up"></i>1,200</li>
 									</ul>
 								</div>
@@ -808,7 +676,7 @@
 								<div class="wrapper">
 									<a href="#"><h5>Curabitur tincidunt porta lorem.</h5></a>
 									<ul class="list-inline">
-										<li><i class="fa fa-calendar"></i>25/3/2015</li> 
+										<li><i class="fa fa-calendar"></i>25/3/2015</li>
 										<li><i class="fa fa-thumbs-up"></i>1,200</li>
 									</ul>
 								</div>
@@ -836,7 +704,7 @@
 					<div class="widget wid-calendar">
 						<div class="heading"><h4>Calendar</h4></div>
 						<div class="content">
-							<center><form action="" role="form">        
+							<center><form action="" role="form">
 								<div class="">
 									<div class="input-group date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">                </div>
 									<input type="hidden" id="dtp_input2" value="" /><br/>
@@ -878,7 +746,7 @@
 							<p>Marshall, Will, and Holly on a routine expedition, met the greatest earthquake ever known. High on the rapids, it struck their tiny raft...</p>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>
@@ -946,9 +814,9 @@
 		</div>
 	</footer>
 	<!-- Footer -->
-	
+
 	<!-- JS -->
-	<script src="owl-carousel/owl.carousel.js"></script>
+	<script src="{% static 'campaign/owl-carousel/owl.carousel.js' %}"></script>
     <script>
     $(document).ready(function() {
       $("#owl-demo-1").owlCarousel({
@@ -960,14 +828,14 @@
 	  $("#owl-demo-2").owlCarousel({
         autoPlay: 3000,
         items : 3,
-        
+
       });
     });
     </script>
-	
-	
-	<script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+
+
+	<script type="text/javascript" src="{% static 'campaign/js/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
+	<script type="text/javascript" src="{% static 'campaign/js/locales/bootstrap-datetimepicker.fr.js' %}" charset="UTF-8"></script>
 	<script type="text/javascript">
     $('.form_datetime').datetimepicker({
         //language:  'fr',
