@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'^faq$', views.faq, name='faq'),
     url(r'^events$', views.events, name='events'),
     url(r'^contacts$', views.contacts, name='contacts'),
+    url(r'^post/(?P<pk>[0-9]+)/like$', views.likePost, name='likePost'),
+    url(r'^comment/(?P<pk>[0-9]+)/like$', views.likeComment, name='likeComment'),
 ]

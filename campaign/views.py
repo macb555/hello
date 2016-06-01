@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
+from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
@@ -99,3 +100,15 @@ def issues(request):
 
 def faq(request):
     return render(request, 'campaign/partials/details.html',{"postTitle":"Demo Titile One", "id":1})
+
+
+ ############################
+# BACKEND VIEWS            #
+###########################
+def likePost(request, pk):
+    data = {"status":True, "likes":20, "id":pk}
+    return JsonResponse(data)
+
+def likeComment(request, pk):
+    data = {"status":True, "likes":20, "id":pk}
+    return JsonResponse(data)

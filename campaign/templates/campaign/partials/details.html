@@ -7,7 +7,7 @@
         <div class="box wrap-vid shadowed">
           <div class="post-detail">
             <h1>{{post.title}}</h1>
-            <p>By: <strong>{{post.author}}</strong> in <strong>{{post.date}}</strong> |  <button onclick="likePost('{{post.pk}}', 'post')" class="btn btn-default like"> <i class="glyphicon glyphicon-heart"></i> like</button> <strong><span id="post-{{post.pk}}-likes-counter">{{post.likes}}</span></strong> people liked this.</p>
+            <p>By: <strong>{{post.author}}</strong> in <strong>{{post.date}}</strong> |  <button id="btn-like-post-{{post.pk}}" onclick="likePost('{{post.pk}}', 'post')" class="btn btn-default like"> <i class="glyphicon glyphicon-heart"></i> like</button> <strong><span id="post-{{post.pk}}-likes-counter">{{post.likes}}</span></strong> people liked this.</p>
 <!--
             {% if post.video %}
               <iframe class="post-video" width="640" height="360" src="https://www.youtube.com/embed/{{post.video.videoId}}" frameborder="0" allowfullscreen></iframe>
@@ -22,7 +22,7 @@
               <li class="comment">
                 <p>
                   <strong>{{comment.user}}</strong> <em>said</em>: {{comment.text}}<br/>{{comment.date}}
-                  <strong><span id="comment-{{comment.pk}}-likes-counter">{{comment.likes}}</span></strong> people liked this. <button class="btn btn-default like" onclick="likePost('{{comment.pk}}', 'comment')"> <i class="glyphicon glyphicon-heart red-text"></i> like</button>
+                  <strong><span id="comment-{{comment.pk}}-likes-counter">{{comment.likes}}</span></strong> people liked this. <button id="btn-like-comment-{{comment.pk}}" class="btn btn-default like" onclick="likePost('{{comment.pk}}', 'comment')"> <i class="glyphicon glyphicon-heart red-text"></i> like</button>
                 </p>
               </li>
           {% endfor %}
