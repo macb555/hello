@@ -15,7 +15,7 @@
         <div class="carousel-inner">
           {% for item in featured_items %}
           <div class="item {% if item == featured_items.0 %}active{% endif %}">
-            <img src="{{item.image}}" alt="First slide">
+            <img src="{{item.featured_image.url}}" alt="First slide">
             <!-- Static Header -->
             <div class="header-text hidden-xs">
               <div class="col-md-12 text-center">
@@ -41,11 +41,11 @@
     <div class="col-sm-4" >
       <div id="owl-demo-1" class="owl-carousel">
         {% for item in featured_items %}
-        <img src="{{item.slider}}" />
+        <img src="{{item.featured_image.url}}" />
         {% endfor %}
 
       </div>
-      <img src="{{featured_items.0.slider}}" />
+      <img src="{{featured_items.0.featured_image.url}}" />
     </div>
   </div>
 </div>

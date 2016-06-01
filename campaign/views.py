@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.http import JsonResponse
-
+from campaign.models import *
 # Create your views here.
 def index(request):
+    posts = Post.objects.all()
+
     web = {
     'topbanner':'New down for Somalia',
     'name':'JABRIL CAMPAIGN',
@@ -31,7 +33,8 @@ def index(request):
 
 
     ]
-    return render(request, 'campaign/partials/home.html', {'web':web, 'speeches':speeches, 'featured_items':speeches})
+    #return render(request, 'campaign/partials/home.html', {'web':web, 'speeches':speeches, 'featured_items':speeches})
+    return render(request, 'campaign/partials/home.html', {'web':web, "featured_items":posts})
 
 def details(request, pk):
     post = {

@@ -16,7 +16,7 @@
               </a>
               <p>{{featured_items.0.title}}</p>
             </div>
-            <img src="{{featured_items.0.image}}">
+            <img src="{{featured_items.0.featured_image.url}}">
           </div>
           <h3>{{featured_items.0.title}}</h3>
 
@@ -39,7 +39,7 @@
              </a>
              <p>{{featured_items.1.title}}</p>
            </div>
-           <img src="http://img.youtube.com/vi/{{featured_items.1.video}}/0.jpg" />
+           <img src="{{featured_items.1.featured_image.url}}" />
          </div>
          <h3 class="vid-name"><a href="#">{{featured_items.1.title}}</a></h3>
        </div>
@@ -59,7 +59,7 @@
                </a>
                <p>{{item.title|slice:"0:14:"}}</p>
              </div>
-             <img src="{{item.image}}" />
+             <img src="{{item.featured_image.url}}" />
            </div>
            <div class="wrapper">
              <h5 class="vid-name"><a href="#">{{item.title}}</a></h5>
@@ -92,7 +92,7 @@
                       </a>
                       <p>{{item.title|slice:"0:14:"}}</p>
                     </div>
-                    <img src="{{item.image}}">
+                    <img src="{{item.featured_image.url}}">
                   </div>
                   <div class="wrapper">
                     <h5 class="vid-name"><a href="#">{{item.title}}</a></h5>
