@@ -1,0 +1,121 @@
+{% extends 'campaign/layout.html' %}
+{% block content %}
+{% include "campaign/partials/featured.html" %}
+<!-- /////////////////////////////////////////Content -->
+<div id="page-content" class="index-page container">
+  <div class="row">
+    <div id="main-content"><!-- background not working -->
+      <div id="column-one" class="col-md-6">
+        <div class="box wrap-vid shadowed">
+
+          <div class="zoom-container">
+            <div class="zoom-caption">
+              <span class="youtube">Youtube</span>
+              <a href="#">
+                <i class="fa fa-play icon-play" style="color: #fff"></i>
+              </a>
+              <p>{{featured_items.0.title}}</p>
+            </div>
+            <img src="{{featured_items.0.image}}">
+          </div>
+          <h3>{{featured_items.0.title}}</h3>
+
+<!-- ################################################################## -->
+
+<div class="box">
+ <div class="box-header header-vimeo">
+   <h2>Videos</h2>
+ </div>
+ <div class="box-content">
+   <div class="row">
+
+     <div class="col-md-6">
+       <div class="wrap-vid">
+         <div class="zoom-container">
+           <div class="zoom-caption">
+             <span class="vimeo">Vimeo</span>
+             <a href="single.html">
+               <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
+             </a>
+             <p>{{featured_items.1.title}}</p>
+           </div>
+           <img src="{{featured_items.1.image}}" />
+         </div>
+         <h3 class="vid-name"><a href="#">{{featured_items.1.title}}</a></h3>
+       </div>
+       <p class="more">{{featured_items.1.description}}</p>
+     </div>
+
+     <div class="col-md-6">
+       {% for item in featured_items|slice:":2" %}
+         <div class="post wrap-vid">
+           <div class="zoom-container">
+             <div class="zoom-caption">
+               <span class="{%if item.type == 'youtube' %}youtube{% else %}vimeo{% endif %}">
+                 {%if item.type == 'youtube' %}Youtube{% else %}Vimeo{% endif %}
+               </span>
+               <a href="single.html">
+                 <i class="fa fa-play-circle-o fa-3x" style="color: #fff"></i>
+               </a>
+               <p>{{item.title|slice:"0:14:"}}</p>
+             </div>
+             <img src="{{item.image}}" />
+           </div>
+           <div class="wrapper">
+             <h5 class="vid-name"><a href="#">{{item.title}}</a></h5>
+           </div>
+         </div>
+       {% endfor %}
+     </div>
+   </div>
+ </div>
+</div>
+
+<!-- ################################################################## -->
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div id="column-two" class="widget wid-vid shadowed">
+          <p><strong>Recent Videos</strong></p>
+          <hr/>
+          <div class="tab-content">
+            <div class="tab-pane fade in active">
+              {% for item in featured_items %}
+                <div class="post wrap-vid">
+                  <div class="zoom-container">
+                    <div class="zoom-caption">
+                      <span class="{%if item.type == 'youtube' %}youtube{% else %}vimeo{% endif %}">
+                        {%if item.type == 'youtube' %}Youtube{% else %}Vimeo{% endif %}
+                      </span>
+                      <a href="#">
+                        <i class="fa fa-play-circle-o fa-3x" style="color:#fff;"></i>
+                      </a>
+                      <p>{{item.title|slice:"0:14:"}}</p>
+                    </div>
+                    <img src="{{item.image}}">
+                  </div>
+                  <div class="wrapper">
+                    <h5 class="vid-name"><a href="#">{{item.title}}</a></h5>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div id="column-three" class="widget wid-comment shadowed">
+          <p><strong>Social Media</strong></p>
+          <hr/>
+          {% for item in featured_items %}
+            <li><h5>{{item.title}}</h5></li>
+            <hr/>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

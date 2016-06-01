@@ -10,10 +10,10 @@
       </div>
       <div class="col-md-6">
         <ul class="list-inline top-link link">
-          <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
-          <li><a href="contact.html"><i class="fa fa-comments"></i> Contact</a></li>
-          <li><a href="#"><i class="fa fa-question-circle"></i> Feedback</a></li>
-          <li><a href="#"><i class="fa fa-question-circle"></i> FAQ</a></li>
+          <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+          <li><a href="/contact"><i class="fa fa-comments"></i> Contact</a></li>
+          <li><a href="/feedback"><i class="fa fa-question-circle"></i> Feedback</a></li>
+          <li><a href="/faq"><i class="fa fa-question-circle"></i> FAQ</a></li>
         </ul>
       </div>
     </div>
@@ -24,17 +24,18 @@
   <nav id="menu" class="navbar container">
   <div class="navbar-header">
     <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
-    <a class="navbar-brand" href="#">
-      <div class="logo"><span>Jabril Campaign </span></div>
+    <a class="navbar-brand" href="/">
+      <div class="logo"><span>Jabril Ibrahim Abdulle</span></div>
     </a>
   </div>
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="index.html">Bio</a></li>
-      <li><a href="index.html">Issues</a></li>
-      <li><a href="index.html">Feed</a></li>
-      <li><a href="index.html">Events</a></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/bio">Bio</a></li>
+      <li><a href="/issues">Issues</a></li>
+      <li><a href="/feed">Feed</a></li>
+      <li><a href="/events">Events</a></li>
+      <!--
       <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Supporter Account <i class="fa fa-arrow-circle-o-down"></i></a>
         <div class="dropdown-menu">
           <div class="dropdown-inner">
@@ -58,13 +59,14 @@
           </div>
         </div>
       </li>
+    -->
     </ul>
     <ul class="list-inline navbar-right top-social">
-      <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-      <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-      <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-      <li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>
-      <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+      <li><a href="{{my.facebook}}"><i class="fa fa-facebook"></i></a></li>
+      <li><a href="{{my.twitter}}"><i class="fa fa-twitter"></i></a></li>
+      <li><a href="{{my.pinterest}}"><i class="fa fa-pinterest"></i></a></li>
+      <li><a href="{{my.googleplus}}"><i class="fa fa-google-plus-square"></i></a></li>
+      <li><a href="{{my.youtube}}"><i class="fa fa-youtube"></i></a></li>
     </ul>
   </div>
 </nav>
