@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^contacts$', views.contacts, name='contacts'),
     url(r'^post/(?P<pk>[0-9]+)/like$', views.likePost, name='likePost'),
     url(r'^comment/(?P<pk>[0-9]+)/like$', views.likeComment, name='likeComment'),
+    url(r'^watch/(?P<pk>[0-9]+)/$', views.watch, name='watch'),
 ]

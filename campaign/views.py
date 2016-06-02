@@ -15,42 +15,10 @@ def index(request):
     return render(request, 'campaign/partials/home.html', {"featured_items":posts, "latest_videos":videos})
 
 def details(request, pk):
-    post = {
-        "pk":1,
-        "title":"Mowduuc Tijaabo ah oo Booscelis ahaan halkan loo dhigay!",
-        "date":"30/05/2016",
-        "author":"Mahdi Bolow",
-        "likes":"15",
-        "video":{"videoId":"yNYJG3WFPak"},
-        "description":"Waa warbixin tijaabo ah oo loogu talagalay in lagu saxo muuqaalka warbixinada soo socda",
-        "content":"Waa warbixin tijaabo ah oo loogu talagalay in lagu saxo muuqaalka warbixinada soo socda. Waa warbixin tijaabo ah oo loogu talagalay in lagu saxo muuqaalka warbixinada soo socda. Waa warbixin tijaabo ah oo loogu talagalay in lagu saxo muuqaalka warbixinada soo socda. Waa warbixin tijaabo ah oo loogu talagalay in lagu saxo muuqaalka warbixinada soo socda. Waa warbixin tijaabo ah oo loogu talagalay in lagu saxo muuqaalka warbixinada soo socda. ",
-        "comments":[{
-            "pk":1,
-            "text":"Waa comment tijaabo ahaan aan usoo geliyay si loo arko sida comments-ka ay usoo bixi doonaan marka aqristayaasha ay soo geliyaan",
-            "date":"31/05/2016",
-            "likes":"9",
-            "user":"Mahdi Bolow"
-        },{
-            "pk":2,
-            "text":"Waa comment tijaabo ahaan aan usoo geliyay si loo arko sida comments-ka ay usoo bixi doonaan marka aqristayaasha ay soo geliyaan",
-            "date":"31/05/2016",
-            "likes":"9",
-            "user":"Mahdi Bolow"
-        },{
-            "pk":3,
-            "text":"Waa comment tijaabo ahaan aan usoo geliyay si loo arko sida comments-ka ay usoo bixi doonaan marka aqristayaasha ay soo geliyaan",
-            "date":"31/05/2016",
-            "likes":"9",
-            "user":"Mahdi Bolow"
-        },{
-            "pk":4,
-            "text":"Waa comment tijaabo ahaan aan usoo geliyay si loo arko sida comments-ka ay usoo bixi doonaan marka aqristayaasha ay soo geliyaan",
-            "date":"31/05/2016",
-            "likes":"9",
-            "user":"Mahdi Bolow"
-        },]
-    }
-    return render(request, 'campaign/partials/details.html',{"post":post, "id":pk})
+    post = Post.objects.get(pk=pk)
+    post_comments = Comment.objects.filter(post=pk)
+    posts = Post.objects.all()
+    return render(request, 'campaign/partials/details.html',{"post":post, "latest_posts":posts, "post_comments":post_comments})
 
 def contacts(request):
     contact_info = {
@@ -62,6 +30,24 @@ def contacts(request):
         "twitter":["http:twitter.com/jabril-official",],
     }
     return render(request, 'campaign/partials/contacts.html',{"contacts":contact_info})
+
+
+def watch(request, pk):
+    video = Video.objects.get(pk=pk)
+    return render(request, 'campaign/partials/watch.html',{"video":video})
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def feed(request):
     return render(request, 'campaign/partials/details.html',{"postTitle":"Demo Titile One", "id":1})
@@ -87,9 +73,13 @@ def faq(request):
 # BACKEND VIEWS            #
 ###########################
 def likePost(request, pk):
-    data = {"status":True, "likes":20, "id":pk}
-    return JsonResponse(data)
+    post = Post.objects.get(pk=pk)
+    post.likes += 1
+    post.save()
+    return JsonResponse({"likes":post.likes})
 
 def likeComment(request, pk):
-    data = {"status":True, "likes":20, "id":pk}
-    return JsonResponse(data)
+    comment = Comment.objects.get(pk=pk)
+    comment.likes += 1
+    comment.save()
+    return JsonResponse({"likes":comment.likes})

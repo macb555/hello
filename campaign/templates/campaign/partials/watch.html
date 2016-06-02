@@ -1,0 +1,28 @@
+{% extends 'campaign/layout.html' %}
+{% block content %}
+<div id="page-content" class="index-page container">
+  <div class="row">
+    <div id="main-content"><!-- background not working -->
+      <div id="column-one" class="col-md-9">
+        <div class="box wrap-vid shadowed">
+          <div class="post-detail">
+            <h1>{{video.title}}</h1>
+              <iframe class="post-video" width="640" height="360" src="https://www.youtube.com/embed/{{video.videoId}}" frameborder="0" allowfullscreen></iframe>
+            <p>{{video.description}}</p>
+            <hr/>
+          </div>
+        </div>
+      </div>
+      <div id="column-two" class="col-md-3">
+        <div class="box wrap-vid shadowed">
+          <h5>Latest on Social Media</h5>
+          {% include "campaign/partials/sidebar.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $("")
+</script>
+{% endblock %}

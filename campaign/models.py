@@ -23,12 +23,13 @@ class Video(models.Model):
     type = models.ForeignKey(VideoType, blank=False)
     description = models.CharField(max_length=300)
     def __unicode__(self):
-        return str(self.type) + ": "+self.title 
+        return str(self.type) + ": "+self.title
 
 class Image(models.Model):
     description = models.CharField(max_length=200)
     url = models.CharField(max_length=500)
     alt = models.CharField(max_length=30)
+    view_counter = models.IntegerField(default=0)
     def __unicode__(self):
         return " id:"+str(self.pk) + " alt:"+ self.alt
 
@@ -44,13 +45,15 @@ class Post(models.Model):
     category = models.ForeignKey(Category, blank=False)
     author = models.ForeignKey(User, blank=False)
     featured_image = models.ForeignKey(Image, blank=True)
+    view_counter = models.IntegerField(default=0)
     def __unicode__(self):
         return self.title
 
 class Comment(models.Model):
+    post = models.ForeignKey(Post, blank=True)
     user = models.ForeignKey(User, blank=False)
     text = models.TextField(max_length=500)
     date = models.DateTimeField(default=timezone.now)
     likes = models.IntegerField(default=0)
     def __unicode__(self):
-        return self.user + " said " +self.text
+        return str(self.user) + " said " +self.text
