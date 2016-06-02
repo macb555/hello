@@ -18,11 +18,12 @@ class VideoType(models.Model):
         return self.name
 
 class Video(models.Model):
+    title = models.CharField(max_length=100, default="The Title")
     videoId = models.CharField(max_length=100)
     type = models.ForeignKey(VideoType, blank=False)
     description = models.CharField(max_length=300)
     def __unicode__(self):
-        return self.description
+        return str(self.type) + ": "+self.title 
 
 class Image(models.Model):
     description = models.CharField(max_length=200)

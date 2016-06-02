@@ -13,3 +13,15 @@ function likePost(id,type) {
      }
   });
 }
+$(document).ready({
+  $.ajax({
+        type:'GET',
+        url: 'http://vimeo.com/api/v2/video/' + video_id + '.json',
+        jsonp: 'callback',
+        dataType: 'jsonp',
+        success: function(data){
+            var thumbnail_src = data[0].thumbnail_large;
+            $('#thumb_wrapper').append('<img src="' + thumbnail_src + '"/>');
+        }
+    });
+});

@@ -4,37 +4,15 @@ from campaign.models import *
 # Create your views here.
 def index(request):
     posts = Post.objects.all()
-
+    videos = Video.objects.all()
     web = {
     'topbanner':'New down for Somalia',
     'name':'JABRIL CAMPAIGN',
     'moto':"Let's build",
     }
 
-    speeches = [
-        {
-            'title':"Let's change ourselves to change our Nation!",
-            'description': 'Mr. Jabril called for a change to make the situation in our Country better.',
-            'image':'/static/campaign/images/3.jpg',
-            'slider':'/static/campaign/images/slide-3.jpg',
-        },
-        {
-            'title':"Let's build Somalia together!",
-            'description': 'Mr. Jabril ephasised that we need to work together to build our Nation',
-            'image':'/static/campaign/images/1.jpg',
-            'slider':'/static/campaign/images/slide-1.jpg',
-        },
-        {
-            'title':"Let's forget our past and build a better future!",
-            'description': 'Mr. Jabril emphasised that we need to forgive one another to develop our Nation',
-            'image':'/static/campaign/images/2.jpg',
-            'slider':'/static/campaign/images/slide-2.jpg',
-        },
-
-
-    ]
     #return render(request, 'campaign/partials/home.html', {'web':web, 'speeches':speeches, 'featured_items':speeches})
-    return render(request, 'campaign/partials/home.html', {'web':web, "featured_items":posts})
+    return render(request, 'campaign/partials/home.html', {"featured_items":posts, "latest_videos":videos})
 
 def details(request, pk):
     post = {

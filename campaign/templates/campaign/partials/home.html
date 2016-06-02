@@ -33,38 +33,58 @@
        <div class="wrap-vid">
          <div class="zoom-container">
            <div class="zoom-caption">
-             <span class="vimeo">Vimeo</span>
+             <span class="{{latest_videos.1.type|lower}}">{{latest_videos.0.type}}</span>
              <a href="single.html">
                <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
              </a>
-             <p>{{featured_items.1.title}}</p>
+             <p>{{latest_videos.0.title}}</p>
            </div>
-           <img src="{{featured_items.1.featured_image.url}}" />
+           <img src="http://img.youtube.com/vi/{{latest_videos.0.videoId}}/0.jpg" />
          </div>
-         <h3 class="vid-name"><a href="#">{{featured_items.1.title}}</a></h3>
+         <h3 class="vid-name"><a href="#">{{latest_videos.0.title}}</a></h3>
        </div>
-       <p class="more">{{featured_items.1.description}}</p>
+       <p class="more">{{latest_videos.0.description}}</p>
      </div>
 
      <div class="col-md-6">
-       {% for item in featured_items|slice:":2" %}
-         <div class="post wrap-vid">
-           <div class="zoom-container">
-             <div class="zoom-caption">
-               <span class="{%if item.type == 'youtube' %}youtube{% else %}vimeo{% endif %}">
-                 {%if item.type == 'youtube' %}Youtube{% else %}Vimeo{% endif %}
-               </span>
-               <a href="single.html">
-                 <i class="fa fa-play-circle-o fa-3x" style="color: #fff"></i>
-               </a>
-               <p>{{item.title|slice:"0:14:"}}</p>
-             </div>
-             <img src="{{item.featured_image.url}}" />
-           </div>
-           <div class="wrapper">
-             <h5 class="vid-name"><a href="#">{{item.title}}</a></h5>
-           </div>
-         </div>
+       {% for item in latest_videos %}
+        {% if not item = latest_videos.0 %}
+
+            {%if item.type.pk == 1 %}
+              <div class="post wrap-vid">
+                <div class="zoom-container">
+                  <div class="zoom-caption">
+                    <span class="youtube">Youtube</span>
+                    <a href="single.html">
+                      <i class="fa fa-play-circle-o fa-3x" style="color: #fff"></i>
+                    </a>
+                    <p>{{item.title|slice:"0:14:"}}</p>
+                  </div>
+                  <img src="http://img.youtube.com/vi/{{item.videoId}}/0.jpg" />
+                </div>
+                <div class="wrapper">
+                  <h5 class="vid-name"><a href="#">{{item.title}}</a></h5>
+                </div>
+              </div>
+            {% else %}
+              <div class="post wrap-vid">
+                <div class="zoom-container">
+                  <div class="zoom-caption">
+                    <span class="vimeo">Vimeo</span>
+                    <a href="single.html">
+                      <i class="fa fa-play-circle-o fa-3x" style="color: #fff"></i>
+                    </a>
+                    <p>{{item.title|slice:"0:14:"}}</p>
+                  </div>
+                  <img src="https://i.vimeocdn.com/video/{{item.videoId}}_200x150.webp" />
+                </div>
+                <div class="wrapper">
+                  <h5 class="vid-name"><a href="#">{{item.title}}</a></h5>
+                </div>
+              </div>
+            {% endif %}
+
+        {% endif %}
        {% endfor %}
      </div>
    </div>
@@ -80,22 +100,32 @@
           <hr/>
           <div class="tab-content">
             <div class="tab-pane fade in active">
-              {% for item in featured_items %}
+              {% for item in latest_videos %}
                 <div class="post wrap-vid">
                   <div class="zoom-container">
-                    <div class="zoom-caption">
-                      <span class="{%if item.type == 'youtube' %}youtube{% else %}vimeo{% endif %}">
-                        {%if item.type == 'youtube' %}Youtube{% else %}Vimeo{% endif %}
-                      </span>
-                      <a href="#">
-                        <i class="fa fa-play-circle-o fa-3x" style="color:#fff;"></i>
-                      </a>
-                      <p>{{item.title|slice:"0:14:"}}</p>
-                    </div>
-                    <img src="{{item.featured_image.url}}">
+
+                    {%if item.type.pk == 1 %}
+                      <div class="zoom-caption">
+                        <span class="youtube">Youtube</span>
+                        <a href="#">
+                          <i class="fa fa-play-circle-o fa-3x" style="color:#fff;"></i>
+                        </a>
+                        <p>{{item.title|slice:"0:14:"}}</p>
+                      </div>
+                      <img src="http://img.youtube.com/vi/{{item.videoId}}/0.jpg">
+                    {% else %}
+                        <div class="zoom-caption">
+                          <span class="vimeo">Vimeo</span>
+                          <a href="#">
+                            <i class="fa fa-play-circle-o fa-3x" style="color:#fff;"></i>
+                          </a>
+                          <p>{{item.title|slice:"0:14:"}}</p>
+                        </div>
+                        <img src="https://i.vimeocdn.com/video/{{item.videoId}}_640.webp">
+                    {% endif %}
                   </div>
                   <div class="wrapper">
-                    <h5 class="vid-name"><a href="#">{{item.title}}</a></h5>
+                    <h5 class="vid-name"><a href="#">{{item.description|slice:'0:50:'}}...</a></h5>
                   </div>
                 </div>
               {% endfor %}
