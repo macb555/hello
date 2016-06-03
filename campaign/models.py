@@ -46,14 +46,17 @@ class Post(models.Model):
     author = models.ForeignKey(User, blank=False)
     featured_image = models.ForeignKey(Image, blank=True)
     view_counter = models.IntegerField(default=0)
+
     def __unicode__(self):
         return self.title
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, blank=True)
+    post = models.ForeignKey(Post,related_name="comment", null=True, blank=True)
+    parent = models.ForeignKey('self', null=True, related_name="replies")
     user = models.ForeignKey(User, blank=False)
     text = models.TextField(max_length=500)
     date = models.DateTimeField(default=timezone.now)
     likes = models.IntegerField(default=0)
+
     def __unicode__(self):
         return str(self.user) + " said " +self.text
