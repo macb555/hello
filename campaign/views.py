@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.http import JsonResponse
 from campaign.models import *
+from campaign.forms import *
 # Create your views here.
 def index(request):
     posts = Post.objects.all()
@@ -18,7 +19,8 @@ def details(request, pk):
     post = Post.objects.get(pk=pk)
     post_comments = Comment.objects.filter(post=pk)
     posts = Post.objects.all()
-    return render(request, 'campaign/partials/details.html',{"post":post, "latest_posts":posts, "post_comments":post_comments})
+    form = CommentForm()
+    return render(request, 'campaign/partials/details.html',{"post":post, "latest_posts":posts, "post_comments":post_comments,"form":form})
 
 def contacts(request):
     contact_info = {
@@ -33,11 +35,35 @@ def contacts(request):
 
 
 def watch(request, pk):
-    video = Video.objects.get(pk=pk)
+    video = Video.objects.get(videoId=pk)
     return render(request, 'campaign/partials/watch.html',{"video":video})
 
+def addReply(request, post, parent):
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save()
+            comment.post = post
+            comment.parent = parent
+            comment.date = timezone.now()
+            return JsonResponse({"comment":comment})
+    else:
+        form = CommentForm()
+        return JsonResponse({"form":form})
 
-
+def addComment(request, post):
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post_id = post
+            comment.user = request.user
+            comment.date = timezone.now()
+            comment.save()
+            return JsonResponse({"comment":comment.text, 'commentId':int(comment.pk),'username':comment.user.username})
+    else:
+        form = CommentForm()
+        return JsonResponse({"form":form})
 
 
 
@@ -60,26 +86,74 @@ def events(request):
     return render(request, 'campaign/partials/details.html',{"postTitle":"Demo Titile One", "id":1})
 
 def bio(request):
-    return render(request, 'campaign/partials/details.html',{"postTitle":"Demo Titile One", "id":1})
+    posts = Post.objects.get(category__name="bio")
+    return render(request, 'campaign/partials/details.html',{"post":posts})
 
 def issues(request):
-    return render(request, 'campaign/partials/details.html',{"postTitle":"Demo Titile One", "id":1})
+    posts = Post.objects.get(category__name="issues")
+    return render(request, 'campaign/partials/details.html',{"post":posts})
 
 def faq(request):
-    return render(request, 'campaign/partials/details.html',{"postTitle":"Demo Titile One", "id":1})
+    posts = Post.objects.get(category__name="faq")
+    return render(request, 'campaign/partials/details.html',{"post":posts})
 
 
- ############################
-# BACKEND VIEWS            #
-###########################
+##############################
+####  JSON BACKEND VIEWS  ####
+##############################
+
+#LIKES
 def likePost(request, pk):
+    likes = Like.objects.filter(liked_post_id=pk, user=request.user)
     post = Post.objects.get(pk=pk)
-    post.likes += 1
-    post.save()
+    if not len(likes) > 0:
+        new_like = Like()
+        new_like.liked_post_id = pk
+        new_like.user = request.user
+        new_like.save()
+        like_count = Like.objects.filter(liked_post_id=pk).count()
+        post.likes = like_count
+        post.save()
     return JsonResponse({"likes":post.likes})
 
 def likeComment(request, pk):
+    print "called like comment view with id: "+pk
+    likes = Like.objects.filter(liked_comment_id=pk, user=request.user)
     comment = Comment.objects.get(pk=pk)
-    comment.likes += 1
-    comment.save()
+    if not len(likes) > 0:
+        print "saving new like record"
+        new_like = Like()
+        new_like.liked_comment_id = pk
+        new_like.user = request.user
+        new_like.save()
+        like_count = Like.objects.filter(liked_comment_id=pk).count()
+        comment.likes = like_count
+        comment.save()
     return JsonResponse({"likes":comment.likes})
+
+# DISLIKES
+def dislikePost(request, pk):
+    dislikes = Dislike.objects.filter(disliked_post_id=pk, user=request.user)
+    post = Post.objects.get(pk=pk)
+    if not len(dislikes) > 0:
+        new_dislike = Dislike()
+        new_dislike.disliked_post_id = pk
+        new_dislike.user = request.user
+        new_dislike.save()
+        dislike_count = Dislike.objects.filter(disliked_post_id=pk).count()
+        post.dislikes = dislike_count
+        post.save()
+    return JsonResponse({"dislikes":post.dislikes})
+
+def dislikeComment(request, pk):
+    dislikes = Dislike.objects.filter(disliked_comment_id=pk, user=request.user)
+    comment = Comment.objects.get(pk=pk)
+    if not len(dislikes) > 0:
+        new_dislike = Dislike()
+        new_dislike.disliked_comment_id = pk
+        new_dislike.user = request.user
+        new_dislike.save()
+        dislike_count = Dislike.objects.filter(disliked_comment_id=pk).count()
+        comment.dislikes = dislike_count
+        comment.save()
+    return JsonResponse({"dislikes":comment.dislikes})

@@ -11,7 +11,7 @@
           <div class="zoom-container">
             <div class="zoom-caption">
               <span class="youtube">Youtube</span>
-              <a href="#">
+              <a href="{% url 'watch' pk=featured_items.0.video.videoId %}">
                 <i class="fa fa-play icon-play" style="color: #fff"></i>
               </a>
               <p>{{featured_items.0.title}}</p>
@@ -34,14 +34,14 @@
          <div class="zoom-container">
            <div class="zoom-caption">
              <span class="{{latest_videos.1.type|lower}}">{{latest_videos.0.type}}</span>
-             <a href="single.html">
+             <a href="{% url 'watch' pk=latest_videos.0.videoId %}">
                <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
              </a>
              <p>{{latest_videos.0.title}}</p>
            </div>
            <img src="http://img.youtube.com/vi/{{latest_videos.0.videoId}}/0.jpg" />
          </div>
-         <h3 class="vid-name"><a href="#">{{latest_videos.0.title}}</a></h3>
+         <h3 class="vid-name"><a href="{% url 'watch' pk=latest_videos.0.videoId %}">{{latest_videos.0.title}}</a></h3>
        </div>
        <p class="more">{{latest_videos.0.description}}</p>
      </div>
@@ -55,7 +55,7 @@
                 <div class="zoom-container">
                   <div class="zoom-caption">
                     <span class="youtube">Youtube</span>
-                    <a href="single.html">
+                    <a href="{% url 'watch' pk=item.videoId %}">
                       <i class="fa fa-play-circle-o fa-3x" style="color: #fff"></i>
                     </a>
                     <p>{{item.title|slice:"0:14:"}}</p>
@@ -63,7 +63,7 @@
                   <img src="http://img.youtube.com/vi/{{item.videoId}}/0.jpg" />
                 </div>
                 <div class="wrapper">
-                  <h5 class="vid-name"><a href="#">{{item.title}}</a></h5>
+                  <h5 class="vid-name"><a href="{% url 'watch' pk=item.videoId %}">{{item.title}}</a></h5>
                 </div>
               </div>
             {% else %}
@@ -71,7 +71,7 @@
                 <div class="zoom-container">
                   <div class="zoom-caption">
                     <span class="vimeo">Vimeo</span>
-                    <a href="single.html">
+                    <a href="/watch/{{item.videoId}}">
                       <i class="fa fa-play-circle-o fa-3x" style="color: #fff"></i>
                     </a>
                     <p>{{item.title|slice:"0:14:"}}</p>
@@ -79,7 +79,7 @@
                   <img src="https://i.vimeocdn.com/video/{{item.videoId}}_200x150.webp" />
                 </div>
                 <div class="wrapper">
-                  <h5 class="vid-name"><a href="#">{{item.title}}</a></h5>
+                  <h5 class="vid-name"><a href="{% url 'watch' pk=item.videoId %}">{{item.title}}</a></h5>
                 </div>
               </div>
             {% endif %}
@@ -107,7 +107,7 @@
                     {%if item.type.pk == 1 %}
                       <div class="zoom-caption">
                         <span class="youtube">Youtube</span>
-                        <a href="#">
+                        <a href="{% url 'watch' pk=item.videoId %}">
                           <i class="fa fa-play-circle-o fa-3x" style="color:#fff;"></i>
                         </a>
                         <p>{{item.title|slice:"0:14:"}}</p>
@@ -116,7 +116,7 @@
                     {% else %}
                         <div class="zoom-caption">
                           <span class="vimeo">Vimeo</span>
-                          <a href="#">
+                          <a href="{% url 'watch' pk=item.videoId %}">
                             <i class="fa fa-play-circle-o fa-3x" style="color:#fff;"></i>
                           </a>
                           <p>{{item.title|slice:"0:14:"}}</p>
@@ -125,7 +125,7 @@
                     {% endif %}
                   </div>
                   <div class="wrapper">
-                    <h5 class="vid-name"><a href="#">{{item.description|slice:'0:50:'}}...</a></h5>
+                    <h5 class="vid-name"><a href="{% url 'watch' pk=item.videoId %}">{{item.description|slice:'0:50:'}}...</a></h5>
                   </div>
                 </div>
               {% endfor %}

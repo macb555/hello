@@ -19,7 +19,9 @@
             <!-- Static Header -->
             <div class="header-text hidden-xs">
               <div class="col-md-12 text-center">
-                <h3>{{item.title|slice:"0:22:" }}...</h3>
+                <h3>
+                  <a href="{% url 'details' pk=item.pk %}">{{item.title|slice:"0:22:" }}...</a>
+                </h3>
                 <br>
                 <h5 class="shadowed-text">{{item.description|slice:"0:100:"}}...</h5>
                 <br>
@@ -41,11 +43,15 @@
     <div class="col-sm-4" >
       <div id="owl-demo-1" class="owl-carousel">
         {% for item in featured_items %}
-        <img src="{{item.featured_image.url}}" />
+        <a href="{% url 'details' pk=item.pk %}">
+          <img src="{{item.featured_image.url}}" />
+        </a>
         {% endfor %}
 
       </div>
-      <img src="{{featured_items.0.featured_image.url}}" />
+      <a href="{% url 'details' pk=featured_items.0.pk %}">
+        <img src="{{featured_items.0.featured_image.url}}" />
+      </a>
     </div>
   </div>
 </div>

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'campaign',
+    'markdown_deux',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -121,3 +122,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+######################################################
+# MARKDOWN SETTINGS STARTS HERE
+######################################################
+from markdown_deux.conf.settings import MARKDOWN_DEUX_DEFAULT_STYLE
+
+MARKDOWN_DEUX_STYLES = {
+    "default": {
+        "extras": {
+            "code-friendly": None,
+        },
+        "safe_mode": "escape",
+    },
+}
+# MARKDOWN SETTINGS END HERE
+#######################################################

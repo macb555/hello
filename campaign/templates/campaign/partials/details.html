@@ -1,43 +1,78 @@
 {% extends 'campaign/layout.html' %}
+{% load markdown_deux_tags %}
 {% block content %}
 <div id="page-content" class="index-page container">
   <div class="row">
     <div id="main-content"><!-- background not working -->
       <div id="column-one" class="col-md-9">
         <div class="box wrap-vid shadowed">
+          {% if post %}
           <div class="post-detail">
-            <h1>{{post.title}}</h1>
-            <p>By: <strong>{{post.author}}</strong> in <strong>{{post.date}}</strong> |  <button id="btn-like-post-{{post.pk}}" onclick="likePost('{{post.pk}}', 'post')" class="btn btn-default like"> <i class="glyphicon glyphicon-heart"></i> like</button> <strong><span id="post-{{post.pk}}-likes-counter">{{post.likes}}</span></strong> people liked this.</p>
+            <div class="row controls-holder">
+              <div class='col-sm-9'>
+                <h1>{{post.title}}</h1>
+                <p>Author: <strong>{{post.author}}</strong> published: <strong>{{post.published_date}}</strong> </p>
+              </div>
+              <div class="col-sm-3">
+                <button id="btn-like-post-{{post.pk}}" onclick="likePost({{post.pk}}, 'post')" class="btn btn-default btn-block like"> <i class="glyphicon glyphicon-thumbs-up blue-text"></i> like</button><button id="btn-like-post-{{post.pk}}" class="btn btn-default btn-block dislike" onclick="dislike('{{post.pk}}', 'post')"> <i class="glyphicon glyphicon glyphicon-thumbs-down red-text"></i> dislike</button>
+                <strong><span id="post-{{post.pk}}-likes-counter">{{post.likes}}</span></strong> people liked this.
+              </div>
+            </div>
 <!--
             {% if post.video %}
               <iframe class="post-video" width="640" height="360" src="https://www.youtube.com/embed/{{post.video.videoId}}" frameborder="0" allowfullscreen></iframe>
             {% endif %}
 -->
-            <p>{{post.content}}</p>
+
+            {% markdown %}{{post.content}}{% endmarkdown %}
             <hr/>
           </div>
           <h5 class="head-title">Comments</h5>
-          <ul class="list-unstyled comments">
-          {% for comment in post_comments %}
-              <li class="comment">
-                <p>
-                  <strong>{{comment.user}}</strong> <em>said</em>: {{comment.text}}<br/>{{comment.date}},
-                  <strong><span id="comment-{{comment.pk}}-likes-counter">{{comment.likes}}</span></strong> people liked this. <button id="btn-like-comment-{{comment.pk}}" class="btn btn-default like" onclick="likePost('{{comment.pk}}', 'comment')"> <i class="glyphicon glyphicon-heart red-text"></i> like</button>
-                </p>
-                <ul>
-                {% for reply in comment.replies.all %}
-                    <li>
-                      <p>
-                        <strong>{{reply.user}}</strong> <em>said</em>: {{reply.text}}<br/>{{reply.date}},
-                        <strong><span id="comment-{{reply.pk}}-likes-counter">{{reply.likes}}</span></strong> people liked this. <button id="btn-like-comment-{{reply.pk}}" class="btn btn-default like" onclick="likePost('{{reply.pk}}', 'comment')"> <i class="glyphicon glyphicon-heart red-text"></i> like</button>
-                      </p>
-                    </li>
-                {% endfor %}
-                </ul>
+            {% if post_comments %}
+            <ul class="list-unstyled comments" id="comments">
+            {% for comment in post_comments %}
+                <li class="comment">
+                  <div class="row">
+                    <div class='col-sm-10'>
+                      <strong>{{comment.user}}</strong> <em>said</em>: {% markdown %}{{comment.text}}{% endmarkdown %}{{comment.date}},
+                      <strong><span id="comment-{{comment.pk}}-likes-counter">{{comment.likes}}</span></strong> people liked this.
+                    </div>
+                    <div class="col-sm-2 controls-holder">
+                      <button id="btn-like-comment-{{comment.pk}}" class="btn btn-default btn-block like" onclick="likePost({{comment.pk}}, 'comment')"> <i class="glyphicon glyphicon glyphicon-thumbs-up blue-text"></i> like</button><button id="btn-like-comment-{{comment.pk}}" class="btn btn-default btn-block dislike" onclick="dislike('{{comment.pk}}', 'comment')"> <i class="glyphicon glyphicon glyphicon-thumbs-down red-text"></i> dislike</button>
+                    </div>
+
+                </li>
+            {% endfor %}
+                <li id="lastcomment">
+                  <form	method="POST"	class="form commentform" id="commentform">{%	csrf_token	%}
+                						{{	form.as_p	}}
+                            <button	type="submit"	class="btn btn-default">Comment</button>
+                	</form>
+                </li>
+            </ul>
+            {% else %}
+            <ul class="list-unstyled comments" id="comments">
+              <li class='hidden'>This is hidden item</li>
+            </ul>
+
+                <form	method="POST"	class="form commentform" id="commentform">{%	csrf_token	%}
+                          {{	form.as_p	}}
+                          <button	type="submit"	class="btn btn-default">Comment</button>
+                </form>
+
+
               </li>
-          {% endfor %}
-          </ul>
+
+            {% endif %}
+          {% else %}
+
+          <div class="post-detail">
+            <h1>Sorry! Content is not available.</h1>
+          </div>
+
+          {% endif %}
         </div>
+
       </div>
       <div id="column-two" class="col-md-3">
         <div class="box wrap-vid shadowed">

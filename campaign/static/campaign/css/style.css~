@@ -508,7 +508,7 @@ ul .titles, li {list-style-type: none;padding-left: -1em;text-indent: 0;}
   flex-flow: row;
   height: 100%;
   flex: 1 1 auto;
-}head-title
+}
 #column-one, #column-two, #column-three {min-height: 22.1em;}
 button.like {color:#00f;}
 button.dislike {color:#f00;}

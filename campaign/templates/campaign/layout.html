@@ -98,6 +98,36 @@
       $("#column-two").css('height','auto');
       $("#column-three").css('height','auto');
     });
+
+    //comment text input area
+    $('textarea').addClass('form-control');
+    $('#comment-button').addClass('btn-primary').removeClass('btn-default');
+
+    //comment button event handler
+    $('#commentform').submit(function(event) {
+      event.preventDefault();
+      //console.log("Submitting the comment");
+      var $form = $(this), comment = $("#id_text").val(), url = "{% url 'addComment' post=post.pk %}";
+      //console.log("URL: {% url 'addComment' post=post.pk %}");
+      var posting = $.post(url, {text:comment});
+
+      posting.done(function(data) {
+        //console.log("Getting the comment content result");
+        //console.log(data);
+        var commentElement = '';
+        var commentId;
+        if (data.commentId != 'undefined'){
+          commentId = parseInt(data.commentId);
+        }
+        commentElement += '<li class="comment"><strong>'+ data.username +'</strong> <em>said</em>: <p>'+ $("#id_text").val() +'</p>You added this just now , <strong><span id="comment-'+ commentId +'-likes-counter">'+ 0 +'</span></strong> people liked this.'
+        commentElement += '<button id="btn-like-comment-'+ commentId +'" class="btn btn-default like" onclick="likePost('
+        commentElement += commentId+', "comment")"> <i class="glyphicon glyphicon-heart red-text"></i> like</button>'
+        $('#comments li').eq($('#comments li').size()-2).after(commentElement);
+        //console.log("Updated the comment list");
+      });
+    });
+
+
     });
     </script>
 

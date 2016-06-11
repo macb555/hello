@@ -11,7 +11,14 @@ urlpatterns = [
     url(r'^faq$', views.faq, name='faq'),
     url(r'^events$', views.events, name='events'),
     url(r'^contacts$', views.contacts, name='contacts'),
+    
     url(r'^post/(?P<pk>[0-9]+)/like$', views.likePost, name='likePost'),
     url(r'^comment/(?P<pk>[0-9]+)/like$', views.likeComment, name='likeComment'),
-    url(r'^watch/(?P<pk>[0-9]+)/$', views.watch, name='watch'),
+
+    url(r'^post/(?P<pk>[0-9]+)/dislike$', views.dislikePost, name='dislikePost'),
+    url(r'^comment/(?P<pk>[0-9]+)/dislike$', views.dislikeComment, name='dislikeComment'),
+
+    url(r'^comment/(?P<post>[0-9]+)$', views.addComment, name='addComment'),
+    url(r'^reply/(?P<post>[0-9]+)/(?P<parent>[0-9]+)$', views.addReply, name='addReply'),
+    url(r'^watch/(?P<pk>[\w\-]+)/$', views.watch, name='watch'),
 ]

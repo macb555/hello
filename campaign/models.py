@@ -28,8 +28,8 @@ class Video(models.Model):
 class Image(models.Model):
     description = models.CharField(max_length=200)
     url = models.CharField(max_length=500)
-    alt = models.CharField(max_length=30)
     view_counter = models.IntegerField(default=0)
+    alt = models.CharField(max_length=30)
     def __unicode__(self):
         return " id:"+str(self.pk) + " alt:"+ self.alt
 
@@ -42,6 +42,7 @@ class Post(models.Model):
     last_updated = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(default=timezone.now)
     likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
     category = models.ForeignKey(Category, blank=False)
     author = models.ForeignKey(User, blank=False)
     featured_image = models.ForeignKey(Image, blank=True)
@@ -57,6 +58,32 @@ class Comment(models.Model):
     text = models.TextField(max_length=500)
     date = models.DateTimeField(default=timezone.now)
     likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
 
     def __unicode__(self):
         return str(self.user) + " said " +self.text
+
+class Like(models.Model):
+    liked_post = models.ForeignKey(Post, related_name="liked_post", null=True, blank=True)
+    liked_comment = models.ForeignKey(Comment, related_name="liked_comment", null=True, blank=True)
+    user = models.ForeignKey(User, blank=False)
+    def __unicode__(self):
+        if self.liked_post == None:
+            if self.liked_comment != None:
+                return self.user.username+ " liked comment: " +str(self.liked_comment.pk)
+        elif self.liked_comment == None:
+            if self.liked_post != None:
+                return self.user.username+ " liked post: "+ str(self.liked_post.pk)
+        else:
+            return "Maybe this was added by a hacker."
+
+class Dislike(models.Model):
+    disliked_post = models.ForeignKey(Post, related_name="disliked_post", null=True, blank=True)
+    disliked_comment = models.ForeignKey(Comment, related_name="disliked_comment", null=True, blank=True)
+    reason = models.CharField(max_length=100, null=True, blank=True)
+    user = models.ForeignKey(User, blank=False)
+    def __unicode__(self):
+        if self.disliked_post:
+            return self.user.username + "disliked post: "+str(self.disliked_post)
+        elif self.disliked_comment:
+            return self.user.username + "disliked post: "+str(self.disliked_post)
