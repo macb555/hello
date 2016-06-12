@@ -136,12 +136,7 @@
       </div>
       <div class="col-md-3">
         <div id="column-three" class="widget wid-comment shadowed">
-          <p><strong>Social Media</strong></p>
-          <hr/>
-          {% for item in featured_items %}
-            <li><h5>{{item.title}}</h5></li>
-            <hr/>
-          {% endfor %}
+          {% include "campaign/partials/sidebar.html" %}
         </div>
       </div>
     </div>

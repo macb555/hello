@@ -76,12 +76,7 @@
       </div>
       <div id="column-two" class="col-md-3">
         <div class="box wrap-vid shadowed">
-          <h5>Latest Posts</h5>
-          {% for post in latest_posts %}
-            <h5>{{post.title}}</h5>
-            <p>{{post.description}}</p>
-            <hr/>
-          {% endfor %}
+          {% include "campaign/partials/sidebar.html" %}
         </div>
       </div>
     </div>

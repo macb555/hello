@@ -16,7 +16,7 @@ def index(request):
     return render(request, 'campaign/partials/home.html', {"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
 
 def details(request, pk):
-    post = Post.objects.get(pk=pk)
+    post = get_object_or_404(Post, pk=pk)
     post_comments = Comment.objects.filter(post=pk)
     posts = Post.objects.all()
     form = CommentForm()
@@ -35,7 +35,7 @@ def contacts(request):
 
 
 def watch(request, pk):
-    video = Video.objects.get(videoId=pk)
+    video = get_object_or_404(Video,videoId=pk)
     post =  post = Post.objects.filter(video_id=video.pk)
     return render(request, 'campaign/partials/watch.html',{"video":video, "post":{"pk":0}})
 
@@ -84,18 +84,20 @@ def feedback(request):
 
 
 def events(request):
-    return render(request, 'campaign/partials/details.html',{"postTitle":"Demo Titile One", "id":1})
+    posts = Post.objects.filter(category__name="events")
+    return render(request, 'campaign/partials/events.html',{"posts":posts, "post":{"pk":0}})
 
 def bio(request):
-    posts = Post.objects.get(category__name="bio")
+    posts = get_object_or_404(Post, category__name="bio")
     return render(request, 'campaign/partials/details.html',{"post":posts})
 
 def issues(request):
-    posts = Post.objects.get(category__name="issues")
-    return render(request, 'campaign/partials/details.html',{"post":posts})
+    #posts = get_object_or_404(Post, category__name="issues")
+    posts = Post.objects.filter(category__name="issues")
+    return render(request, 'campaign/partials/issues.html',{"posts":posts, "post":{"pk":0}})
 
 def faq(request):
-    posts = Post.objects.get(category__name="faq")
+    posts = get_object_or_404(Post, category__name="faq")
     return render(request, 'campaign/partials/details.html',{"post":posts})
 
 

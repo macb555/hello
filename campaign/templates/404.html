@@ -6,17 +6,8 @@
     <div id="main-content"><!-- background not working -->
       <div id="column-one" class="col-md-9">
         <div class="box wrap-vid shadowed">
-          <h1>Feed</h1>
-          {% if not posts %}<p>No posts added into the feed yet</p>{% endif %}
-          {% for post in posts %}
-          <a href="{% url 'details' pk=post.pk %}">
-            <h5>{{post.title}}</h5>
-          </a>
-            <p>
-              {{post.description|slice:"0:100:"}}<br/>
-              Date: <strong>{{post.published_date}}</strong> | Likes: <strong>{{post.likes}}</strong> | By: <strong>{{post.author}}</strong>
-            </p>
-          {% endfor %}
+          <h1>PAGE NOT FOUND (404)</h1>
+          <p>Sorry, we didn't find the page you requested. Please make sure the url to the page is correct and try again.</p>
         </div>
       </div>
       <div id="column-two" class="col-md-3">

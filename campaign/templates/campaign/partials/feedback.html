@@ -6,17 +6,13 @@
     <div id="main-content"><!-- background not working -->
       <div id="column-one" class="col-md-9">
         <div class="box wrap-vid shadowed">
-          <h1>Feed</h1>
-          {% if not posts %}<p>No posts added into the feed yet</p>{% endif %}
-          {% for post in posts %}
-          <a href="{% url 'details' pk=post.pk %}">
-            <h5>{{post.title}}</h5>
-          </a>
-            <p>
-              {{post.description|slice:"0:100:"}}<br/>
-              Date: <strong>{{post.published_date}}</strong> | Likes: <strong>{{post.likes}}</strong> | By: <strong>{{post.author}}</strong>
-            </p>
-          {% endfor %}
+            <h1>Feedback</h1>
+            <h5>We really appreciate any feedback be a positive or negative. Please don't hesitate to tell us if we did something wrong or you have a better idea regarding our work.</h5>
+
+            <form	method="POST"	class="form feedbackform" id="feedbackform">{%	csrf_token	%}
+                      {{	form.as_p	}}
+                      <button	type="submit"	class="btn btn-primary">Send</button>
+            </form>
         </div>
       </div>
       <div id="column-two" class="col-md-3">
