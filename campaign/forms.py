@@ -12,3 +12,8 @@ class DislikeForm(ModelForm):
     class Meta:
         model = Dislike
         fields = ('reason',)
+
+class FeedbackForm(ModelForm):
+    class Meta:
+        model = Message
+        fields = ('email', 'message')

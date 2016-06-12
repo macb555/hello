@@ -101,13 +101,16 @@
 
     //comment text input area
     $('textarea').addClass('form-control');
-    $('#comment-button').addClass('btn-primary').removeClass('btn-default');
+    //$('#comment-button').addClass('btn-primary').removeClass('btn-default');
 
     //comment button event handler
     $('#commentform').submit(function(event) {
       event.preventDefault();
       //console.log("Submitting the comment");
-      var $form = $(this), comment = $("#id_text").val(), url = "{% url 'addComment' post=post.pk %}";
+      if (comment_url == 'undefined'){
+        comment_url = "#"
+      }
+      var $form = $(this), comment = $("#id_text").val(), url = comment_url;
       //console.log("URL: {% url 'addComment' post=post.pk %}");
       var posting = $.post(url, {text:comment});
 

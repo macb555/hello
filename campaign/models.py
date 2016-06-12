@@ -87,3 +87,8 @@ class Dislike(models.Model):
             return self.user.username + "disliked post: "+str(self.disliked_post)
         elif self.disliked_comment:
             return self.user.username + "disliked post: "+str(self.disliked_post)
+
+class Message(models.Model):
+    email = models.EmailField(blank=False, null=False)
+    message = models.TextField(max_length=500)
+    date = models.DateTimeField(default=timezone.now)

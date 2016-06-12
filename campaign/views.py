@@ -13,7 +13,7 @@ def index(request):
     }
 
     #return render(request, 'campaign/partials/home.html', {'web':web, 'speeches':speeches, 'featured_items':speeches})
-    return render(request, 'campaign/partials/home.html', {"featured_items":posts, "latest_videos":videos})
+    return render(request, 'campaign/partials/home.html', {"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
 
 def details(request, pk):
     post = Post.objects.get(pk=pk)
@@ -36,7 +36,8 @@ def contacts(request):
 
 def watch(request, pk):
     video = Video.objects.get(videoId=pk)
-    return render(request, 'campaign/partials/watch.html',{"video":video})
+    post =  post = Post.objects.filter(video_id=video.pk)
+    return render(request, 'campaign/partials/watch.html',{"video":video, "post":{"pk":0}})
 
 def addReply(request, post, parent):
     if request.method == "POST":
@@ -67,19 +68,19 @@ def addComment(request, post):
 
 
 
-
-
-
-
-
-
-
-
 def feed(request):
-    return render(request, 'campaign/partials/details.html',{"postTitle":"Demo Titile One", "id":1})
+    posts = Post.objects.all()
+    return render(request, 'campaign/partials/feeds.html',{"posts":posts, "post":{"pk":0}})
 
 def feedback(request):
-    return render(request, 'campaign/partials/details.html',{"postTitle":"Demo Titile One", "id":1})
+    if request.method == "POST":
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            feedback = form.save()
+            return JsonResponse({"feedback":feedback})
+    else:
+        form = FeedbackForm()
+        return render(request, 'campaign/partials/feedback.html',{'form':form, "post":{"pk":0}})
 
 
 def events(request):

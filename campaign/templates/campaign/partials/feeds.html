@@ -1,0 +1,34 @@
+{% extends 'campaign/layout.html' %}
+{% load markdown_deux_tags %}
+{% block content %}
+<div id="page-content" class="index-page container">
+  <div class="row">
+    <div id="main-content"><!-- background not working -->
+      <div id="column-one" class="col-md-9">
+        <div class="box wrap-vid shadowed">
+          {% for post in posts %}
+            <h5>{{post.title}}</h5>
+            <p>
+              {{post.description|slice:"0:100:"}}<br/>
+              Date: <strong>{{post.published_date}}</strong> | Likes: <strong>{{post.likes}}</strong> | By: <strong>{{post.author}}</strong>
+            </p>
+          {% endfor %}
+        </div>
+      </div>
+      <div id="column-two" class="col-md-3">
+        <div class="box wrap-vid shadowed">
+          <h5>Latest Posts</h5>
+          {% for post in latest_posts %}
+            <h5>{{post.title}}</h5>
+            <p>{{post.description}}</p>
+            <hr/>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  comment_url = "/comment/{{post.pk}}"
+</script>
+{% endblock %}

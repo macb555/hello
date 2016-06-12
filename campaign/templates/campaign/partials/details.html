@@ -15,7 +15,7 @@
               </div>
               <div class="col-sm-3">
                 <button id="btn-like-post-{{post.pk}}" onclick="likePost({{post.pk}}, 'post')" class="btn btn-default btn-block like"> <i class="glyphicon glyphicon-thumbs-up blue-text"></i> like</button><button id="btn-like-post-{{post.pk}}" class="btn btn-default btn-block dislike" onclick="dislike('{{post.pk}}', 'post')"> <i class="glyphicon glyphicon glyphicon-thumbs-down red-text"></i> dislike</button>
-                <strong><span id="post-{{post.pk}}-likes-counter">{{post.likes}}</span></strong> people liked this.
+                <strong><span id="post-{{post.pk}}-likes-counter">{{post.likes}}</span></strong> reader{{post.likes|pluralize}} liked this.
               </div>
             </div>
 <!--
@@ -35,7 +35,7 @@
                   <div class="row">
                     <div class='col-sm-10'>
                       <strong>{{comment.user}}</strong> <em>said</em>: {% markdown %}{{comment.text}}{% endmarkdown %}{{comment.date}},
-                      <strong><span id="comment-{{comment.pk}}-likes-counter">{{comment.likes}}</span></strong> people liked this.
+                      <strong><span id="comment-{{comment.pk}}-likes-counter">{{comment.likes}}</span></strong> reader{{comment.likes|pluralize}} liked this.
                     </div>
                     <div class="col-sm-2 controls-holder">
                       <button id="btn-like-comment-{{comment.pk}}" class="btn btn-default btn-block like" onclick="likePost({{comment.pk}}, 'comment')"> <i class="glyphicon glyphicon glyphicon-thumbs-up blue-text"></i> like</button><button id="btn-like-comment-{{comment.pk}}" class="btn btn-default btn-block dislike" onclick="dislike('{{comment.pk}}', 'comment')"> <i class="glyphicon glyphicon glyphicon-thumbs-down red-text"></i> dislike</button>
@@ -88,6 +88,6 @@
   </div>
 </div>
 <script>
-  $("")
+  comment_url = "/comment/{{post.pk}}"
 </script>
 {% endblock %}
