@@ -40,10 +40,10 @@ function likePost(id,type) {
   var counter =  parseInt($("#"+type+"-"+id+"-likes-counter").text());
   //counter += 1;
   $("#"+type+"-"+id+"-likes-counter").text(counter);
-  $("#btn-like-"+type+"-"+id).attr('disabled','disabled');
+  //$("#btn-like-"+type+"-"+id).attr('disabled','disabled');
   $.ajax(location.origin+"/"+type+"/"+id+"/like", {
      success: function(data) {
-       console.log(data)
+       //console.log(data)
         $("#"+type+"-"+id+"-likes-counter").text(data.likes);
         console.log('got some data');
      },

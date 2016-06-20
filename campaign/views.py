@@ -22,7 +22,7 @@ def details(request, pk):
     form = CommentForm()
     return render(request, 'campaign/partials/details.html',{"post":post, "latest_posts":posts, "post_comments":post_comments,"form":form})
 
-def contacts(request):
+def contact(request):
     contact_info = {
         "emails":["boolow5@gmail.com",],
         "phones":["+252-618-270616","+252-698-270616",],
@@ -31,7 +31,7 @@ def contacts(request):
         "youtubeChannels":["http://youtube.com/jabril-official",],
         "twitter":["http:twitter.com/jabril-official",],
     }
-    return render(request, 'campaign/partials/contacts.html',{"contacts":contact_info})
+    return render(request, 'campaign/partials/contacts.html',{"contacts":contact_info, "post":{"pk":0}})
 
 
 def watch(request, pk):
