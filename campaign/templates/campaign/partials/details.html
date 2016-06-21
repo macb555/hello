@@ -44,22 +44,28 @@
                 </li>
             {% endfor %}
                 <li id="lastcomment">
+                  {% if user.is_authenticated %}
                   <form	method="POST"	class="form commentform" id="commentform">{%	csrf_token	%}
                 						{{	form.as_p	}}
                             <button	type="submit"	class="btn btn-default">Comment</button>
                 	</form>
+                  {% else %}
+                  <strong>Please login to be able to post comment</strong>
+                  {% endif %}
                 </li>
             </ul>
             {% else %}
             <ul class="list-unstyled comments" id="comments">
               <li class='hidden'>This is hidden item</li>
             </ul>
-
+              {% if user.is_authenticated %}
                 <form	method="POST"	class="form commentform" id="commentform">{%	csrf_token	%}
                           {{	form.as_p	}}
                           <button	type="submit"	class="btn btn-default">Comment</button>
                 </form>
-
+              {% else %}
+              <strong>Please login to be able to post comment</strong>
+              {% endif %}
 
               </li>
 

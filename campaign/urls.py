@@ -1,5 +1,6 @@
 from django.conf.urls import include, url
 from . import views
+from JABRIL import settings
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
@@ -22,3 +23,6 @@ urlpatterns = [
     url(r'^reply/(?P<post>[0-9]+)/(?P<parent>[0-9]+)$', views.addReply, name='addReply'),
     url(r'^watch/(?P<pk>[\w\-]+)/$', views.watch, name='watch'),
 ]
+
+#if settings.DEBUG:
+#    urlpatterns += ['django.views.static', (r'media/(?P<path>.*)', 'serve', {'document_root': settings.MEDIA_ROOT}),]

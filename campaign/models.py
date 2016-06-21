@@ -28,6 +28,7 @@ class Video(models.Model):
 class Image(models.Model):
     description = models.CharField(max_length=200)
     url = models.CharField(max_length=500)
+    photo = models.ImageField(upload_to="static/campaign/images", null=True, blank=True)
     view_counter = models.IntegerField(default=0)
     alt = models.CharField(max_length=30)
     def __unicode__(self):
@@ -66,7 +67,7 @@ class Comment(models.Model):
 class Like(models.Model):
     liked_post = models.ForeignKey(Post, related_name="liked_post", null=True, blank=True)
     liked_comment = models.ForeignKey(Comment, related_name="liked_comment", null=True, blank=True)
-    user = models.ForeignKey(User, blank=False)
+    user = models.ForeignKey(User, blank=False, null=True)
     def __unicode__(self):
         if self.liked_post == None:
             if self.liked_comment != None:

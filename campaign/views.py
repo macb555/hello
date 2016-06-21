@@ -136,12 +136,18 @@ def likeComment(request, pk):
 
 # DISLIKES
 def dislikePost(request, pk):
-    dislikes = Dislike.objects.filter(disliked_post_id=pk, user=request.user)
+    if user.is_authenticated():
+        dislikes = Dislike.objects.filter(disliked_post_id=pk, user=request.user)
+    else:
+        dislikes = []
     post = Post.objects.get(pk=pk)
     if not len(dislikes) > 0:
         new_dislike = Dislike()
         new_dislike.disliked_post_id = pk
-        new_dislike.user = request.user
+        if user.is_authenticated():
+            new_dislike.user = request.user
+        else:
+            new_dislike.user = None
         new_dislike.save()
         dislike_count = Dislike.objects.filter(disliked_post_id=pk).count()
         post.dislikes = dislike_count
@@ -160,3 +166,6 @@ def dislikeComment(request, pk):
         comment.dislikes = dislike_count
         comment.save()
     return JsonResponse({"dislikes":comment.dislikes})
+
+def AmIIn(request):
+    return JsonResponse({"status":user.is_authenticated()})
