@@ -37,7 +37,7 @@ class Image(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=350)
-    video = models.ForeignKey(Video,blank=True, default=None)
+    video = models.ForeignKey(Video,blank=True, default=None, null=True)
     content = models.TextField()
     date_added = models.DateTimeField(default=timezone.now)
     last_updated = models.DateTimeField(default=timezone.now)
@@ -46,7 +46,7 @@ class Post(models.Model):
     dislikes = models.IntegerField(default=0)
     category = models.ForeignKey(Category, blank=False)
     author = models.ForeignKey(User, blank=False)
-    featured_image = models.ForeignKey(Image, blank=True)
+    featured_image = models.ForeignKey(Image, blank=True, default=1)
     view_counter = models.IntegerField(default=0)
 
     def __unicode__(self):
@@ -60,6 +60,7 @@ class Comment(models.Model):
     date = models.DateTimeField(default=timezone.now)
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
+    approved = models.BooleanField(default=False)
 
     def __unicode__(self):
         return str(self.user) + " said " +self.text

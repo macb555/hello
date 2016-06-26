@@ -17,7 +17,7 @@ def index(request):
 
 def details(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    post_comments = Comment.objects.filter(post=pk)
+    post_comments = Comment.objects.filter(post=pk, approved=True)
     posts = Post.objects.all()
     form = CommentForm()
     return render(request, 'campaign/partials/details.html',{"post":post, "latest_posts":posts, "post_comments":post_comments,"form":form})
@@ -84,7 +84,7 @@ def feedback(request):
 
 
 def events(request):
-    posts = Post.objects.filter(category__name="events")
+    posts = Post.objects.filter(category__name="Events")
     return render(request, 'campaign/partials/events.html',{"posts":posts, "post":{"pk":0}})
 
 def bio(request):
@@ -93,7 +93,7 @@ def bio(request):
 
 def issues(request):
     #posts = get_object_or_404(Post, category__name="issues")
-    posts = Post.objects.filter(category__name="issues")
+    posts = Post.objects.filter(category__name="Issues")
     return render(request, 'campaign/partials/issues.html',{"posts":posts, "post":{"pk":0}})
 
 def faq(request):
