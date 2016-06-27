@@ -15,7 +15,9 @@
         <div class="carousel-inner">
           {% for item in featured_items %}
           <div class="item {% if item == featured_items.0 %}active{% endif %}">
-            <img src="{{item.featured_image.url}}" alt="First slide">
+            <div class="carsl-image">
+              <img src="media/{{item.featured_image.photo}}" alt="First slide">
+            </div>
             <!-- Static Header -->
             <div class="header-text hidden-xs">
               <div class="col-md-12 text-center">
@@ -43,14 +45,18 @@
     <div class="col-sm-4" >
       <div id="owl-demo-1" class="owl-carousel">
         {% for item in featured_items %}
-        <a href="{% url 'details' pk=item.pk %}">
-          <img src="{{item.featured_image.url}}" />
-        </a>
+        <div class="carsl-image-small">
+          <a href="{% url 'details' pk=item.pk %}">
+            <img src="{{item.featured_image.url}}" />
+          </a>
+        </div>
         {% endfor %}
 
       </div>
       <a href="{% url 'details' pk=featured_items.0.pk %}">
-        <img src="{{featured_items.0.featured_image.url}}" />
+        <div class="carsl-image-small" style="background-image: url({{featured_items.0.featured_image.url}})" >
+          <!--<img src="{{featured_items.0.featured_image.url}}" />-->
+        </div>
       </a>
     </div>
   </div>

@@ -28,7 +28,8 @@ class Video(models.Model):
 class Image(models.Model):
     description = models.CharField(max_length=200)
     url = models.CharField(max_length=500)
-    photo = models.ImageField(upload_to="static/campaign/images", null=True, blank=True)
+    #photo = models.ImageField(upload_to="static/campaign/images", null=True, blank=True)
+    photo = models.ImageField(upload_to = 'images/%Y/%m/%d', default = 'images/None/no-image.png')
     view_counter = models.IntegerField(default=0)
     alt = models.CharField(max_length=30)
     def __unicode__(self):
@@ -36,7 +37,8 @@ class Image(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
-    
+    language = models.CharField(max_length=15, choices=(("en", "English"),
+                                        ("so", "Somali"),), default='so')
     description = models.CharField(max_length=350)
     video = models.ForeignKey(Video,blank=True, default=None, null=True)
     content = models.TextField()

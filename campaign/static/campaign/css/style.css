@@ -521,3 +521,10 @@ h5.head-title-2 {background: #e6f0ff;box-shadow: 1px 0 6px darkgray;padding: .5e
 .red-text {color: red;}
 .blue-text {color: blue;}
 .controls-holder button {margin:.3em;}
+
+.carsl-image, .carsl-image-small {width: 100%;border:2px solid red;}
+.carsl-image { height: 500px; overflow: hidden; }
+.carsl-image img {height: 100%;}
+
+.carsl-image-small { height: 230px; overflow: hidden; }
+.carsl-image-small img {height: 100%;}
