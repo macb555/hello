@@ -6,23 +6,39 @@ from campaign.forms import *
 def index(request):
     posts = Post.objects.all()
     videos = Video.objects.all()
-    web = {
-    'topbanner':'New down for Somalia',
-    'name':'JABRIL CAMPAIGN',
-    'moto':"Let's build",
-    }
-
+    loginForm = LoginForm()
     #return render(request, 'campaign/partials/home.html', {'web':web, 'speeches':speeches, 'featured_items':speeches})
-    return render(request, 'campaign/partials/home.html', {"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
+    return render(request, 'campaign/partials/home.html', {"loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
+
+def login(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            print(form)
+            return JsonResponse({"status":""})
+    else:
+        form = CommentForm()
+        print(form)
+        return JsonResponse({"form":form})
+
+
+def logout(request):
+    return JsonResponse({"status":"You're logged out"})
+
+def invalid_login(request):
+    return JsonResponse({"status":"Sorry you failed to login"})
+
 
 def details(request, pk):
+    loginForm = LoginForm()
     post = get_object_or_404(Post, pk=pk)
     post_comments = Comment.objects.filter(post=pk, approved=True)
     posts = Post.objects.all()
     form = CommentForm()
-    return render(request, 'campaign/partials/details.html',{"post":post, "latest_posts":posts, "post_comments":post_comments,"form":form})
+    return render(request, 'campaign/partials/details.html',{"loginform":loginForm,"post":post, "latest_posts":posts, "post_comments":post_comments,"form":form})
 
 def contact(request):
+    loginForm = LoginForm()
     contact_info = {
         "emails":["boolow5@gmail.com",],
         "phones":["+252-618-270616","+252-698-270616",],
@@ -31,13 +47,14 @@ def contact(request):
         "youtubeChannels":["http://youtube.com/jabril-official",],
         "twitter":["http:twitter.com/jabril-official",],
     }
-    return render(request, 'campaign/partials/contacts.html',{"contacts":contact_info, "post":{"pk":0}})
+    return render(request, 'campaign/partials/contacts.html',{"loginform":loginForm,"contacts":contact_info, "post":{"pk":0}})
 
 
 def watch(request, pk):
+    loginForm = LoginForm()
     video = get_object_or_404(Video,videoId=pk)
     post =  post = Post.objects.filter(video_id=video.pk)
-    return render(request, 'campaign/partials/watch.html',{"video":video, "post":{"pk":0}})
+    return render(request, 'campaign/partials/watch.html',{"loginform":loginForm,"video":video, "post":{"pk":0}})
 
 def addReply(request, post, parent):
     if request.method == "POST":
@@ -69,10 +86,12 @@ def addComment(request, post):
 
 
 def feed(request):
+    loginForm = LoginForm()
     posts = Post.objects.all()
-    return render(request, 'campaign/partials/feeds.html',{"posts":posts, "post":{"pk":0}})
+    return render(request, 'campaign/partials/feeds.html',{"loginform":loginForm,"posts":posts, "post":{"pk":0}})
 
 def feedback(request):
+    loginForm = LoginForm()
     if request.method == "POST":
         form = FeedbackForm(request.POST)
         if form.is_valid():
@@ -80,25 +99,29 @@ def feedback(request):
             return JsonResponse({"feedback":feedback})
     else:
         form = FeedbackForm()
-        return render(request, 'campaign/partials/feedback.html',{'form':form, "post":{"pk":0}})
+        return render(request, 'campaign/partials/feedback.html',{"loginform":loginForm,'form':form, "post":{"pk":0}})
 
 
 def events(request):
+    loginForm = LoginForm()
     posts = Post.objects.filter(category__name="Events")
-    return render(request, 'campaign/partials/events.html',{"posts":posts, "post":{"pk":0}})
+    return render(request, 'campaign/partials/events.html',{"loginform":loginForm,"posts":posts, "post":{"pk":0}})
 
 def bio(request):
+    loginForm = LoginForm()
     posts = get_object_or_404(Post, category__name="bio")
-    return render(request, 'campaign/partials/details.html',{"post":posts})
+    return render(request, 'campaign/partials/details.html',{"loginform":loginForm,"post":posts})
 
 def issues(request):
+    loginForm = LoginForm()
     #posts = get_object_or_404(Post, category__name="issues")
     posts = Post.objects.filter(category__name="Issues")
-    return render(request, 'campaign/partials/issues.html',{"posts":posts, "post":{"pk":0}})
+    return render(request, 'campaign/partials/issues.html',{"loginform":loginForm,"posts":posts, "post":{"pk":0}})
 
 def faq(request):
+    loginForm = LoginForm()
     posts = get_object_or_404(Post, category__name="faq")
-    return render(request, 'campaign/partials/details.html',{"post":posts})
+    return render(request, 'campaign/partials/details.html',{"loginform":loginForm,"post":posts})
 
 
 ##############################
@@ -169,3 +192,13 @@ def dislikeComment(request, pk):
 
 def AmIIn(request):
     return JsonResponse({"status":user.is_authenticated()})
+
+def changeLanguage(request, language):
+    if language == 'so' or language == 'en':
+        request.session["language"] = language
+        return redirect("index")
+    else:
+        posts = Post.objects.all()
+        videos = Video.objects.all()
+        loginForm = LoginForm()
+        return render(request, 'campaign/partials/home.html', {"error":"Sorry \""+language+"\" is an invalid language. \"so\"(for Somali) and \"en\"(for English) are available","loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})

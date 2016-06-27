@@ -4,9 +4,16 @@
 <!--Top-->
 <nav id="top">
   <div class="container">
+    {% if error %}
+    <div class="row">
+      <div class="alert alert-danger">
+        <strong>Error!</strong> {{error}}.
+      </div>
+    </div>
+    {% endif %}
     <div class="row">
       <div class="col-md-6">
-        <strong>Welcome to the new dawn for Somalia!</strong>
+        <strong>Waaga cusub ee u curtay Ummadda Soomaaliyeed!</strong>
       </div>
       <div class="col-md-6">
         <ul class="list-inline top-link link">
@@ -25,7 +32,7 @@
   <div class="navbar-header">
     <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
     <a class="navbar-brand" href="/">
-      <div class="logo"><span>Jabril Ibrahim Abdulle</span></div>
+      <div class="logo"><img href=""><span>Hal Qaran</span></div>
     </a>
   </div>
   <div class="collapse navbar-collapse navbar-ex1-collapse">

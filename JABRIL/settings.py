@@ -65,6 +65,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'campaign.context_processors.global_settings',
             ],
         },
     },
@@ -142,3 +143,9 @@ MARKDOWN_DEUX_STYLES = {
 }
 # MARKDOWN SETTINGS END HERE
 #######################################################
+
+
+#######################  SITE VARIABLES ###################
+SITE_NAME = {"so":"Hal Qaran", "en":"Hal Qaran"}
+SITE_MOTO = {"so":"Waaga cusub ee u curtay Ummadda Soomaaliyeed!", "en":"New Dawn for the Somali People"}
+SITE_DESCRIPTION = {"so":"Bogga Rasmiga ah ee Hal Qaran", "en":"The official page for Hal Qaran Movement (HQM)."}

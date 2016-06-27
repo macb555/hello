@@ -36,6 +36,7 @@ class Image(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
+    
     description = models.CharField(max_length=350)
     video = models.ForeignKey(Video,blank=True, default=None, null=True)
     content = models.TextField()

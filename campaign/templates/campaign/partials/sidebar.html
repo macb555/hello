@@ -1,5 +1,14 @@
 {% load staticfiles %}
 {% block sidebar %}
+{% if loginform %}
+<!-- ############# LOGGIN FORM ############### -->
+<h5>Login</h5>
+<form	method="POST"	class="form loginform" action="{% url 'login' %}" id="loginform">{%	csrf_token	%}
+      {{	loginform.as_p	}}
+      <button	type="submit"	class="btn btn-default">Login</button>
+</form>
+{% endif %}
+
 <!-- ############# TWITTER PLUGIN ############ -->
 <a class="twitter-timeline" href="https://twitter.com/TwitterDev" data-widget-id="738398786544906240">Tweets by @TwitterDev</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>

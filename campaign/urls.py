@@ -4,6 +4,11 @@ from JABRIL import settings
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+
+    url(r'^login$', views.login, name='login'),
+    url(r'^logout$', views.logout, name='logout'),
+    url(r'^invalid_login$', views.invalid_login, name='invalid_login'),
+
     url(r'^post/(?P<pk>[0-9]+)/$', views.details, name='details'),
     url(r'^issues$', views.issues, name='issues'),
     url(r'^bio$', views.bio, name='bio'),
@@ -22,6 +27,8 @@ urlpatterns = [
     url(r'^comment/(?P<post>[0-9]+)$', views.addComment, name='addComment'),
     url(r'^reply/(?P<post>[0-9]+)/(?P<parent>[0-9]+)$', views.addReply, name='addReply'),
     url(r'^watch/(?P<pk>[\w\-]+)/$', views.watch, name='watch'),
+
+    url(r'^language/(?P<language>[a-z]{2})', views.changeLanguage, name='language'),
 ]
 
 #if settings.DEBUG:
