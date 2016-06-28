@@ -70,9 +70,9 @@ def logout(request):
     loginForm = LoginForm()
     msg = {"type":"info","so":"Waad kuguuleysatay kabixitaanka.","en":"You have successfully logged out."}
     return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
-
+'''
 class RegistrationView(CreateView):
-    form_class = RegistrationForm
+    form_class = UserRegistrationForm
     model = User
 
     def form_valid(self, form):
@@ -95,7 +95,7 @@ class RegistrationView(CreateView):
         reset_form.save(**opts)
 
         return redirect('accounts:register-done')
-
+'''
 def details(request, pk):
     request.session.setdefault('language','so')
 

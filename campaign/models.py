@@ -2,10 +2,11 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth.models import User, AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django_countries.fields import CountryField
 
 # Create your models here.
+'''
 class UserManager(BaseUserManager):
 
     def create_user(self, email, password, **kwargs):
@@ -47,7 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
     def get_short_name(self):
         return self.email
-
+'''
 
 class Category(models.Model):
     name = models.CharField(max_length=100)

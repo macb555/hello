@@ -158,4 +158,4 @@ SITE_NAME = {"so":"Hal Qaran", "en":"Hal Qaran"}
 SITE_MOTO = {"so":"Waaga cusub ee u curtay Ummadda Soomaaliyeed!", "en":"New Dawn for the Somali People"}
 SITE_DESCRIPTION = {"so":"Bogga Rasmiga ah ee Hal Qaran", "en":"The official page for Hal Qaran Movement (HQM)."}
 
-AUTH_USER_MODEL = "campaign.User"
+#AUTH_USER_MODEL = "campaign.User"
