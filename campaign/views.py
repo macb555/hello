@@ -9,7 +9,6 @@ def index(request):
     language = request.session.setdefault('language','so')
 
     posts = Post.objects.filter(language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
-    print(posts)
     videos = Video.objects.all()
     loginForm = LoginForm()
     #return render(request, 'campaign/partials/home.html', {'web':web, 'speeches':speeches, 'featured_items':speeches})
@@ -228,11 +227,9 @@ def likePost(request, pk):
     return JsonResponse({"likes":post.likes})
 
 def likeComment(request, pk):
-    print "called like comment view with id: "+pk
     likes = Like.objects.filter(liked_comment_id=pk, user=request.user)
     comment = Comment.objects.get(pk=pk)
     if not len(likes) > 0:
-        print "saving new like record"
         new_like = Like()
         new_like.liked_comment_id = pk
         new_like.user = request.user

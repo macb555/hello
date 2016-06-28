@@ -513,7 +513,8 @@ ul .titles, li {list-style-type: none;padding-left: -1em;text-indent: 0;}
   height: 100%;
   flex: 1 1 auto;
 }head-title
-#column-one, #column-two, #column-three {min-height: 60.1em;}
+//#column-one, #column-two, #column-three {min-height: 60.1em;max-height: 100em; overflow: auto; height: 61em;}
+.column-1, .column-2, .column-3 {min-height: 60.1em;max-height: 100em; overflow: hidden; height: 61em;}
 button.like {color:#00f;}
 button.dislike {color:#f00;}
 ul.comments {color:#000;}
