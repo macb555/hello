@@ -123,7 +123,7 @@ body.sub-page .logo {margin: 110px 0 80px;background: url(../images/bg.jpg) fixe
 /* ---------------------------------------------------------------------------- */
 /* -----------------------------------Header----------------------------------- */
 /* ---------------------------------------------------------------------------- */
-header{background: #fff;}
+header{background:#fff;//#3a6fa9;}
 
 
 /* Carousel Styles */
@@ -462,8 +462,10 @@ footer .footer-3 ul li a:hover{color: #666;}
 	background: rgba(0, 0, 0, .5);
 
 }
+
+/////////////////////////// HEADER - MENUS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 .collapse, .navbar-collapse, .navbar-ex1-collapse {
-  background: black;//#55BBCC;
+  background: #a00000;//#55BBCC;
   border: 1px groove whitesmoke;
   //box-shadow: -1px 0 14px black;
 }
@@ -471,7 +473,7 @@ footer .footer-3 ul li a:hover{color: #666;}
   //background: lightgray;
   //box-shadow: -1px 0 14px black;
   //border: 1px groove white;
-  padding: .1em;
+  //padding: .1em;
 }
 .navbar-brand {
   margin: .5em;
@@ -558,3 +560,23 @@ h5.head-title-2 {background: #e6f0ff;box-shadow: 1px 0 6px darkgray;padding: .5e
     width: 100%;
     height: 100%;
 }
+.latest-posts-titles li {
+  border-bottom: 1px groove darkgray;
+}
+
+.in-sect {
+	/* Initially we don't want any height, and we want the contents to be hidden */
+	max-height: 0;
+	overflow: hidden;
+
+	/* Set our transitions up. */
+	-webkit-transition: max-height 0.8s;
+	-moz-transition: max-height 0.8s;
+	transition: max-height 1.8s;
+}
+.sect:hover .in-sect, .sect:active .in-sect {
+	/* On hover, set the max-height to something large. In this case there's an obvious limit. */
+	max-height: 500px;
+}
+.read-more {color:#7DC314; border:1px groove darkgray; border-radius: .3em; padding-left: .4em; padding-right: .4em;box-shadow: inset 2px 1px 6px #000; text-shadow: 0 -1px 1px black;}
+.read-more:hover {color:#fff;box-shadow: inset 2px 1px 6px #7DC314;}

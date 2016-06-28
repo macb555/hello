@@ -43,6 +43,9 @@ def login(request):
         msg = {"type":"danger","so":"Waan kaxunnahay waxaad gelisay cinwaan ama ereysireed qaldan.","en":"Sorry! Your username or password is incorrect."}
         return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
 
+def register(request):
+    form = UserRegistrationForm()
+
 def logout(request):
     request.session.setdefault('language','so')
 
