@@ -3,6 +3,8 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.views.generic.edit import CreateView
+from django.contrib.auth.forms import UserCreationForm
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
@@ -10,6 +12,13 @@ urlpatterns = [
     url(r'^loginpage$', views.loginPage, name='loginpage'),
     url(r'^login$', views.login, name='login'),
     url(r'^logout$', views.logout, name='logout'),
+    url(r'^join$', views.register, name='join'),
+    #url('^register/', CreateView.as_view(
+    #        template_name='campaign/partials/registration.html',
+    #        form_class=UserCreationForm,
+    #        success_url='/'
+    #)),
+    #url('^accounts/', include('django.contrib.auth.urls')),
 
     url(r'^post/(?P<pk>[0-9]+)/$', views.details, name='details'),
     url(r'^issues$', views.issues, name='issues'),

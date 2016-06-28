@@ -42,9 +42,15 @@
         <div class="dropdown-menu">
           <div class="dropdown-inner">
             <ul class="list-unstyled">
+              {% if not user.is_authenticated %}
               <li><a href="/loginpage"><i class="fa fa-user-plus"></i> {% if request.session.language = "so" %}Gal Cinwaankaaga{% else %}Login{% endif %}</a></li>
+              {% endif %}
+              {% if user.is_authenticated %}
               <li><a href="/logout"><i class="fa fa-user-times"></i> {% if request.session.language = "so" %}Kabax Cinwaankaaga{% else %}Logout{% endif %}</a></li>
-              <li><a href="/register"><i class="fa fa-database"></i> {% if request.session.language = "so" %}Is Diiwaangeli{% else %}Register{% endif %}</a></li>
+              {% endif %}
+              {% if not user.is_authenticated %}
+              <li><a href="/join"><i class="fa fa-database"></i> {% if request.session.language = "so" %}Is Diiwaangeli{% else %}Register{% endif %}</a></li>
+              {% endif %}
             </ul>
           </div>
         </div>

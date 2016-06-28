@@ -4,15 +4,15 @@
   <div class="row">
     <div id="main-content"><!-- background not working -->
       <div id="column-one" class="col-md-9">
-        <div class="box wrap-vid">
+        <div class="box wrap-vid shadowed">
           <div class="post-detail">
-            <h1>{% if request.session.language = "so" %}Diiwaangelin{% else %}Register{% endif %}</h1>
+            <h1>{% if request.session.language = "so" %}Gelitaanka{% else %}Login{% endif %}</h1>
 
             {% if not user.is_authenticated %}
               {% if form %}
               <!-- ############# LOGGIN FORM ############### -->
               <div id="login-area">
-                <form	method="POST"	class="form loginform" action="/join" id="loginform">{%	csrf_token	%}
+                <form	method="POST"	class="form loginform" action="{% url 'login' %}" id="loginform">{%	csrf_token	%}
 
                   {% for field in form %}
                       <div class="fieldWrapper">
@@ -36,7 +36,8 @@
         </div>
       </div>
       <div id="column-two" class="col-md-3">
-        <div class="box wrap-vid">
+        <div class="box wrap-vid shadowed">
+          <h5>Latest on Social Media</h5>
           {% include "campaign/partials/sidebar.html" %}
         </div>
       </div>

@@ -119,7 +119,7 @@
         comment_url = "#"
       }
       var $form = $(this), comment = $("#id_text").val(), url = comment_url;
-      //console.log("URL: {% url 'addComment' post=post.pk %}");
+      
       var posting = $.post(url, {text:comment});
 
       posting.done(function(data) {
