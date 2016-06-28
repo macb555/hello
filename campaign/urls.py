@@ -7,13 +7,13 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^$', views.index, name='index'),
 
+    url(r'^loginpage$', views.loginPage, name='loginpage'),
     url(r'^login$', views.login, name='login'),
     url(r'^logout$', views.logout, name='logout'),
-    url(r'^invalid_login$', views.invalid_login, name='invalid_login'),
 
     url(r'^post/(?P<pk>[0-9]+)/$', views.details, name='details'),
     url(r'^issues$', views.issues, name='issues'),
-    url(r'^bio$', views.bio, name='bio'),
+    url(r'^about$', views.about, name='about'),
     url(r'^feed$', views.feed, name='feed'),
     url(r'^feedback$', views.feedback, name='feedback'),
     url(r'^faq$', views.faq, name='faq'),

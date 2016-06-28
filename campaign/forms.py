@@ -23,3 +23,8 @@ class LoginForm(ModelForm):
     class Meta:
         model = User
         fields = ('username', 'password')
+        password = forms.CharField(widget=forms.PasswordInput)
+        model = User
+        widgets = {
+            'password': forms.PasswordInput(),
+        }

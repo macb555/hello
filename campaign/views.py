@@ -2,64 +2,69 @@ from django.shortcuts import render, redirect, render_to_response, get_object_or
 from django.http import JsonResponse
 from campaign.models import *
 from campaign.forms import *
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.db.models import Q
 # Create your views here.
 def index(request):
-    posts = Post.objects.all().order_by('-date_added')
+    language = request.session.setdefault('language','so')
+
+    posts = Post.objects.filter(language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
+    print(posts)
     videos = Video.objects.all()
     loginForm = LoginForm()
     #return render(request, 'campaign/partials/home.html', {'web':web, 'speeches':speeches, 'featured_items':speeches})
     return render(request, 'campaign/partials/home.html', {"loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
 
+
+def loginPage(request):
+    loginForm = LoginForm()
+    return render(request, 'campaign/partials/login.html', {"nosidebarlogin":True,"loginform":loginForm,"post":{"pk":0}})
+
 def login(request):
+    request.session.setdefault('language','so')
+
+
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(username=username, password=password)
     if user is not None:
         if user.is_active:
             auth_login(request, user)
-            posts = Post.objects.all()
-            videos = Video.objects.all()
-            loginForm = LoginForm()
-            alert = {"so":"Waad ku guuleysatay gelitaanka.","en":"You have successfully logged in"}
-            return render(request, 'campaign/partials/home.html', {"alert":alert,"loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
+            msg = {'type':'info','so':"Waad ku guuleysatay gelitaanka!", 'en':'You loggedin successfully!'}
+            return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "post":{"pk":0}})
         else:
-            posts = Post.objects.all()
-            videos = Video.objects.all()
             loginForm = LoginForm()
-            error={"so":"Waan kaxunnahay, cinwaankan wuu xayiran yahay. Laxiriir maamulka wixi su'aalo ah.","en":"Sorry! Your acount is deactivated. Contact the admin for enquiry."}
-            return render(request, 'campaign/partials/home.html', {"error":error,"loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
+            msg = {'type':'danger','so':"Waan kaxunnahay cinwaankan wuu xiran yahay.", 'en':'Sorry, Your account is not active.'}
+            return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
     else:
-        posts = Post.objects.all()
+        posts = Post.objects.filter(language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
         videos = Video.objects.all()
         loginForm = LoginForm()
-        error = {"so":"Waan kaxunnahay waxaad gelisay cinwaan ama ereysireed qaldan.","en":"Sorry! Your username or password is incorrect."}
-        return render(request, 'campaign/partials/home.html', {"error":error,"loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
+        msg = {"type":"danger","so":"Waan kaxunnahay waxaad gelisay cinwaan ama ereysireed qaldan.","en":"Sorry! Your username or password is incorrect."}
+        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
 
 def logout(request):
-    logout(request)
-    posts = Post.objects.all()
-    videos = Video.objects.all()
-    loginForm = LoginForm()
-    alert = {"so":"Waad ku guuleysatay kabixidda.","en":"You have successfully loggedout!"}
-    return render(request, 'campaign/partials/home.html', {"alert":alert,"loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
+    request.session.setdefault('language','so')
 
-def invalid_login(request):
-    posts = Post.objects.all()
-    videos = Video.objects.all()
+    auth_logout(request)
     loginForm = LoginForm()
-    return render(request, 'campaign/partials/home.html', {"error":"Sorry! Your username or password is incorrect.","loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
+    msg = {"type":"info","so":"Waad kuguuleysatay kabixitaanka.","en":"You have successfully logged out."}
+    return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
 
 
 def details(request, pk):
+    request.session.setdefault('language','so')
+
     loginForm = LoginForm()
     post = get_object_or_404(Post, pk=pk)
     post_comments = Comment.objects.filter(post=pk, approved=True)
-    posts = Post.objects.all()
+    #posts = Post.objects.all()
     form = CommentForm()
-    return render(request, 'campaign/partials/details.html',{"loginform":loginForm,"post":post, "latest_posts":posts, "post_comments":post_comments,"form":form})
+    return render(request, 'campaign/partials/details.html',{"loginform":loginForm,"post":post, "latest_posts":"posts", "post_comments":post_comments,"form":form})
 
 def contact(request):
+    request.session.setdefault('language','so')
+
     loginForm = LoginForm()
     contact_info = {
         "emails":["boolow5@gmail.com",],
@@ -73,6 +78,8 @@ def contact(request):
 
 
 def watch(request, pk):
+    request.session.setdefault('language','so')
+
     loginForm = LoginForm()
     video = get_object_or_404(Video,videoId=pk)
     post =  post = Post.objects.filter(video_id=video.pk)
@@ -108,11 +115,15 @@ def addComment(request, post):
 
 
 def feed(request):
+    request.session.setdefault('language','so')
+
     loginForm = LoginForm()
-    posts = Post.objects.all()
+    posts = Post.objects.filter(language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
     return render(request, 'campaign/partials/feeds.html',{"loginform":loginForm,"posts":posts, "post":{"pk":0}})
 
 def feedback(request):
+    request.session.setdefault('language','so')
+
     loginForm = LoginForm()
     if request.method == "POST":
         form = FeedbackForm(request.POST)
@@ -125,22 +136,30 @@ def feedback(request):
 
 
 def events(request):
+    request.session.setdefault('language','so')
+
     loginForm = LoginForm()
-    posts = Post.objects.filter(category__name="Events")
+    posts = Post.objects.filter(category__name="Events",language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
     return render(request, 'campaign/partials/events.html',{"loginform":loginForm,"posts":posts, "post":{"pk":0}})
 
-def bio(request):
+def about(request):
+    request.session.setdefault('language','so')
+
     loginForm = LoginForm()
-    posts = get_object_or_404(Post, category__name="bio")
-    return render(request, 'campaign/partials/details.html',{"loginform":loginForm,"post":posts})
+    posts = get_object_or_404(Post, category__name="About", language=request.session.get('language'))
+    return render(request, 'campaign/partials/about.html',{"loginform":loginForm,"post":posts})
 
 def issues(request):
+    request.session.setdefault('language','so')
+
     loginForm = LoginForm()
     #posts = get_object_or_404(Post, category__name="issues")
-    posts = Post.objects.filter(category__name="Issues")
+    posts = Post.objects.filter(category__name="Issues",language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
     return render(request, 'campaign/partials/issues.html',{"loginform":loginForm,"posts":posts, "post":{"pk":0}})
 
 def faq(request):
+    request.session.setdefault('language','so')
+
     loginForm = LoginForm()
     posts = get_object_or_404(Post, category__name="faq")
     return render(request, 'campaign/partials/details.html',{"loginform":loginForm,"post":posts})
@@ -218,10 +237,19 @@ def AmIIn(request):
 def changeLanguage(request, language):
     if language == 'so' or language == 'en':
         request.session["language"] = language
-        return redirect("index")
-    else:
-        posts = Post.objects.all()
-        videos = Video.objects.all()
         loginForm = LoginForm()
-        error = {"so":"Waan kaxunnahay \""+language+"\" ma aha luqad jirta. Fadlan dooro \"so\" (oo ah Soomaali) ama \"en\"(oo ah Ingiriis)","en":"Sorry \""+language+"\" is an invalid language. \"so\"(for Somali) and \"en\"(for English) are available"}
-        return render(request, 'campaign/partials/home.html', {"error":error,"loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
+        msg = {'type':'info','so':"Waad ku guuleysatay bedelidda luqadda.", 'en':'You have successfully changed the language.'}
+        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+    else:
+        request.session.setdefault('language','so')
+        loginForm = LoginForm()
+        msg = {'type':'danger','so':"Waan kaxunnahay luqadda aad dooratay wili ma aanan kusoo derin boggeena.", 'en':"Sorry, we didn't add this language yet."}
+        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+
+################ PURE PYTHON FUNCTIONS ##################
+def getLanguage(request):
+    current_language = request.session['language']
+    if current_language == 'so':
+        return current_language
+    else:
+        return 'en'

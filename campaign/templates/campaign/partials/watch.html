@@ -7,11 +7,13 @@
         <div class="box wrap-vid shadowed">
           <div class="post-detail">
             <h1>{{video.title}}</h1>
-            {% if video.type.pk = 1 %}
-              <iframe class="post-video" width="640" height="360" src="https://www.youtube.com/embed/{{video.videoId}}" frameborder="0" allowfullscreen></iframe>
-            {% else %}
-              <iframe class="post-video" src="https://player.vimeo.com/video/{{video.videoId}}" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-            {% endif %}
+            <div class="videowrapper">
+              {% if video.type.pk = 1 %}
+                <iframe class="post-video" width="640" height="360" src="https://www.youtube.com/embed/{{video.videoId}}" frameborder="0" allowfullscreen></iframe>
+              {% else %}
+                <iframe class="post-video" src="https://player.vimeo.com/video/{{video.videoId}}" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+              {% endif %}
+            </div>
             <p>{{video.description}}</p>
             <hr/>
           </div>

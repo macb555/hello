@@ -4,6 +4,7 @@
   <div class="row">
     <div class="col-sm-8">
       <!-- Carousel -->
+      {% if featured_items %}
       <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -22,7 +23,7 @@
             <div class="header-text hidden-xs">
               <div class="col-md-12 text-center">
                 <h3>
-                  <a href="{% url 'details' pk=item.pk %}">{{item.title|slice:"0:22:" }}...</a>
+                  <a href="/post/{{pk}}">{{item.title|slice:"0:22:" }}...</a>
                 </h3>
                 <br>
                 <h5 class="shadowed-text">{{item.description|slice:"0:100:"}}...</h5>
@@ -31,7 +32,6 @@
             </div><!-- /header-text -->
           </div>
           {% endfor %}
-
         </div>
         <!-- Controls -->
         <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
@@ -43,9 +43,11 @@
       </div><!-- /carousel -->
     </div>
     <div class="col-sm-4" >
+
       <div id="owl-demo-1" class="owl-carousel">
+
         {% for item in featured_items %}
-          <a href="{% url 'details' pk=item.pk %}">
+          <a href="/posts/{{pk}}">
             <div class="carsl-image-small image-container" style="background-image: url(media/{{item.featured_image.photo}})">
 
             </div>
@@ -53,12 +55,19 @@
         {% endfor %}
 
       </div>
-      <a href="{% url 'details' pk=featured_items.1.pk %}">
+
+      <a href="/post/{{pk}}">
         <div class="carsl-image-small image-container" style="background-image: url(media/{{featured_items.1.featured_image.photo}})" >
 
         </div>
       </a>
+      {% else %}
+      <div class="text text-info">
+        <strong>{% if request.session.language = "so" %}Waan kaxunnahay!</strong> Wax warbixinno ah oo halkan lagu soo bandhigo malaha. Waxaan kuu balan qaadaynaa in dhawaan warbixinno aad jeclaan doonto halkan kugu soo bandhigno. Mahadsanid.{% else %}Sorry!</strong> There is no posts to show here. We regret this to happen and we promise you to fill here with posts you like very soon.{% endif %}.
+      </div>
+      {% endif %}
     </div>
+
   </div>
 </div>
 {% endblock %}

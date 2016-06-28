@@ -27,7 +27,7 @@ class Video(models.Model):
 
 class Image(models.Model):
     description = models.CharField(max_length=200)
-    url = models.CharField(max_length=500)
+    #url = models.CharField(max_length=500)
     #photo = models.ImageField(upload_to="static/campaign/images", null=True, blank=True)
     photo = models.ImageField(upload_to = 'images/%Y/%m/%d', default = 'images/None/no-image.png')
     view_counter = models.IntegerField(default=0)
@@ -40,7 +40,7 @@ class Post(models.Model):
     language = models.CharField(max_length=15, choices=(("en", "English"),
                                         ("so", "Somali"),), default='so')
     description = models.CharField(max_length=350)
-    video = models.ForeignKey(Video,blank=True, default=None, null=True)
+    video = models.ForeignKey(Video,blank=True, default=1, null=True)
     content = models.TextField()
     date_added = models.DateTimeField(default=timezone.now)
     last_updated = models.DateTimeField(default=timezone.now)

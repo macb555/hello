@@ -1,0 +1,32 @@
+{% extends 'campaign/layout.html' %}
+{% block content %}
+<div id="page-content" class="index-page container">
+  <div class="row">
+    <!--<div id="main-content"> background not working -->
+      <div id="column-one" class="col-md-9">
+        <div class="box wrap-vid shadowed">
+
+          {% if message %}
+          <div class="row">
+            <div class="alert alert-{{message.type}}">
+              <strong>
+                {% if request.session.language = "so" %}{% if message.type = 'djangoer' %}Cillad{% else %}Fariin:{% endif %}</strong> {{message.so}}{% else %}Error:</strong> {{message.en}}{% endif %}.
+            </div>
+          </div>
+          {% endif %}
+
+
+      </div>
+      <div id="column-two" class="col-md-3">
+        <div class="box wrap-vid shadowed">
+          <h5>Latest on Social Media</h5>
+          {% include "campaign/partials/sidebar.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $("")
+</script>
+{% endblock %}
