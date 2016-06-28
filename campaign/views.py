@@ -24,8 +24,8 @@ def login(request):
     request.session.setdefault('language','so')
 
 
-    username = request.POST['username']
-    password = request.POST['password']
+    username = request.POST.get('username')
+    password = request.POST.get('password')
     user = authenticate(username=username, password=password)
     if user is not None:
         if user.is_active:
@@ -42,6 +42,26 @@ def login(request):
         loginForm = LoginForm()
         msg = {"type":"danger","so":"Waan kaxunnahay waxaad gelisay cinwaan ama ereysireed qaldan.","en":"Sorry! Your username or password is incorrect."}
         return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+
+def register(request):
+    request.session.setdefault('language','so')
+
+    if request.method == "POST":
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            f_name = request.POST.get('first_name')
+            l_name = request.POST.get('last_name')
+            email = request.POST.get('email')
+
+            user = User.objects.create_user(username=username, password=password, first_name=f_name, last_name=l_name, email=email)
+            user.save()
+            msg = {"type":"info","so":"Hambalyo! waad ku guuleysatay isdiiwaangelinta.","en":"Congradulations! You are successfully registered'."}
+            return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "post":{"pk":0}})
+    form = UserRegistrationForm()
+    return render(request, 'campaign/partials/registration.html', {'form':form})
+
 
 def logout(request):
     request.session.setdefault('language','so')

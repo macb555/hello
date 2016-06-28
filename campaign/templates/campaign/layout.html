@@ -61,16 +61,23 @@
   {% block content %}{% endblock %}
 
 	<footer>
-		<div class="wrap-footer">
-			<div class="container">
-				<div class="row">
+    <div class="container">
+  		<div class="wrap-footer">
+  			<div class="row">
 
-				</div>
-			</div>
-		</div>
-		<div class="copy-right">
-			<p>Copyright 2015 - <a href="http://www.365bootstrap.com" target="_blank" rel="nofollow">Bootstrap Themes</a> Designed by 365Bootstrap.com</p>
-		</div>
+  			</div>
+
+  		</div>
+  		<div class="row copy-right">
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-4">
+          <p>Copyright 2015 - <a href="http://www.365bootstrap.com" target="_blank" rel="nofollow">Bootstrap Themes</a> Designed by 365Bootstrap.com</p>
+        </div>
+  		</div>
+    </div>
 	</footer>
 	<!-- Footer -->
 
@@ -112,7 +119,7 @@
         comment_url = "#"
       }
       var $form = $(this), comment = $("#id_text").val(), url = comment_url;
-      //console.log("URL: {% url 'addComment' post=post.pk %}");
+      
       var posting = $.post(url, {text:comment});
 
       posting.done(function(data) {

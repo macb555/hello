@@ -29,7 +29,18 @@ class LoginForm(ModelForm):
         model = AuthUser
         fields = ('username', 'password')
         password = forms.CharField(widget=forms.PasswordInput)
+<<<<<<< HEAD
         
+=======
+        widgets = {
+            'password': forms.PasswordInput(),
+        }
+class UserRegistrationForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ('email', 'first_name', 'last_name','username', 'password',)
+        password = forms.CharField(widget=forms.PasswordInput)
+>>>>>>> my-temp-work
         widgets = {
             'password': forms.PasswordInput(),
         }

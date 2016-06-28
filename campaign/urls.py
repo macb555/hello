@@ -3,9 +3,14 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+<<<<<<< HEAD
 from .views import RegistrationView
 from django.contrib.auth import views as auth_views
 
+=======
+from django.views.generic.edit import CreateView
+from django.contrib.auth.forms import UserCreationForm
+>>>>>>> my-temp-work
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
@@ -13,7 +18,17 @@ urlpatterns = [
     url(r'^loginpage$', views.loginPage, name='loginpage'),
     url(r'^login$', views.login, name='login'),
     url(r'^logout$', views.logout, name='logout'),
+<<<<<<< HEAD
     url(r'^register$', views.RegistrationView, name='register'),
+=======
+    url(r'^join$', views.register, name='join'),
+    #url('^register/', CreateView.as_view(
+    #        template_name='campaign/partials/registration.html',
+    #        form_class=UserCreationForm,
+    #        success_url='/'
+    #)),
+    #url('^accounts/', include('django.contrib.auth.urls')),
+>>>>>>> my-temp-work
 
     url(r'^post/(?P<pk>[0-9]+)/$', views.details, name='details'),
     url(r'^issues$', views.issues, name='issues'),
