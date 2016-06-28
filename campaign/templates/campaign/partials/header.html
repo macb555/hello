@@ -7,20 +7,31 @@
     {% if error %}
     <div class="row">
       <div class="alert alert-danger">
-        <strong>Error!</strong> {{error}}.
+        <strong>
+          {% if request.session.language = "so" %}Cillad:</strong> {{error.so}}{% else %}Error:</strong> {{error.en}}{% endif %}.
+      </div>
+    </div>
+    {% endif %}
+    {% if alert %}
+    <div class="row">
+      <div class="alert alert-danger">
+        <strong>
+          {% if request.session.language = "so" %}Fariin:</strong> {{alert.so}}{% else %}Info:</strong> {{alert.en}}{% endif %}.
+
       </div>
     </div>
     {% endif %}
     <div class="row">
       <div class="col-md-6">
-        <strong>Waaga cusub ee u curtay Ummadda Soomaaliyeed!</strong>
+        <strong>{% if request.session.language = "so" %}Waaga cusub ee u curtay Ummadda Soomaaliyeed!{% else %}New dawn for Somali people!{% endif %}</strong>
       </div>
       <div class="col-md-6">
         <ul class="list-inline top-link link">
-          <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
-          <li><a href="/contact"><i class="fa fa-comments"></i> Contact</a></li>
-          <li><a href="/feedback"><i class="fa fa-question-circle"></i> Feedback</a></li>
-          <li><a href="/faq"><i class="fa fa-question-circle"></i> FAQ</a></li>
+          {% if request.session.language = "so" %}{% else %}{% endif %}
+          <li><a href="/"><i class="fa fa-home"></i>{% if request.session.language = "so" %}Hoyga{% else %}Home{% endif %}</a></li>
+          <li><a href="/contact"><i class="fa fa-comments"></i> {% if request.session.language = "so" %}Xiriirada{% else %}Contacts{% endif %}</a></li>
+          <li><a href="/feedback"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}Soo Dir Warcelin{% else %}Send Feedback{% endif %}</a></li>
+          <li><a href="/faq"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}Su'aalo{% else %}FAQ{% endif %}</a></li>
         </ul>
       </div>
     </div>
@@ -37,10 +48,10 @@
   </div>
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
-      <li><a href="/">Home</a></li>
+      <li><a href="/">{% if request.session.language = "so" %}Hoyga{% else %}Home{% endif %}</a></li>
       <li><a href="/bio">Bio</a></li>
-      <li><a href="/issues">Issues</a></li>
-      <li><a href="/feed">Feed</a></li>
+      <li><a href="/issues">{% if request.session.language = "so" %}Arimaha{% else %}Issues{% endif %}</a></li>
+      <li><a href="/feed">{% if request.session.language = "so" %}{% else %}Feed{% endif %}</a></li>
       <li><a href="/events">Events</a></li>
       <!--
       <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Supporter Account <i class="fa fa-arrow-circle-o-down"></i></a>

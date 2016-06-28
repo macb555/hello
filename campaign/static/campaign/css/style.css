@@ -164,7 +164,7 @@ header{background: #fff;}
 .archive-page {}
 .archive-page .box .zoom-container{max-width: 250px;display: inline-block;float: left;margin-right: 5px;}
 
-.featured{background-color: #fff;padding: 15px ;border: 1px solid #ddd;}
+
 
 /* ---MainContent--- */
 
@@ -332,6 +332,8 @@ footer .footer-3 ul li a:hover{color: #666;}
 /* ---------------------------------------------------------------------------- */
 /* -------------------------------------Contact-------------------------------- */
 /* ---------------------------------------------------------------------------- */
+.featured{background-color:#fff; /*#CCFFFF;*/padding: 15px ;border: 1px solid #ddd;min-height: 15em;}
+
 .contact h2{font-size: 34px; font-weight: 500;letter-spacing: 3px;padding-top: 20px ;text-align: center;}
 
 #contact_form {padding:25px;}
@@ -509,7 +511,7 @@ ul .titles, li {list-style-type: none;padding-left: -1em;text-indent: 0;}
   height: 100%;
   flex: 1 1 auto;
 }head-title
-#column-one, #column-two, #column-three {min-height: 22.1em;}
+#column-one, #column-two, #column-three {min-height: 60.1em;}
 button.like {color:#00f;}
 button.dislike {color:#f00;}
 ul.comments {color:#000;}
@@ -522,9 +524,16 @@ h5.head-title-2 {background: #e6f0ff;box-shadow: 1px 0 6px darkgray;padding: .5e
 .blue-text {color: blue;}
 .controls-holder button {margin:.3em;}
 
-.carsl-image, .carsl-image-small {width: 100%;border:2px solid red;}
+.carsl-image, .carsl-image-small {width: 100%;}
 .carsl-image { height: 500px; overflow: hidden; }
 .carsl-image img {height: 100%;}
 
 .carsl-image-small { height: 230px; overflow: hidden; }
 .carsl-image-small img {height: 100%;}
+.carsl-image-small-2 { height: 300px; overflow: hidden; }
+.carsl-image-small-2 img {height: 100%;}
+.image-container {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}​

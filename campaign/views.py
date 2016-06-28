@@ -2,31 +2,53 @@ from django.shortcuts import render, redirect, render_to_response, get_object_or
 from django.http import JsonResponse
 from campaign.models import *
 from campaign.forms import *
+from django.contrib.auth import authenticate, login as auth_login
 # Create your views here.
 def index(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-date_added')
     videos = Video.objects.all()
     loginForm = LoginForm()
     #return render(request, 'campaign/partials/home.html', {'web':web, 'speeches':speeches, 'featured_items':speeches})
     return render(request, 'campaign/partials/home.html', {"loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
 
 def login(request):
-    if request.method == "POST":
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            print(form)
-            return JsonResponse({"status":""})
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            auth_login(request, user)
+            posts = Post.objects.all()
+            videos = Video.objects.all()
+            loginForm = LoginForm()
+            alert = {"so":"Waad ku guuleysatay gelitaanka.","en":"You have successfully logged in"}
+            return render(request, 'campaign/partials/home.html', {"alert":alert,"loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
+        else:
+            posts = Post.objects.all()
+            videos = Video.objects.all()
+            loginForm = LoginForm()
+            error={"so":"Waan kaxunnahay, cinwaankan wuu xayiran yahay. Laxiriir maamulka wixi su'aalo ah.","en":"Sorry! Your acount is deactivated. Contact the admin for enquiry."}
+            return render(request, 'campaign/partials/home.html', {"error":error,"loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
     else:
-        form = CommentForm()
-        print(form)
-        return JsonResponse({"form":form})
-
+        posts = Post.objects.all()
+        videos = Video.objects.all()
+        loginForm = LoginForm()
+        error = {"so":"Waan kaxunnahay waxaad gelisay cinwaan ama ereysireed qaldan.","en":"Sorry! Your username or password is incorrect."}
+        return render(request, 'campaign/partials/home.html', {"error":error,"loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
 
 def logout(request):
-    return JsonResponse({"status":"You're logged out"})
+    logout(request)
+    posts = Post.objects.all()
+    videos = Video.objects.all()
+    loginForm = LoginForm()
+    alert = {"so":"Waad ku guuleysatay kabixidda.","en":"You have successfully loggedout!"}
+    return render(request, 'campaign/partials/home.html', {"alert":alert,"loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
 
 def invalid_login(request):
-    return JsonResponse({"status":"Sorry you failed to login"})
+    posts = Post.objects.all()
+    videos = Video.objects.all()
+    loginForm = LoginForm()
+    return render(request, 'campaign/partials/home.html', {"error":"Sorry! Your username or password is incorrect.","loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
 
 
 def details(request, pk):
@@ -54,7 +76,7 @@ def watch(request, pk):
     loginForm = LoginForm()
     video = get_object_or_404(Video,videoId=pk)
     post =  post = Post.objects.filter(video_id=video.pk)
-    return render(request, 'campaign/partials/watch.html',{"loginform":loginForm,"video":video, "post":{"pk":0}})
+    return render(request, 'campaign/partials/watch.html',{"loginform":loginForm,"no_twitter":True,"video":video, "post":{"pk":0}})
 
 def addReply(request, post, parent):
     if request.method == "POST":
@@ -201,4 +223,5 @@ def changeLanguage(request, language):
         posts = Post.objects.all()
         videos = Video.objects.all()
         loginForm = LoginForm()
-        return render(request, 'campaign/partials/home.html', {"error":"Sorry \""+language+"\" is an invalid language. \"so\"(for Somali) and \"en\"(for English) are available","loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
+        error = {"so":"Waan kaxunnahay \""+language+"\" ma aha luqad jirta. Fadlan dooro \"so\" (oo ah Soomaali) ama \"en\"(oo ah Ingiriis)","en":"Sorry \""+language+"\" is an invalid language. \"so\"(for Somali) and \"en\"(for English) are available"}
+        return render(request, 'campaign/partials/home.html', {"error":error,"loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})

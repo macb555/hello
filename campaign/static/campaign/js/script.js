@@ -68,6 +68,7 @@ function dislike(id,type) {
   });
 }
 
+
 /*
 var frm = $('#commentform');
 console.log('got the form');
