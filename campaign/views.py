@@ -172,7 +172,10 @@ def feedback(request):
         form = FeedbackForm(request.POST)
         if form.is_valid():
             feedback = form.save()
-            return JsonResponse({"feedback":feedback})
+            loginForm = LoginForm()
+            msg = {"type":"info","so":"Waad kuguuleysatay diritaanka fariintan. Waxaan jecelnahay inaan jawaab ama wax kaqabad degdega naga aragto","en":"You have successfully sent your feedback. We promise for response soon."}
+            return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+            #return JsonResponse({"feedback":feedback})
     else:
         form = FeedbackForm()
         return render(request, 'campaign/partials/feedback.html',{"loginform":loginForm,'form':form, "post":{"pk":0}})

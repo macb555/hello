@@ -142,3 +142,5 @@ class Message(models.Model):
     email = models.EmailField(blank=False, null=False)
     message = models.TextField(max_length=500)
     date = models.DateTimeField(default=timezone.now)
+    def __unicode__(self):
+        return "From: " + self.email
