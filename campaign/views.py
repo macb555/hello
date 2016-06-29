@@ -56,10 +56,27 @@ def register(request):
 
             user = User.objects.create_user(username=username, password=password, first_name=f_name, last_name=l_name, email=email)
             user.save()
-            msg = {"type":"info","so":"Hambalyo! waad ku guuleysatay isdiiwaangelinta.","en":"Congradulations! You are successfully registered'."}
-            return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "post":{"pk":0}})
+            user = authenticate(username=username, password=password)
+            auth_login(request, user)
+            #form = LocationForm()
+            #return render(request, 'campaign/partials/register_location.html', {'form':form})
+            return redirect('register_location')
+            
     form = UserRegistrationForm()
     return render(request, 'campaign/partials/registration.html', {'form':form})
+
+def register_location(request):
+    request.session.setdefault('language','so')
+    if request.method == "POST":
+        form = LocationForm(request.POST)
+        if form.is_valid():
+            location = Location.objects.create(user=request.user, current_country=request.POST.get('current_country'), current_city=request.POST.get('current_city'), region_of_birth = request.POST.get('region_of_birth'),city_of_birth=request.POST.get('city_of_birth'))
+            location.save()
+            #msg = {"type":"info","so":"Hambalyo! waad ku guuleysatay isdiiwaangelinta.","en":"Congradulations! You are successfully registered'."}
+            #return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "post":{"pk":0}})
+            return redirect('index')
+    form = LocationForm()
+    return render(request, 'campaign/partials/register_location.html', {'form':form})
 
 
 def logout(request):
@@ -110,12 +127,12 @@ def contact(request):
 
     loginForm = LoginForm()
     contact_info = {
-        "emails":["boolow5@gmail.com",],
+        "emails":["halqaran@gmail.com",],
         "phones":["+252-618-270616","+252-698-270616",],
-        "websites":["jabril.so",],
-        "facebookPages":["http://facebook.com/jabril-official",],
-        "youtubeChannels":["http://youtube.com/jabril-official",],
-        "twitter":["http:twitter.com/jabril-official",],
+        "websites":["halqaran.org",],
+        "facebookPages":["http://facebook.com/halqaran",],
+        "youtubeChannels":["http://youtube.com/halqaran",],
+        "twitter":["http:twitter.com/halqaran",],
     }
     return render(request, 'campaign/partials/contacts.html',{"loginform":loginForm,"contacts":contact_info, "post":{"pk":0}})
 

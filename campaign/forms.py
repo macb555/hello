@@ -8,6 +8,8 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.shortcuts import redirect
 from django.views.generic import CreateView
 
+from django_countries.widgets import CountrySelectWidget
+
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
@@ -49,3 +51,9 @@ class RegistrationForm(forms.ModelForm):
         model = User
         fields = ('email', )
 '''
+
+class LocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+        fields = ('current_country','current_city','region_of_birth','city_of_birth',)
+        widgets = {'country': CountrySelectWidget()}

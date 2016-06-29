@@ -144,3 +144,10 @@ class Message(models.Model):
     date = models.DateTimeField(default=timezone.now)
     def __unicode__(self):
         return "From: " + self.email
+
+class Location(models.Model):
+    user =  models.OneToOneField(User)
+    current_country = CountryField()
+    current_city = models.CharField(max_length=30)
+    region_of_birth = models.CharField(max_length=30, choices=[("Awdal","Awdal"), ("Bakool","Bakoo"), ("Banaadir","Banaadir"), ("Bari","Bari"), ("Bay", "Bay"), ("Galguduud","Galguduud"),("Gedo","Gedo"), ("Hiiraan","Hiiraan"),("Jubada Dhexe","Jubada Dhexe"),("Jubada Hoose","Jubada Hoose"), ("Nugaal","Nugaal"), ("Sanaag","Sanaag"), ("Shabeelaha Dhexe", "Shabeelaha Dhexe"), ("Shabeelaha Hoose","Shabeelaha Hoose"), ("Sool","Sool"), ("Togdheer","Togdheer"), ("Waqooyi Galbeed", "Waqooyi Galbeed")])
+    city_of_birth = models.CharField(max_length=30)
