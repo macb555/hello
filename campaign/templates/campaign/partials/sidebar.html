@@ -1,5 +1,10 @@
 {% load staticfiles %}
 {% block sidebar %}
+
+{% if user.is_authenticated %}
+ <em> {% if request.session.language == 'so' %}Soo Dhawoow{% else %}Welcome{% endif %}</em> <strong>{{request.user.username}}</strong>
+{% endif %}
+
 {% if featured_items %}
 <h5 class="head-title" style="margin-top:0;">Latest Posts</h5>
 <ul class="list-unstyled latest-posts-titles">
@@ -18,7 +23,7 @@
 </ul>
 {% endif %}
 {% if not user.is_authenticated %}
-    <a href="/loginpage"><button	type="submit"	class="btn btn-primary btn-block"><i class="fa fa-user"></i> Login</button></a>
+    <a href="/loginpage"><button	type="submit"	class="btn btn-primary btn-block"><i class="fa fa-user"></i> {% if request.session.language = "so" %}Gal{% else %}Login{% endif %}</button></a>
     <br>
 {% endif %}
 
