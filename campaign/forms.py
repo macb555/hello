@@ -30,8 +30,8 @@ class LoginForm(ModelForm):
     class Meta:
         model = AuthUser
         fields = ('username', 'password')
-        password = forms.CharField(widget=forms.PasswordInput)
-
+        password = forms.CharField(widget=forms.PasswordInput())
+        #username = forms.CharField(widget=forms.CharField(attrs={'placeholder': 'Enter description here'}))
         widgets = {
             'password': forms.PasswordInput(),
         }

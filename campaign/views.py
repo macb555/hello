@@ -145,6 +145,16 @@ def watch(request, pk):
     post =  post = Post.objects.filter(video_id=video.pk)
     return render(request, 'campaign/partials/watch.html',{"loginform":loginForm,"no_twitter":True,"video":video, "post":{"pk":0}})
 
+def comments(request):
+    request.session.setdefault('language','so')
+    comments = Comment.objects.filter(approved=False)    
+    if request.user.is_authenticated() and request.user.is_staff:
+        return render(request, 'campaign/partials/comments_validation.html',{"comments":comments,"no_twitter":True})
+    else:
+        loginForm = LoginForm()
+        msg = {"type":"danger","so":"Waan kaxunnahay! Uma fasaxnid inaad gasho boggan.","en":"Sorry! you don't have permission to access this page."}
+        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+
 def addReply(request, post, parent):
     if request.method == "POST":
         form = CommentForm(request.POST)
@@ -291,6 +301,18 @@ def dislikeComment(request, pk):
         comment.dislikes = dislike_count
         comment.save()
     return JsonResponse({"dislikes":comment.dislikes})
+
+def approveComment(request, pk):
+    comment = Comment.objects.filter(pk=pk)
+    
+    if not comment.approved:
+        comment.approved = True
+        comment.save()
+    return JsonResponse({"status":True})
+
+def deleteComment(request, pk):
+    comment = Comment.objects.filter(pk=pk).delete()
+    return JsonResponse({"status":True})
 
 def AmIIn(request):
     return JsonResponse({"status":user.is_authenticated()})

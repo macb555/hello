@@ -4,19 +4,49 @@
 <!--Top-->
 <nav id="top">
   <div class="container">
-    <div class="row">
+    <div class="row header-row">
+      <!--
       <div class="col-md-6">
         <strong>{% if request.session.language = "so" %}Waaga cusub ee u curtay Ummadda Soomaaliyeed!{% else %}New dawn for Somali people!{% endif %}</strong>
       </div>
-      <div class="col-md-6">
-        <ul class="list-inline top-link link">
+      -->
+      <div class="col-md-5 halqaran-header">
+        <img src="{% static 'campaign/images/logo1.png' %}"/>
+      </div>
+      <div class="col-md-7 header-links-side">
+        <!--<ul class="list-inline top-link link">-->
+        <ul class="list-inline header-links-list">
           {% if request.session.language = "so" %}{% else %}{% endif %}
           <li><a href="/"><i class="fa fa-home"></i>{% if request.session.language = "so" %}Hoyga{% else %}Home{% endif %}</a></li>
           <li><a href="/contact"><i class="fa fa-comments"></i> {% if request.session.language = "so" %}Xiriirada{% else %}Contacts{% endif %}</a></li>
-          <li><a href="/feedback"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}Soo Dir Warcelin{% else %}Send Feedback{% endif %}</a></li>
+          <li><a href="/feedback"><i class="fa fa-send-o"></i> {% if request.session.language = "so" %}Soo Dir Warcelin{% else %}Send Feedback{% endif %}</a></li>
           <li><a href="/faq"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}Su'aalo{% else %}FAQ{% endif %}</a></li>
-          <li><a href="/language/{% if request.session.language == 'so'%}en{% else %}so{% endif %}"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}English{% else %}Af Soomaali{% endif %}</a></li>
+          <!--<li><a href="/language/{% if request.session.language == 'so'%}en{% else %}so{% endif %}"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}English{% else %}Af Soomaali{% endif %}</a></li>-->
+          <li style="background:url({% if request.session.language == "so" %}{% static 'campaign/images/uk.gif' %}{% else %}{% static 'campaign/images/somalia.png' %}{% endif %}) center no-repeat;background-size:cover;width:6em;">
+            {% if request.session.language = "so" %}
+            <a href="/language/en"><strong class='language-flag'>ENGLISH</strong></a>
+            {% else %}
+            <a href="/language/so"><strong class='language-flag'>SOMALI</strong></a>
+            {% endif %}
+          </li>
         </ul>
+        <div class="login-area">
+          {% if not user.is_authenticated %}
+            {% if loginform %}
+            <form	method="POST"	class="form-inline loginform" action="{% url 'login' %}" id="loginform">{%	csrf_token	%}
+                <div class="form-group">
+                  <!--<label for="id_username">{% if request.session.language = "so" %}Magac-kugalka:{% else %}Username:{% endif %}</label>-->
+                  {{loginform.username}}
+                </div>
+                <div class="form-group">
+                  <!--<label for="id_password">{% if request.session.language = "so" %}Ereysireedka:{% else %}Password:{% endif %}</label>-->
+                  {{loginform.password}}
+                </div>
+                <button	type="submit"	class="btn btn-primary">{% if request.session.language = "so" %}Gal{% else %}Login{% endif%}</button>
+            </form>
+            {% endif %}
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>

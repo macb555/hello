@@ -15,12 +15,8 @@
                 <form	method="POST"	class="form loginform" action="{% url 'login' %}" id="loginform">{%	csrf_token	%}
                       <label for="id_username">{% if request.session.language = "so" %}Magac-kugalka:{% else %}Username:{% endif %}</label>
                       {{loginform.username}}
-                      <p>
-                        {% if request.session.language = "so" %}30 xaraf ama kayar. Alifbeeto iyo calaamadahan @/./+/-/_ ayaa la ogolyahay.{% else %}Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.{% endif %}
-                      </p>
                       <label for="id_password">{% if request.session.language = "so" %}Ereysireedka:{% else %}Password:{% endif %}</label>
-                      {{loginform.password}}<br>
-
+                      {{loginform.password}}
                       <button	type="submit"	class="btn btn-primary btn-block">{% if request.session.language = "so" %}Gal{% else %}Login{% endif%}</button>
                 </form>
               </div>

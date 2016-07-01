@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^loginpage$', views.loginPage, name='loginpage'),
     url(r'^login$', views.login, name='login'),
     url(r'^logout$', views.logout, name='logout'),
+    url(r'^manage/comments$', views.comments, name='comments'),
 
     #url(r'^register$', views.RegistrationView, name='register'),
 
@@ -42,6 +43,9 @@ urlpatterns = [
 
     url(r'^post/(?P<pk>[0-9]+)/like$', views.likePost, name='likePost'),
     url(r'^comment/(?P<pk>[0-9]+)/like$', views.likeComment, name='likeComment'),
+    
+    url(r'^comment/(?P<pk>[0-9]+)/approve$', views.approveComment, name='approveComment'),
+    url(r'^comment/(?P<pk>[0-9]+)/delete$', views.deleteComment, name='deleteComment'),
 
     url(r'^post/(?P<pk>[0-9]+)/dislike$', views.dislikePost, name='dislikePost'),
     url(r'^comment/(?P<pk>[0-9]+)/dislike$', views.dislikeComment, name='dislikeComment'),

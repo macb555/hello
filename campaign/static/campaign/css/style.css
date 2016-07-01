@@ -5,7 +5,8 @@
 /* ---------------------------------------------------------------------------- */
 /* ------------------------------------Html-Body------------------------------- */
 /* ---------------------------------------------------------------------------- */
-body {height: 100%; margin: 0;font-family: 'Ek Mukta', sans-serif;color: #666;/*background:#00CCCC;*//*#8CEAFF;*/ background:url(../images/bg2.jpg) fixed ;font-size: 15px;line-height: 1.6em;font-weight: 400;}
+//body {height: 100%; margin: 0;font-family: 'Ek Mukta', sans-serif;color: #666;/*background:#00CCCC;*//*#8CEAFF;*/ background:url(../images/bg2.jpg) fixed ;font-size: 15px;line-height: 1.6em;font-weight: 400;}
+body {height: 100%; margin: 0;font-family: 'Ek Mukta', sans-serif;color: #666;background:#00CCCC;/*#8CEAFF;*/ /*background:url(../images/bg2.jpg) fixed ;*/font-size: 15px;line-height: 1.6em;font-weight: 400;}
 html, body {width:100%; padding:0; margin:0;}
 
 ::-moz-selection{background:#000;color:#fff;text-shadow:none}
@@ -62,8 +63,8 @@ body.sub-page .logo {margin: 110px 0 80px;background: url(../images/bg.jpg) fixe
 /* ---------------------------------------------------------------------------- */
 /* -------------------------------------Top------------------------------------ */
 /* ---------------------------------------------------------------------------- */
-#top {background: #fff;padding: 10px 0 0; color: #000;border-bottom: 1px solid #ddd;}
-#top a{color: #000;}
+#top {background: #fff;padding: 10px 0 0; color: #000;border-bottom: 1px solid #ddd;;}
+#top a{color: #fff;}
 #top a:hover{color: #69BF03}
 
 #top ul.top-link {}
@@ -479,9 +480,9 @@ footer .footer-3 ul li a:hover{color: #666;}
   margin: .5em;
 }
 
-img {
+/*img {
   border: 1px groove black;
-}
+}*/
 
 .text-center h2 {
   text-shadow: 1px 0 3px black;
@@ -514,7 +515,7 @@ ul .titles, li {list-style-type: none;padding-left: -1em;text-indent: 0;}
   flex: 1 1 auto;
 }head-title
 //#column-one, #column-two, #column-three {min-height: 60.1em;max-height: 100em; overflow: auto; height: 61em;}
-.column-1, .column-2, .column-3 {min-height: 60.1em;max-height: 100em; overflow: hidden; height: 61em;}
+.column-1, .column-2, .column-3 {min-height: 60.1em; overflow: hidden; height: 61em;}
 button.like {color:#00f;}
 button.dislike {color:#f00;}
 ul.comments {color:#000;}
@@ -581,3 +582,11 @@ h5.head-title-2 {background: #e6f0ff;box-shadow: 1px 0 6px darkgray;padding: .5e
 }
 .read-more {color:#7DC314; border:1px groove darkgray; border-radius: .3em; padding-left: .4em; padding-right: .4em;box-shadow: inset 2px 1px 6px #000; text-shadow: 0 -1px 1px black;}
 .read-more:hover {color:#fff;box-shadow: inset 2px 1px 6px #7DC314;}
+.halqaran-header {background:#00CCCC; height:10em;margin-left: -6.2em;margin-top: 0em;}
+.halqaran-header img {height: 9em;margin-top: .5em;}
+.header-links-side li {padding-top: 2em;padding-right: 1em;padding-left: 1em;padding-bottom: 0;border-right:1px solid white; color: white;}
+//.somali-language {padding-bottom: .2em;margin-top: .4em;height: 1em;}
+//.header-links-side {background-color: #a00000;margin: 0;}
+.header-row {background-color: #222;margin-right: -7em;margin-top: -1em;;}
+
+.language-flag {text-shadow: 0px 0px 5px #000;}

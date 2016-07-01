@@ -1,0 +1,39 @@
+{% extends 'campaign/layout.html' %}
+{% load markdown_deux_tags %}
+{% block content %}
+<div id="page-content" class="index-page container">
+  <div class="row">
+    <!--<div id="main-content"> background not working -->
+      <div id="column-one" class="col-md-9">
+        <div class="box wrap-vid column-1">
+
+          <ul class="list-unstyled comments" id="comments">
+            {% for comment in comments %}
+                <li class="comment" id="comment-{{comment.pk}}">
+                  <div class="row">
+                    <div class='col-sm-10'>
+                      <strong>{{comment.user}}</strong> <em>said</em>: {% markdown %}{{comment.text}}{% endmarkdown %}{{comment.date}}
+                    </div>
+                    <div class="col-sm-2 controls-holder">
+                      <button id="btn-approve-comment-{{comment.pk}}" class="btn btn-default btn-block like" onclick="approveComment({{comment.pk}})">Approve</button>
+                      <button id="btn-delete-comment-{{comment.pk}}" class="btn btn-default btn-block like" onclick="deleteComment({{comment.pk}})">Delete</button>
+                    </div>
+                </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+      </div>
+      <div id="column-two" class="col-md-3">
+        <div class="box wrap-vid column-2">
+          <h5>Latest on Social Media</h5>
+          {% include "campaign/partials/sidebar.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $("")
+</script>
+{% endblock %}

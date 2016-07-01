@@ -123,12 +123,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/jabril/JABRIL' #os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static') # for pythonanywhere only '/home/jabril/JABRIL' #os.path.join(BASE_DIR, 'static')
 
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home2/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/home/jabril/JABRIL/media' #os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # for pythonanywhere '/home/jabril/JABRIL/media'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
