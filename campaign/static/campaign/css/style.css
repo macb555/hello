@@ -63,7 +63,7 @@ body.sub-page .logo {margin: 110px 0 80px;background: url(../images/bg.jpg) fixe
 /* ---------------------------------------------------------------------------- */
 /* -------------------------------------Top------------------------------------ */
 /* ---------------------------------------------------------------------------- */
-#top {background: #fff;padding: 10px 0 0; color: #000;border-bottom: 1px solid #ddd;;}
+#top {background: #fff;padding: 10px 0 0; color: #000;/*border-bottom: 1px solid #ddd;;*/}
 #top a{color: #fff;}
 #top a:hover{color: #69BF03}
 
@@ -79,7 +79,7 @@ body.sub-page .logo {margin: 110px 0 80px;background: url(../images/bg.jpg) fixe
 /* ---------------------------------------------------------------------------- */
 /* ------------------------------------Menu------------------------------------ */
 /* ---------------------------------------------------------------------------- */
-#menu {background-color: #252628;border-radius: 0;}
+#menu {background-color:#222; /*#252628*/;border-radius: 0;}
 #menu a.navbar-brand:hover{color: #fff;}
 #menu .navbar-brand{margin: .2em;padding: 14px 18px;background-color: #000000;height: auto;text-transform: uppercase;}
 #menu .logo {}
@@ -124,7 +124,7 @@ body.sub-page .logo {margin: 110px 0 80px;background: url(../images/bg.jpg) fixe
 /* ---------------------------------------------------------------------------- */
 /* -----------------------------------Header----------------------------------- */
 /* ---------------------------------------------------------------------------- */
-header{background:#fff;//#3a6fa9;}
+header{background:#cfc;//#3a6fa9;}
 
 
 /* Carousel Styles */
@@ -578,15 +578,48 @@ h5.head-title-2 {background: #e6f0ff;box-shadow: 1px 0 6px darkgray;padding: .5e
 }
 .sect:hover .in-sect, .sect:active .in-sect {
 	/* On hover, set the max-height to something large. In this case there's an obvious limit. */
-	max-height: 500px;
+	max-height: 1000px;
 }
 .read-more {color:#7DC314; border:1px groove darkgray; border-radius: .3em; padding-left: .4em; padding-right: .4em;box-shadow: inset 2px 1px 6px #000; text-shadow: 0 -1px 1px black;}
 .read-more:hover {color:#fff;box-shadow: inset 2px 1px 6px #7DC314;}
-.halqaran-header {background:#00CCCC; height:10em;margin-left: -6.2em;margin-top: 0em;}
-.halqaran-header img {height: 9em;margin-top: .5em;}
-.header-links-side li {padding-top: 2em;padding-right: 1em;padding-left: 1em;padding-bottom: 0;border-right:1px solid white; color: white;}
+.halqaran-header {background:#00CCCC; height:10em;/*margin-left: -6.2em;margin-top: 0em;*/}
+.halqaran-header img {height: 9em;/*margin-top: .5em;*/}
+.header-links-side li a {padding-top: 2em;padding-right: .1em;padding-left: .1em;padding-bottom: 0; border-bottom: 2px groove #fff;color: #fff;}
+.header-links-side li {padding: 0em; margin: 1em;}
+.header-links-side li:hover {background-color: #fff;color: #000;}
+.header-links-side li:hover a {color: #222;}
+li.user-welcome-area {border:0;padding-top: 0; padding-bottom: 0;margin: 0;}
+li.user-welcome-area:hover {background-color: #222;color: #fff;}
 //.somali-language {padding-bottom: .2em;margin-top: .4em;height: 1em;}
 //.header-links-side {background-color: #a00000;margin: 0;}
-.header-row {background-color: #222;margin-right: -7em;margin-top: -1em;;}
+.header-row {background-color: #222;/*margin-right: -7em;margin-top: -1em;;*/}
 
-.language-flag {text-shadow: 0px 0px 5px #000;}
+.language-flag {text-shadow: 0px 0px 5px #000;width: 3em;overflow: hidden;}
+span.yellow-text {color:#FFF801;}
+span.white-text {color:#fff;}
+.header-container {margin-top: -1em; padding-top: -1em;}
+
+/* ############# fixing the menu bar ################### */
+.f-nav{  /* To fix main menu container */
+    z-index: 9999;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+#menu-container {
+    text-align: center; /* Assuming your main layout is centered */
+    margin-top: 0;
+    padding-top: 0;
+}
+#menu {
+    display: inline-block;
+    width: 1024px; /* Your menu's width */
+}
+
+#menu-container {
+    -webkit-transition: all 5s ease;
+    -moz-transition: all 5s ease;
+    -o-transition: all 5s ease;
+    transition: all 5s ease;
+}

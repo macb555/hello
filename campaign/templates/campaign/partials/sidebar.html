@@ -1,10 +1,6 @@
 {% load staticfiles %}
 {% block sidebar %}
 
-{% if user.is_authenticated %}
- <em> {% if request.session.language == 'so' %}Soo Dhawoow{% else %}Welcome{% endif %}</em> <strong>{{request.user.username}}</strong>
-{% endif %}
-
 {% if featured_items %}
 <h5 class="head-title" style="margin-top:0;">Latest Posts</h5>
 <ul class="list-unstyled latest-posts-titles">

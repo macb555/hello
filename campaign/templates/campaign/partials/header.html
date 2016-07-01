@@ -3,7 +3,7 @@
 
 <!--Top-->
 <nav id="top">
-  <div class="container">
+  <div class="container-fluid header-container">
     <div class="row header-row">
       <!--
       <div class="col-md-6">
@@ -22,13 +22,16 @@
           <li><a href="/feedback"><i class="fa fa-send-o"></i> {% if request.session.language = "so" %}Soo Dir Warcelin{% else %}Send Feedback{% endif %}</a></li>
           <li><a href="/faq"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}Su'aalo{% else %}FAQ{% endif %}</a></li>
           <!--<li><a href="/language/{% if request.session.language == 'so'%}en{% else %}so{% endif %}"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}English{% else %}Af Soomaali{% endif %}</a></li>-->
-          <li style="background:url({% if request.session.language == "so" %}{% static 'campaign/images/uk.gif' %}{% else %}{% static 'campaign/images/somalia.png' %}{% endif %}) center no-repeat;background-size:cover;width:6em;">
-            {% if request.session.language = "so" %}
+          <li title="Luqadda Bedel | Change Language" style="background:url({% if request.session.language == "so" %}{% static 'campaign/images/uk.gif' %}{% else %}{% static 'campaign/images/somalia.png' %}{% endif %}) center no-repeat;background-size:cover;width:6em;">
+            {% if request.session.language == "so" %}
             <a href="/language/en"><strong class='language-flag'>ENGLISH</strong></a>
             {% else %}
             <a href="/language/so"><strong class='language-flag'>SOMALI</strong></a>
             {% endif %}
           </li>
+          {% if user.is_authenticated %}
+          <li class="user-welcome-area"><span class="yellow-text">{{user.username|title}}!</span> <span class="white-text">{% if request.session.language = "so" %}Welcome to Hal Qaran{% else %}Kuso dhawow Hal Qaran{% endif%}</span></li>
+          {% endif %}
         </ul>
         <div class="login-area">
           {% if not user.is_authenticated %}
@@ -53,61 +56,63 @@
 </nav>
 
 <!--Navigation-->
+<div id="menu-container">
   <nav id="menu" class="navbar container">
-  <div class="navbar-header">
-    <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
-    <a class="navbar-brand" href="/">
-      <div class="logo"><img href=""><span>Hal Qaran</span></div>
-    </a>
-  </div>
-  <div class="collapse navbar-collapse navbar-ex1-collapse">
-    <ul class="nav navbar-nav">
-      <li><a href="/"><i class="fa  fa-home"></i> {% if request.session.language = "so" %}Hoyga{% else %}Home{% endif %}</a></li>
-      <li><a href="/issues"><i class="fa fa-list"></i> {% if request.session.language = "so" %}Arimaha{% else %}Issues{% endif %}</a></li>
-      <li><a href="/feed"><i class="fa fa-feed"></i> {% if request.session.language = "so" %}Dhamaan{% else %}Feed{% endif %}</a></li>
-      <li><a href="/events"><i class="fa fa-calendar"></i> {% if request.session.language = "so" %}Dhacdooyinka{% else %}Events{% endif %}</a></li>
-      <li><a href="/about"><i class="fa fa-institution"></i> {% if request.session.language = "so" %}Ku Saabsan{% else %}About{% endif %}</a></li>
+    <div class="navbar-header">
+      <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
+      <a class="navbar-brand" href="/">
+        <div class="logo"><img href=""><span>Hal Qaran</span></div>
+      </a>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav">
+        <!--<li><a href="/"><i class="fa  fa-home"></i> {% if request.session.language = "so" %}Hoyga{% else %}Home{% endif %}</a></li>-->
+        <li><a href="/issues"><i class="fa fa-list"></i> {% if request.session.language = "so" %}Arimaha{% else %}Issues{% endif %}</a></li>
+        <li><a href="/feed"><i class="fa fa-feed"></i> {% if request.session.language = "so" %}Dhamaan{% else %}Feed{% endif %}</a></li>
+        <li><a href="/events"><i class="fa fa-calendar"></i> {% if request.session.language = "so" %}Dhacdooyinka{% else %}Events{% endif %}</a></li>
+        <li><a href="/about"><i class="fa fa-institution"></i> {% if request.session.language = "so" %}Ku Saabsan{% else %}About{% endif %}</a></li>
 
-      <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {% if request.session.language = "so" %}Xubinnimo{% else %}Membership{% endif %} <i class="fa fa-arrow-circle-o-down"></i></a>
-        <div class="dropdown-menu">
-          <div class="dropdown-inner">
-            <ul class="list-unstyled">
-              {% if not user.is_authenticated %}
-              <li><a href="/loginpage"><i class="fa fa-user-plus"></i> {% if request.session.language = "so" %}Gal Cinwaankaaga{% else %}Login{% endif %}</a></li>
-              {% endif %}
-              {% if user.is_authenticated %}
-              <li><a href="/logout"><i class="fa fa-user-times"></i> {% if request.session.language = "so" %}Kabax Cinwaankaaga{% else %}Logout{% endif %}</a></li>
-              {% endif %}
-              {% if not user.is_authenticated %}
-              <li><a href="/join"><i class="fa fa-database"></i> {% if request.session.language = "so" %}Is Diiwaangeli{% else %}Register{% endif %}</a></li>
-              {% endif %}
-            </ul>
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {% if request.session.language = "so" %}Xubinnimo{% else %}Membership{% endif %} <i class="fa fa-arrow-circle-o-down"></i></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-inner">
+              <ul class="list-unstyled">
+                {% if not user.is_authenticated %}
+                <li><a href="/loginpage"><i class="fa fa-user-plus"></i> {% if request.session.language = "so" %}Gal Cinwaankaaga{% else %}Login{% endif %}</a></li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <li><a href="/logout"><i class="fa fa-user-times"></i> {% if request.session.language = "so" %}Kabax Cinwaankaaga{% else %}Logout{% endif %}</a></li>
+                {% endif %}
+                {% if not user.is_authenticated %}
+                <li><a href="/join"><i class="fa fa-database"></i> {% if request.session.language = "so" %}Is Diiwaangeli{% else %}Register{% endif %}</a></li>
+                {% endif %}
+              </ul>
+            </div>
           </div>
-        </div>
-      </li>
-<!--
-      <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Video <i class="fa fa-arrow-circle-o-down"></i></a>
-        <div class="dropdown-menu">
-          <div class="dropdown-inner">
-            <ul class="list-unstyled">
-              <li><a href="archive.html">Text 201</a></li>
-              <li><a href="archive.html">Text 202</a></li>
-              <li><a href="archive.html">Text 203</a></li>
-              <li><a href="archive.html">Text 204</a></li>
-              <li><a href="archive.html">Text 205</a></li>
-            </ul>
+        </li>
+  <!--
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Video <i class="fa fa-arrow-circle-o-down"></i></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-inner">
+              <ul class="list-unstyled">
+                <li><a href="archive.html">Text 201</a></li>
+                <li><a href="archive.html">Text 202</a></li>
+                <li><a href="archive.html">Text 203</a></li>
+                <li><a href="archive.html">Text 204</a></li>
+                <li><a href="archive.html">Text 205</a></li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </li>
--->
-    </ul>
-    <ul class="list-inline navbar-right top-social">
-      <li><a href="{{my.facebook}}"><i class="fa fa-facebook"></i></a></li>
-      <li><a href="{{my.twitter}}"><i class="fa fa-twitter"></i></a></li>
-      <li><a href="{{my.googleplus}}"><i class="fa fa-google-plus-square"></i></a></li>
-      <li><a href="{{my.youtube}}"><i class="fa fa-youtube"></i></a></li>
-      <li><a href="{% url 'loginpage' %}"><i class="fa fa-user"></i></a></li>
-    </ul>
-  </div>
-</nav>
+        </li>
+  -->
+      </ul>
+      <ul class="list-inline navbar-right top-social">
+        <li title="Facebook"><a href="{{my.facebook}}"><i class="fa fa-facebook"></i></a></li>
+        <li title="Twitter"><a href="{{my.twitter}}"><i class="fa fa-twitter"></i></a></li>
+        <li title="Google Plus"><a href="{{my.googleplus}}"><i class="fa fa-google-plus-square"></i></a></li>
+        <li title="Youtube"><a href="{{my.youtube}}"><i class="fa fa-youtube"></i></a></li>
+        {% if user.is_authenticated %}<li title="Logout"><a href="{% url 'logout' %}"><i class="fa fa-user" style="color:red;"></i></a></li>{% else %}<li title="Login"><a href="{% url 'loginpage' %}"><i class="fa fa-user" style="color:green;"></i></a></li>{% endif %}
+      </ul>
+    </div>
+  </nav>
+</div>
 {% endblock %}

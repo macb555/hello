@@ -119,7 +119,7 @@
         comment_url = "#"
       }
       var $form = $(this), comment = $("#id_text").val(), url = comment_url;
-      
+
       var posting = $.post(url, {text:comment});
 
       posting.done(function(data) {
@@ -177,6 +177,71 @@
 		maxView: 1,
 		forceParse: 0
     });
+</script>
+<script type="text/javascript">
+//APPROVE COMMENT
+function approveComment(id) {
+  //preventDefault();
+  console.log('called approve button');
+
+
+  //$("#btn-like-"+type+"-"+id).attr('disabled','disabled');
+  $.ajax(location.origin+"/comment/"+id+"/approve", {
+     success: function(data) {
+        $("#comment-"+id).detach();
+        //console.log('got some data');
+     },
+     error: function() {
+        console.log("Error Occurred!");
+     }
+  });
+}
+//UNAPPROVE COMMENT
+function unapproveComment(id) {
+  //preventDefault();
+  console.log('called unapprove button');
+
+
+  //$("#btn-like-"+type+"-"+id).attr('disabled','disabled');
+  $.ajax(location.origin+"/comment/"+id+"/unapprove", {
+     success: function(data) {
+       $("#comment-"+id).detach();
+       //console.log('got some data');
+     },
+     error: function() {
+        console.log("Error Occurred!");
+     }
+  });
+}
+
+
+//DELETE COMMENT
+function deleteComment(id) {
+  //preventDefault();
+  console.log('called approve button');
+  //$("#btn-like-"+type+"-"+id).attr('disabled','disabled');
+  $.ajax(location.origin+"/comment/"+id+"/delete", {
+     success: function(data) {
+        $("#comment-"+id).detach();
+        console.log('got some data');
+     },
+     error: function() {
+        console.log("Error Occurred!");
+     }
+  });
+}
+// fix the menu bar when scrolled down.
+$("document").ready(function($){
+    var nav = $('#menu-container');
+
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 145) {
+            nav.addClass("f-nav");
+        } else {
+            nav.removeClass("f-nav");
+        }
+    });
+});
 </script>
 
 </body>

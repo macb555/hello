@@ -61,7 +61,7 @@ def register(request):
             #form = LocationForm()
             #return render(request, 'campaign/partials/register_location.html', {'form':form})
             return redirect('register_location')
-            
+
     form = UserRegistrationForm()
     return render(request, 'campaign/partials/registration.html', {'form':form})
 
@@ -145,15 +145,24 @@ def watch(request, pk):
     post =  post = Post.objects.filter(video_id=video.pk)
     return render(request, 'campaign/partials/watch.html',{"loginform":loginForm,"no_twitter":True,"video":video, "post":{"pk":0}})
 
-def comments(request):
+def comments(request, status=None):
     request.session.setdefault('language','so')
-    comments = Comment.objects.filter(approved=False)    
+    print(status)
+    print("##############################")
     if request.user.is_authenticated() and request.user.is_staff:
-        return render(request, 'campaign/partials/comments_validation.html',{"comments":comments,"no_twitter":True})
+        message = 'Comments Manager'
+        if status==1:
+            status = True
+            message = "Approved Comments"
+        elif status == None or status == 0:
+            status = False
+            message = "Comments Waiting Approval"
+        comments = Comment.objects.filter(approved=status)
+        return render(request, 'campaign/partials/comments_validation.html',{"comments":comments,"no_twitter":True, 'title':message})
     else:
         loginForm = LoginForm()
         msg = {"type":"danger","so":"Waan kaxunnahay! Uma fasaxnid inaad gasho boggan.","en":"Sorry! you don't have permission to access this page."}
-        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "status":status})
 
 def addReply(request, post, parent):
     if request.method == "POST":
@@ -245,7 +254,7 @@ def faq(request):
 #LIKES
 def likePost(request, pk):
     likes = Like.objects.filter(liked_post_id=pk, user=request.user)
-    post = Post.objects.get(pk=pk)
+    post = get_object_or_404(Post, pk=pk)
     if not len(likes) > 0:
         new_like = Like()
         new_like.liked_post_id = pk
@@ -258,7 +267,7 @@ def likePost(request, pk):
 
 def likeComment(request, pk):
     likes = Like.objects.filter(liked_comment_id=pk, user=request.user)
-    comment = Comment.objects.get(pk=pk)
+    comment = get_object_or_404(Comment, pk=pk)
     if not len(likes) > 0:
         new_like = Like()
         new_like.liked_comment_id = pk
@@ -275,7 +284,7 @@ def dislikePost(request, pk):
         dislikes = Dislike.objects.filter(disliked_post_id=pk, user=request.user)
     else:
         dislikes = []
-    post = Post.objects.get(pk=pk)
+    post = get_object_or_404(Post,pk=pk)
     if not len(dislikes) > 0:
         new_dislike = Dislike()
         new_dislike.disliked_post_id = pk
@@ -291,7 +300,7 @@ def dislikePost(request, pk):
 
 def dislikeComment(request, pk):
     dislikes = Dislike.objects.filter(disliked_comment_id=pk, user=request.user)
-    comment = Comment.objects.get(pk=pk)
+    comment = get_object_or_404(Comment, pk=pk)
     if not len(dislikes) > 0:
         new_dislike = Dislike()
         new_dislike.disliked_comment_id = pk
@@ -303,16 +312,32 @@ def dislikeComment(request, pk):
     return JsonResponse({"dislikes":comment.dislikes})
 
 def approveComment(request, pk):
-    comment = Comment.objects.filter(pk=pk)
-    
-    if not comment.approved:
-        comment.approved = True
-        comment.save()
-    return JsonResponse({"status":True})
+    if request.user.is_authenticated() and request.user.is_staff:
+        comment = get_object_or_404(Comment, pk=pk)
+
+        if not comment.approved:
+            comment.approved = True
+            comment.save()
+            return JsonResponse({"status":True})
+        return JsonResponse({"status":False})
+    return JsonResponse({"status":"Sorry you don't have permission to do this."})
+
+def unapproveComment(request, pk):
+    if request.user.is_authenticated() and request.user.is_staff:
+        comment = get_object_or_404(Comment, pk=pk)
+
+        if comment.approved:
+            comment.approved = False
+            comment.save()
+            return JsonResponse({"status":True})
+        return JsonResponse({"status":False})
+    return JsonResponse({"status":"Sorry you don't have permission to do this."})
+
 
 def deleteComment(request, pk):
-    comment = Comment.objects.filter(pk=pk).delete()
-    return JsonResponse({"status":True})
+    if request.user.is_authenticated() and request.user.is_staff:
+        comment = Comment.objects.filter(pk=pk).delete()
+        return JsonResponse({"status":True})
 
 def AmIIn(request):
     return JsonResponse({"status":user.is_authenticated()})
