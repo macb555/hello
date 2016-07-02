@@ -11,7 +11,7 @@
       </div>
       -->
       <div class="col-md-5 halqaran-header">
-        <img src="{% static 'campaign/images/logo1.png' %}"/>
+        <img class="img-responsive" src="{% static 'campaign/images/logo1.png' %}"/>
       </div>
       <div class="col-md-7 header-links-side">
         <!--<ul class="list-inline top-link link">-->
@@ -19,14 +19,14 @@
           {% if request.session.language = "so" %}{% else %}{% endif %}
           <li><a href="/"><i class="fa fa-home"></i>{% if request.session.language = "so" %}Hoyga{% else %}Home{% endif %}</a></li>
           <li><a href="/contact"><i class="fa fa-comments"></i> {% if request.session.language = "so" %}Xiriirada{% else %}Contacts{% endif %}</a></li>
-          <li><a href="/feedback"><i class="fa fa-send-o"></i> {% if request.session.language = "so" %}Soo Dir Warcelin{% else %}Send Feedback{% endif %}</a></li>
+          <li><a href="/feedback"><i class="fa fa-send-o"></i> {% if request.session.language = "so" %}Warcelin{% else %}Send Feedback{% endif %}</a></li>
           <li><a href="/faq"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}Su'aalo{% else %}FAQ{% endif %}</a></li>
-          <!--<li><a href="/language/{% if request.session.language == 'so'%}en{% else %}so{% endif %}"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}English{% else %}Af Soomaali{% endif %}</a></li>-->
-          <li title="Luqadda Bedel | Change Language" style="background:url({% if request.session.language == "so" %}{% static 'campaign/images/uk.gif' %}{% else %}{% static 'campaign/images/somalia.png' %}{% endif %}) center no-repeat;background-size:cover;width:6em;">
+        <!--<li><a href="/language/{% if request.session.language == 'so'%}en{% else %}so{% endif %}"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}English{% else %}Af Soomaali{% endif %}</a></li>-->
+        <li title="Luqadda Bedel | Change Language">
             {% if request.session.language == "so" %}
             <a href="/language/en"><strong class='language-flag'>ENGLISH</strong></a>
             {% else %}
-            <a href="/language/so"><strong class='language-flag'>SOMALI</strong></a>
+            <a href="/language/so"><strong class='language-flag'>AFSOOMAALI</strong></a>
             {% endif %}
           </li>
           {% if user.is_authenticated %}
@@ -47,6 +47,7 @@
                 </div>
                 <button	type="submit"	class="btn btn-primary">{% if request.session.language = "so" %}Gal{% else %}Login{% endif%}</button>
             </form>
+            <p>{% if request.session.language = "so" %}<span class="yellow-text">Hadii aad ku cusubtahay boggan.</span> <a href="/join">Halkan riix si aad xubin uga noqoto Hal Qaran</a>.{% else %}<span class="yellow-text">If this is your first time.</span> <a href="/join">Please click here to join Hal Qaran.</a>{% endif%}</p>
             {% endif %}
           {% endif %}
         </div>
@@ -57,7 +58,7 @@
 
 <!--Navigation-->
 <div id="menu-container">
-  <nav id="menu" class="navbar container">
+  <nav id="menu" class="navbar">
     <div class="navbar-header">
       <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
       <a class="navbar-brand" href="/">

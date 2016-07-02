@@ -151,3 +151,5 @@ class Location(models.Model):
     current_city = models.CharField(max_length=30)
     region_of_birth = models.CharField(max_length=30, choices=[("Awdal","Awdal"), ("Bakool","Bakoo"), ("Banaadir","Banaadir"), ("Bari","Bari"), ("Bay", "Bay"), ("Galguduud","Galguduud"),("Gedo","Gedo"), ("Hiiraan","Hiiraan"),("Jubada Dhexe","Jubada Dhexe"),("Jubada Hoose","Jubada Hoose"), ("Nugaal","Nugaal"), ("Sanaag","Sanaag"), ("Shabeelaha Dhexe", "Shabeelaha Dhexe"), ("Shabeelaha Hoose","Shabeelaha Hoose"), ("Sool","Sool"), ("Togdheer","Togdheer"), ("Waqooyi Galbeed", "Waqooyi Galbeed")])
     city_of_birth = models.CharField(max_length=30)
+    def __str__(self):
+        return str(self.user.username)+" lives in " + str(self.current_city) + ", "+ str(self.current_country.name)

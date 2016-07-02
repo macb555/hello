@@ -46,8 +46,9 @@ def register(request):
     request.session.setdefault('language','so')
 
     if request.method == "POST":
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
+        userform = UserRegistrationForm(request.POST)
+        locationform = LocationForm(request.POST)
+        if userform.is_valid() and locationform.is_valid():
             username = request.POST.get('username')
             password = request.POST.get('password')
             f_name = request.POST.get('first_name')
@@ -60,24 +61,63 @@ def register(request):
             auth_login(request, user)
             #form = LocationForm()
             #return render(request, 'campaign/partials/register_location.html', {'form':form})
-            return redirect('register_location')
+            location = Location.objects.create(user=request.user, current_country=request.POST.get('current_country'), current_city=request.POST.get('current_city'), region_of_birth = request.POST.get('region_of_birth'),city_of_birth=request.POST.get('city_of_birth'))
+            location.save()
+            return redirect('index')
 
-    form = UserRegistrationForm()
-    return render(request, 'campaign/partials/registration.html', {'form':form})
+    userform = UserRegistrationForm()
+    locationform = LocationForm()
+    return render(request, 'campaign/partials/registration.html', {'userform':userform, 'locationform':locationform})
 
 def register_location(request):
     request.session.setdefault('language','so')
+    location = None
+    location = get_object_or_404(Location, user__pk=request.user.pk)
+    if location == None:
+        if request.method == "POST":
+            locationform = LocationForm(request.POST)
+            if request.user.is_authenticated():
+                if locationform.is_valid():
+                    username = request.POST.get('username')
+                    password = request.POST.get('password')
+
+                    location = Location.objects.create(user=request.user, current_country=request.POST.get('current_country'), current_city=request.POST.get('current_city'), region_of_birth = request.POST.get('region_of_birth'),city_of_birth=request.POST.get('city_of_birth'))
+                    location.save()
+                    return redirect('index')
+    else:
+        locationform = LocationForm(instance=location)
+        return render(request, 'campaign/partials/register_location.html', {'locationform':locationform,'location':location})
+
+    locationform = LocationForm()
+    return render(request, 'campaign/partials/register_location.html', {'locationform':locationform})
+
+
+'''
+def register_location(request):
+    request.session.setdefault('language','so')
+    print("______________________________________________________________")
+    print("Registering user location")
     if request.method == "POST":
         form = LocationForm(request.POST)
+        print("______________________________________________________________")
+        print("Form is created using user provided information")
         if form.is_valid():
             location = Location.objects.create(user=request.user, current_country=request.POST.get('current_country'), current_city=request.POST.get('current_city'), region_of_birth = request.POST.get('region_of_birth'),city_of_birth=request.POST.get('city_of_birth'))
             location.save()
             #msg = {"type":"info","so":"Hambalyo! waad ku guuleysatay isdiiwaangelinta.","en":"Congradulations! You are successfully registered'."}
             #return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "post":{"pk":0}})
+            print("______________________________________________________________")
+            print("Redirecting to home page")
             return redirect('index')
+        print("______________________________________________________________")
+        print("User provided invalid data")
+    print("______________________________________________________________")
+    print("Registration form is created for the user")
     form = LocationForm()
+    print("______________________________________________________________")
+    print("Rendering the template for the form")
     return render(request, 'campaign/partials/register_location.html', {'form':form})
-
+'''
 
 def logout(request):
     request.session.setdefault('language','so')

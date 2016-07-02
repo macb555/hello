@@ -25,6 +25,7 @@ urlpatterns = [
 
     url(r'^join$', views.register, name='join'),
     url(r'^location-registration$', views.register_location, name='register_location'),
+    url(r'^location-registration/update$', views.register_location, name='register_location_update'),
     #url('^register/', CreateView.as_view(
     #        template_name='campaign/partials/registration.html',
     #        form_class=UserCreationForm,

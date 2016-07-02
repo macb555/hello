@@ -12,6 +12,14 @@
                 {% if request.session.language = "so" %}{% if message.type = 'danger' %}Cillad{% else %}Fariin{% endif %}:</strong> {{message.so}}{% else %}{% if message.type = 'danger' %}Error{% else %}Info{% endif %}:</strong> {{message.en}}{% endif %}
             </div>
           {% endif %}
+          <h5>Links:</h5>
+          <ul class="list-inline">
+            <li>{% if request.session.language = "so" %}<a href="/">Hoyga</a>{% else %}<a href="/">Home</a>{% endif %}</li>
+            <li>{% if request.session.language = "so" %}<a href="/issues">Arimaha</a>{% else %}<a href="/issues">Issues</a>{% endif %}</li>
+            <li>{% if request.session.language = "so" %}<a href="/feed">Dhamaan</a>{% else %}<a href="/feed">Feed</a>{% endif %}</li>
+            <li>{% if request.session.language = "so" %}<a href="/events">Dhacdooyinka</a>{% else %}<a href="/events">Events</a>{% endif %}</li>
+            <li>{% if request.session.language = "so" %}<a href="/about">Ku Saabsan</a>{% else %}<a href="/about">About</a>{% endif %}</li>
+          </ul>
         </div>
 
       </div>

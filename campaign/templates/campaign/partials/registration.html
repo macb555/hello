@@ -3,53 +3,52 @@
 <div id="page-content" class="index-page container">
   <div class="row">
     <div id="main-content"><!-- background not working -->
-      <div id="column-one" class="col-md-9">
-        <div class="box wrap-vid">
+      <div id="column-one" class="col-md-10">
+        <div class="box wrap-vid registration-form-container" style="background-image: url(/static/campaign/images/registration-bg.png)">
           <div class="post-detail">
-            <h1>{% if request.session.language = "so" %}Diiwaangelin{% else %}Register{% endif %}</h1>
+              <div class="inner-registration-container">
+              <h2>{% if request.session.language = "so" %}Diiwaangelin{% else %}Register{% endif %}</h2>
 
-            {% if not user.is_authenticated %}
-              {% if form %}
-              <!-- ############# LOGGIN FORM ############### -->
-              <div id="login-area">
-                <form	method="POST"	class="form loginform" action="/join" id="loginform">{%	csrf_token	%}
+              {% if not user.is_authenticated %}
+                {% if userform and locationform %}
+                <!-- ############# LOGGIN FORM ############### -->
+                <div id="login-area">
+                  <form	method="POST"	class="form loginform" action="/join" id="loginform">{%	csrf_token	%}
+                    <h5>Personal Info</h5>
+                    {% for field in userform %}
+                        <div class="fieldWrapper">
+                            {{ field.errors }}
+                            {{ field.label_tag }}: {{ field }}
+                        </div>
+                    {% endfor %}
+                    <br>
+                    <h5>Location Info</h5>
+                    {% for field in locationform %}
+                        <div class="fieldWrapper">
+                            {{ field.errors }}
+                            {{ field.label_tag }}: {{ field }}
+                        </div>
+                    {% endfor %}
+                    <br>
+                    <button	type="submit"	class="btn btn-primary btn-block">{% if request.session.language = "so" %}Is Diiwaangeli{% else %}Register{% endif%}</button>
+                  </form>
+                </div>
+                {% endif %}
+              {% else %}
+                <h5>{% if request.session.language = "so" %}{{user.username|title}}! Cinwaankaaga ayaa kacsan{% else %}You are already logged in{% endif %}</h5>
+                <p>{% if request.session.language = "so" %}Ma dooneysaa in aad <a href="/logout">kabaxdo</a> cinwaankan?{% else %}Do you want to <a href="/logout">logout</a>?{% endif %}</p>
 
-                  {% for field in form %}
-                      <div class="fieldWrapper">
-                          {{ field.errors }}
-                          {{ field.label_tag }}: {{ field }}
-                      </div>
-                  {% endfor %}
-
-
-                      <button	type="submit"	class="btn btn-default">{% if request.session.language = "so" %}Gal{% else %}Login{% endif%}</button>
-                </form>
-              </div>
               {% endif %}
-            {% else %}
-              <h5>{% if request.session.language = "so" %}{{user.username|title}}! Cinwaankaaga ayaa kacsan{% else %}You are already logged in{% endif %}</h5>
-              <p>{% if request.session.language = "so" %}Ma dooneysaa in aad <a href="/logout">kabaxdo</a> cinwaankan?{% else %}Do you want to <a href="/logout">logout</a>?{% endif %}</p>
 
-            {% endif %}
-
-            <hr/>
+              <hr/>
+            </div>
           </div>
         </div>
       </div>
-      <div id="column-two" class="col-md-3">
 
-        <div class="box wrap-vid shadowed">
-          <h5>Latest on Social Media</h5>
 
-        <div class="box wrap-vid">
-
-          {% include "campaign/partials/sidebar.html" %}
-        </div>
-      </div>
     </div>
   </div>
 </div>
-<script>
-  $("")
-</script>
+
 {% endblock %}
