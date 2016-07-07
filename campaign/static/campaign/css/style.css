@@ -468,6 +468,7 @@ footer .footer-3 ul li a:hover{color: #666;}
 .collapse, .navbar-collapse, .navbar-ex1-collapse {
   background: #a00000;//#55BBCC;
   border: 1px groove whitesmoke;
+  height: 5em;
   //box-shadow: -1px 0 14px black;
 }
 .featured, .container .navbar-brand, .nav li {
@@ -541,6 +542,14 @@ h5.head-title-2 {background: #e6f0ff;box-shadow: 1px 0 6px darkgray;padding: .5e
     background-repeat: no-repeat;
     background-position: 50% 50%;
 }​
+.image-container-2 {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    height: 10em;
+    overflow: hidden;
+}​
+
 .videowrapper {
     float: none;
     clear: both;
@@ -628,3 +637,17 @@ span.white-text {color:#fff;}
 .registration-form-container { padding: 5em; padding-top: 5em; padding-bottom: 3em;background-size: 120%;margin: auto;border-radius: .8em;box-shadow: inset 1px 1px 10px black;}
 
 .inner-registration-container {background: #fff; padding: .5em;border-radius: .3em; margin: 12em; margin-top: 3em; margin-bottom: 3em;box-shadow: 1px 1px 10px black;}
+
+/*********************** transition *********************/
+.height-transition {
+	/* Initially we don't want any height, and we want the contents to be hidden */
+	max-height: 30em;
+	//overflow: hidden;
+
+	/* Set our transitions up. */
+	-webkit-transition: max-height 0.8s;
+	-moz-transition: max-height 0.8s;
+	transition: max-height 1.8s;
+}
+.thumbnail-container {max-height: 10;margin: -1em;margin-right: -6em;}
+.preview-image-img {height: 25em;margin: auto;box-shadow: 1px 2px 10px black;border-radius: .3em;margin-bottom: .2em;}

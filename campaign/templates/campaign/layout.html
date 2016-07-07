@@ -26,14 +26,17 @@
 
 	<!-- Custom Fonts -->
     <link rel="stylesheet" href="{% static 'campaign/font-awesome-4.4.0/css/font-awesome.min.css' %}"  type="text/css">
+  <!--  <link rel="stylesheet" href="{% static 'campaign/css/jquery.bsPhotoGallery.css' %}"  type="text/css"> -->
 
 	<!-- jQuery and Modernizr-->
 	<script src="{% static 'campaign/js/jquery-2.1.1.js' %}"></script>
+
 
 	<!-- Core JavaScript Files -->
     <script src="{% static 'campaign/js/bootstrap.min.js' %}"></script>
 
   <!-- My own scripts -->
+    <script src="{% static 'campaign/js/jquery.bsPhotoGallery.js' %}"></script>
     <script src="{% static 'campaign/js/script.js' %}"></script>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -69,16 +72,23 @@
     <div class="container">
   		<div class="wrap-footer">
   			<div class="row">
-
+          <div class="col-sm-4">
+            <h5><span class='white-text'>Links:</span></h5>
+            <ul class="list-inline">
+              <li>{% if request.session.language = "so" %}<a href="/">Hoyga</a>{% else %}<a href="/">Home</a>{% endif %}</li><span class="white-text"> | </span>
+              <li>{% if request.session.language = "so" %}<a href="/issues">Arimaha</a>{% else %}<a href="/issues">Issues</a>{% endif %}</li><span class="white-text"> | </span>
+              <li>{% if request.session.language = "so" %}<a href="/feed">Dhamaan</a>{% else %}<a href="/feed">Feed</a>{% endif %}</li><span class="white-text"> | </span>
+              <li>{% if request.session.language = "so" %}<a href="/events">Dhacdooyinka</a>{% else %}<a href="/events">Events</a>{% endif %}</li><span class="white-text"> | </span>
+              <li>{% if request.session.language = "so" %}<a href="/about">Ku Saabsan</a>{% else %}<a href="/about">About</a>{% endif %}</li><span class="white-text"> | </span>
+              <li>{% if request.session.language = "so" %}<a href="/contact">Nala Xiriir</a>{% else %}<a href="/contact">Contact us</a>{% endif %}</li><span class="white-text"> | </span>
+              <li>{% if request.session.language = "so" %}<a href="/faq">Su'aalahaaga</a>{% else %}<a href="/contact">FAQ</a>{% endif %}</li><span class="white-text"> | </span>
+            </ul>
+          </div>
   			</div>
 
   		</div>
   		<div class="row copy-right">
-        <div class="col-sm-4">
-        </div>
-        <div class="col-sm-4">
-        </div>
-        <div class="col-sm-4">
+        <div class="col-sm-12">
           <p>Copyright 2015 - <a href="http://www.365bootstrap.com" target="_blank" rel="nofollow">Bootstrap Themes</a> Designed by 365Bootstrap.com</p>
         </div>
   		</div>
@@ -101,15 +111,6 @@
         items : 3,
 
       });
-      /*var newheight = $("#column-one").height();
-    $("#column-two").height(newheight-20);
-    $("#column-three").height(newheight-20)
-    $(window).resize(function() {
-      $("#column-two").height(0);
-      $("#column-three").height(0)
-      $("#column-two").css('height','auto');
-      $("#column-three").css('height','auto');
-    });*/
 
     //comment text input area
     $('textarea').addClass('form-control');

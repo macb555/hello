@@ -6,8 +6,14 @@
     <div id="main-content"><!-- background not working -->
       <div id="column-one" class="col-md-9">
         <div class="box wrap-vid column-1">
-          <h1>Feed</h1>
-          {% if not posts %}<p>No posts added into the feed yet</p>{% endif %}
+          {% if request.session.language = "so" %}
+            <h1>Dhamaan</h1>
+            {% if not posts %}<p>Wili wax warbixinno ah lama soo gelin.</p>{% endif %}
+          {% else %}
+            <h1>Feed</h1>
+            {% if not posts %}<p>No posts added into the feed yet</p>{% endif %}
+          {% endif %}
+
           {% for post in posts %}
           <a href="{% url 'details' pk=post.pk %}">
             <h5>{{post.title}}</h5>

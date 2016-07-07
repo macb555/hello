@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'campaign',
     'markdown_deux',
     'analytical',
+    'easy_thumbnails',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -79,12 +80,27 @@ WSGI_APPLICATION = 'JABRIL.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+'''
+#POSTGRES
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'hello',
+        'USER': 'hello_django',
+        'PASSWORD': '711d12cc-4443-11e6-ab65-a02bb82252db',
+        'HOST': 'localhost',
+        'PORT': '',                      # Set to empty string for default.
+    }
+}
+'''
+
 
 
 # Password validation
@@ -153,10 +169,17 @@ MARKDOWN_DEUX_STYLES = {
 # MARKDOWN SETTINGS END HERE
 #######################################################
 
+############### THUMPNAILS APP ########################
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (100, 100), 'crop': True},
+    },
+}
 
 #######################  SITE VARIABLES ###################
 SITE_NAME = {"so":"Hal Qaran", "en":"Hal Qaran"}
 SITE_MOTO = {"so":"Waaga cusub ee u curtay Ummadda Soomaaliyeed!", "en":"New Dawn for the Somali People"}
 SITE_DESCRIPTION = {"so":"Bogga Rasmiga ah ee Hal Qaran", "en":"The official page for Hal Qaran Movement (HQM)."}
 
-GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-80178068-1'
+#GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-80178068-1'
+CLICKY_SITE_ID = '100971100'

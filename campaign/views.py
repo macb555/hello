@@ -3,12 +3,13 @@ from django.http import JsonResponse
 from campaign.models import *
 from campaign.forms import *
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from django.db.models import Q
+from django.db.models import Q, F
+
 # Create your views here.
 def index(request):
     language = request.session.setdefault('language','so')
 
-    posts = Post.objects.filter(language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
+    posts = Post.objects.filter(likes__gte=F('dislikes'),language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
     videos = Video.objects.all()
     loginForm = LoginForm()
     #return render(request, 'campaign/partials/home.html', {'web':web, 'speeches':speeches, 'featured_items':speeches})
@@ -176,6 +177,18 @@ def contact(request):
     }
     return render(request, 'campaign/partials/contacts.html',{"loginform":loginForm,"contacts":contact_info, "post":{"pk":0}})
 
+def videos(request):
+    request.session.setdefault('language','so')
+    videos = Video.objects.all()
+    loginForm = LoginForm()
+    return render(request, 'campaign/partials/videos.html', {'videos':videos,'loginform':loginForm})
+
+def photos(request):
+    request.session.setdefault('language','so')
+    photos = Image.objects.all()
+    loginForm = LoginForm()
+    return render(request, 'campaign/partials/photos.html', {'photos':photos,'loginform':loginForm})
+
 
 def watch(request, pk):
     request.session.setdefault('language','so')
@@ -320,7 +333,7 @@ def likeComment(request, pk):
 
 # DISLIKES
 def dislikePost(request, pk):
-    if user.is_authenticated():
+    if request.user.is_authenticated():
         dislikes = Dislike.objects.filter(disliked_post_id=pk, user=request.user)
     else:
         dislikes = []
@@ -328,7 +341,7 @@ def dislikePost(request, pk):
     if not len(dislikes) > 0:
         new_dislike = Dislike()
         new_dislike.disliked_post_id = pk
-        if user.is_authenticated():
+        if request.user.is_authenticated():
             new_dislike.user = request.user
         else:
             new_dislike.user = None

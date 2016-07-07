@@ -31,27 +31,27 @@
  <div class="box-content">
    <div class="row">
      <div class="col-md-6">
-       {% if latest_videos.0.videoId %}
+       {% if latest_videos.1.videoId %}
        <div class="wrap-vid">
          <div class="zoom-container">
            <div class="zoom-caption">
-             <span class="{{latest_videos.1.type|lower}}">{{latest_videos.0.type}}</span>
+             <span class="{{latest_videos.1.type|lower}}">{{latest_videos.1.type}}</span>
              <a href="/watch/{{latest_videos.0.videoId}}">
                <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
              </a>
-             <p>{{latest_videos.0.title}}</p>
+             <p>{{latest_videos.1.title}}</p>
            </div>
-           <img src="http://img.youtube.com/vi/{{latest_videos.0.videoId}}/0.jpg" />
+           <img src="http://img.youtube.com/vi/{{latest_videos.1.videoId}}/0.jpg" />
          </div>
-         <h3 class="vid-name"><a href="/watch/{{latest_videos.0.videoId}}">{{latest_videos.0.title}}</a></h3>
+         <h3 class="vid-name"><a href="/watch/{{latest_videos.1.videoId}}">{{latest_videos.1.title}}</a></h3>
        </div>
-       <p class="more">{{latest_videos.0.description}}</p>
+       <p class="more">{{latest_videos.1.description}}</p>
        {% endif %}
      </div>
 
      <div class="col-md-6">
        {% if latest_videos %}
-       {% for item in latest_videos %}
+       {% for item in latest_videos|slice:"2:" %}
         {% if not item = latest_videos.0 %}
 
             {%if item.type.pk == 1 %}

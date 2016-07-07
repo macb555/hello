@@ -11,7 +11,7 @@
       </div>
       -->
       <div class="col-md-5 halqaran-header">
-        <img class="img-responsive" src="{% static 'campaign/images/logo1.png' %}"/>
+        <a href="/"><img class="img-responsive" src="{% static 'campaign/images/logo1.png' %}"/></a>
       </div>
       <div class="col-md-7 header-links-side">
         <!--<ul class="list-inline top-link link">-->
@@ -30,7 +30,7 @@
             {% endif %}
           </li>
           {% if user.is_authenticated %}
-          <li class="user-welcome-area"><span class="yellow-text">{{user.username|title}}!</span> <span class="white-text">{% if request.session.language = "so" %}Welcome to Hal Qaran{% else %}Kuso dhawow Hal Qaran{% endif%}</span></li>
+          <li class="user-welcome-area"><span class="yellow-text">{{user.username|title}}!</span> <span class="white-text">{% if request.session.language = "so" %}Kuso dhawow Hal Qaran.{% else %}Welcome to Hal Qaran.{% endif%}</span></li>
           {% endif %}
         </ul>
         <div class="login-area">
@@ -70,7 +70,8 @@
         <!--<li><a href="/"><i class="fa  fa-home"></i> {% if request.session.language = "so" %}Hoyga{% else %}Home{% endif %}</a></li>-->
         <li><a href="/issues"><i class="fa fa-list"></i> {% if request.session.language = "so" %}Arimaha{% else %}Issues{% endif %}</a></li>
         <li><a href="/feed"><i class="fa fa-feed"></i> {% if request.session.language = "so" %}Dhamaan{% else %}Feed{% endif %}</a></li>
-        <li><a href="/events"><i class="fa fa-calendar"></i> {% if request.session.language = "so" %}Dhacdooyinka{% else %}Events{% endif %}</a></li>
+        <li><a href="/events"><i class="fa fa-calendar"></i> {% if request.session.language = "so" %}Munaasabado{% else %}Events{% endif %}</a></li>
+        <li><a href="/videos"><i class="fa fa-institution"></i> {% if request.session.language = "so" %}Fiidiyaal{% else %}Videos{% endif %}</a></li>
         <li><a href="/about"><i class="fa fa-institution"></i> {% if request.session.language = "so" %}Ku Saabsan{% else %}About{% endif %}</a></li>
 
         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {% if request.session.language = "so" %}Xubinnimo{% else %}Membership{% endif %} <i class="fa fa-arrow-circle-o-down"></i></a>
@@ -107,10 +108,10 @@
   -->
       </ul>
       <ul class="list-inline navbar-right top-social">
-        <li title="Facebook"><a href="{{my.facebook}}"><i class="fa fa-facebook"></i></a></li>
-        <li title="Twitter"><a href="{{my.twitter}}"><i class="fa fa-twitter"></i></a></li>
-        <li title="Google Plus"><a href="{{my.googleplus}}"><i class="fa fa-google-plus-square"></i></a></li>
-        <li title="Youtube"><a href="{{my.youtube}}"><i class="fa fa-youtube"></i></a></li>
+        <li title="Facebook"><a href="#facebook"><i class="fa fa-facebook"></i></a></li>
+        <li title="Twitter"><a href="#twitter"><i class="fa fa-twitter"></i></a></li>
+        <li title="Google Plus"><a href="#googleplus"><i class="fa fa-google-plus-square"></i></a></li>
+        <li title="Youtube"><a href="#youtube"><i class="fa fa-youtube"></i></a></li>
         {% if user.is_authenticated %}<li title="Logout"><a href="{% url 'logout' %}"><i class="fa fa-user" style="color:red;"></i></a></li>{% else %}<li title="Login"><a href="{% url 'loginpage' %}"><i class="fa fa-user" style="color:green;"></i></a></li>{% endif %}
       </ul>
     </div>
