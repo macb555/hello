@@ -80,26 +80,37 @@ WSGI_APPLICATION = 'JABRIL.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-'''
+
 #POSTGRES
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'hello',
         'USER': 'hello_django',
-        'PASSWORD': '711d12cc-4443-11e6-ab65-a02bb82252db',
+        'PASSWORD': '0615538193',
         'HOST': 'localhost',
         'PORT': '',                      # Set to empty string for default.
     }
 }
 '''
+#MARIADB
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'hello',
+        'USER': 'halqaran_django',
+        'PASSWORD': 'cudurdilaadhimo',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
 
 
 
