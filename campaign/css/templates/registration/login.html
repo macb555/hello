@@ -1,0 +1,50 @@
+{% extends 'campaign/layout.html' %}
+{% block content %}
+<div id="page-content" class="index-page container">
+  <div class="row">
+    <div id="main-content"><!-- background not working -->
+      <div id="column-one" class="col-md-9">
+        <div class="box wrap-vid shadowed">
+          <div class="post-detail">
+            <h1>{% if request.session.language == "so" %}Gelitaanka{% else %}Login{% endif %}</h1>
+
+            {% if not user.is_authenticated %}
+              {% if form %}
+              <!-- ############# LOGGIN FORM ############### -->
+              <div id="login-area">
+                <form	method="POST"	class="form loginform" action="{% url 'login' %}" id="loginform">{%	csrf_token	%}
+
+                  {% for field in form %}
+                      <div class="fieldWrapper">
+                          {{ field.errors }}
+                          {{ field.label_tag }}: {{ field }}
+                      </div>
+                  {% endfor %}
+
+                      <button	type="submit"	class="btn btn-default">{% if request.session.language == "so" %}Gal{% else %}Login{% endif%}</button>
+                </form>
+              </div>
+              {% endif %}
+            {% else %}
+              <h5>{% if request.session.language == "so" %}{{user.username|title}}! Cinwaankaaga ayaa kacsan{% else %}You are already logged in{% endif %}</h5>
+              <p>{% if request.session.language == "so" %}Ma dooneysaa in aad <a href="/logout">kabaxdo</a> cinwaankan?{% else %}Do you want to <a href="/logout">logout</a>?{% endif %}</p>
+
+            {% endif %}
+
+            <hr/>
+          </div>
+        </div>
+      </div>
+      <div id="column-two" class="col-md-3">
+        <div class="box wrap-vid shadowed">
+          <h5>Latest on Social Media</h5>
+          {% include "campaign/partials/sidebar.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $("")
+</script>
+{% endblock %}

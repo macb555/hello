@@ -1,0 +1,120 @@
+{% load staticfiles %}
+{% block header %}
+
+<!--Top-->
+<nav id="top">
+  <div class="container-fluid header-container">
+    <div class="row header-row">
+      <!--
+      <div class="col-md-6">
+        <strong>{% if request.session.language == "so" %}Waaga cusub ee u curtay Ummadda Soomaaliyeed!{% else %}New dawn for Somali people!{% endif %}</strong>
+      </div>
+      -->
+      <div class="col-md-5 halqaran-header">
+        <a href="/"><img class="img-responsive" src="{% static 'campaign/images/logo1.png' %}"/></a>
+      </div>
+      <div class="col-md-7 header-links-side">
+        <!--<ul class="list-inline top-link link">-->
+        <ul class="list-inline header-links-list">
+          {% if request.session.language == "so" %}{% else %}{% endif %}
+          <li><a href="/"><i class="fa fa-home"></i>{% if request.session.language == "so" %}Hoyga{% else %}Home{% endif %}</a></li>
+          <li><a href="/contact"><i class="fa fa-comments"></i> {% if request.session.language == "so" %}Xiriirada{% else %}Contacts{% endif %}</a></li>
+          <li><a href="/feedback"><i class="fa fa-send-o"></i> {% if request.session.language == "so" %}Warcelin{% else %}Send Feedback{% endif %}</a></li>
+          <li><a href="/faq"><i class="fa fa-question-circle"></i> {% if request.session.language == "so" %}Su'aalo{% else %}FAQ{% endif %}</a></li>
+        <!--<li><a href="/language/{% if request.session.language == 'so'%}en{% else %}so{% endif %}"><i class="fa fa-question-circle"></i> {% if request.session.language == "so" %}English{% else %}Af Soomaali{% endif %}</a></li>-->
+        <li title="Luqadda Bedel | Change Language">
+            {% if request.session.language == "so" %}
+            <a href="/language/en"><strong class='language-flag'>ENGLISH</strong></a>
+            {% else %}
+            <a href="/language/so"><strong class='language-flag'>AFSOOMAALI</strong></a>
+            {% endif %}
+          </li>
+          {% if user.is_authenticated %}
+          <li class="user-welcome-area"><span class="yellow-text">{{user.username|title}}!</span> <span class="white-text">{% if request.session.language == "so" %}Kuso dhawow Hal Qaran.{% else %}Welcome to Hal Qaran.{% endif%}</span></li>
+          {% endif %}
+        </ul>
+        <div class="login-area">
+          {% if not user.is_authenticated %}
+            {% if loginform %}
+            <form	method="POST"	class="form-inline loginform" action="{% url 'login' %}" id="loginform">{%	csrf_token	%}
+                <div class="form-group">
+                  <!--<label for="id_username">{% if request.session.language == "so" %}Magac-kugalka:{% else %}Username:{% endif %}</label>-->
+                  {{loginform.username}}
+                </div>
+                <div class="form-group">
+                  <!--<label for="id_password">{% if request.session.language == "so" %}Ereysireedka:{% else %}Password:{% endif %}</label>-->
+                  {{loginform.password}}
+                </div>
+                <button	type="submit"	class="btn btn-primary">{% if request.session.language == "so" %}Gal{% else %}Login{% endif%}</button>
+            </form>
+            <p>{% if request.session.language == "so" %}<span class="yellow-text">Hadii aad ku cusubtahay boggan.</span> <a href="/join">Halkan riix si aad xubin uga noqoto Hal Qaran</a>.{% else %}<span class="yellow-text">If this is your first time.</span> <a href="/join">Please click here to join Hal Qaran.</a>{% endif%}</p>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!--Navigation-->
+<div id="menu-container">
+  <nav id="menu" class="navbar">
+    <div class="navbar-header">
+      <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
+      <a class="navbar-brand" href="/">
+        <div class="logo"><img href=""><span>Hal Qaran</span></div>
+      </a>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav">
+        <!--<li><a href="/"><i class="fa  fa-home"></i> {% if request.session.language == "so" %}Hoyga{% else %}Home{% endif %}</a></li>-->
+        <li><a href="/issues"><i class="fa fa-list"></i> {% if request.session.language == "so" %}Arimaha{% else %}Issues{% endif %}</a></li>
+        <li><a href="/feed"><i class="fa fa-feed"></i> {% if request.session.language == "so" %}Dhamaan{% else %}Feed{% endif %}</a></li>
+        <li><a href="/events"><i class="fa fa-calendar"></i> {% if request.session.language == "so" %}Munaasabado{% else %}Events{% endif %}</a></li>
+        <li><a href="/videos"><i class="fa fa-institution"></i> {% if request.session.language == "so" %}Fiidiyaal{% else %}Videos{% endif %}</a></li>
+        <li><a href="/about"><i class="fa fa-institution"></i> {% if request.session.language == "so" %}Ku Saabsan{% else %}About{% endif %}</a></li>
+
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {% if request.session.language == "so" %}Xubinnimo{% else %}Membership{% endif %} <i class="fa fa-arrow-circle-o-down"></i></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-inner">
+              <ul class="list-unstyled">
+                {% if not user.is_authenticated %}
+                <li><a href="/loginpage"><i class="fa fa-user-plus"></i> {% if request.session.language == "so" %}Gal Cinwaankaaga{% else %}Login{% endif %}</a></li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <li><a href="/logout"><i class="fa fa-user-times"></i> {% if request.session.language == "so" %}Kabax Cinwaankaaga{% else %}Logout{% endif %}</a></li>
+                {% endif %}
+                {% if not user.is_authenticated %}
+                <li><a href="/join"><i class="fa fa-database"></i> {% if request.session.language == "so" %}Is Diiwaangeli{% else %}Register{% endif %}</a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </li>
+  <!--
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Video <i class="fa fa-arrow-circle-o-down"></i></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-inner">
+              <ul class="list-unstyled">
+                <li><a href="archive.html">Text 201</a></li>
+                <li><a href="archive.html">Text 202</a></li>
+                <li><a href="archive.html">Text 203</a></li>
+                <li><a href="archive.html">Text 204</a></li>
+                <li><a href="archive.html">Text 205</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+  -->
+      </ul>
+      <ul class="list-inline navbar-right top-social">
+        <li title="Facebook"><a href="#facebook"><i class="fa fa-facebook"></i></a></li>
+        <li title="Twitter"><a href="#twitter"><i class="fa fa-twitter"></i></a></li>
+        <li title="Google Plus"><a href="#googleplus"><i class="fa fa-google-plus-square"></i></a></li>
+        <li title="Youtube"><a href="#youtube"><i class="fa fa-youtube"></i></a></li>
+        {% if user.is_authenticated %}<li title="Logout"><a href="{% url 'logout' %}"><i class="fa fa-user" style="color:red;"></i></a></li>{% else %}<li title="Login"><a href="{% url 'loginpage' %}"><i class="fa fa-user" style="color:green;"></i></a></li>{% endif %}
+      </ul>
+    </div>
+  </nav>
+</div>
+{% endblock %}

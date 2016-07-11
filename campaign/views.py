@@ -47,78 +47,82 @@ def register(request):
     request.session.setdefault('language','so')
 
     if request.method == "POST":
+        print("Got data from user")
+        
         userform = UserRegistrationForm(request.POST)
-        locationform = LocationForm(request.POST)
-        if userform.is_valid() and locationform.is_valid():
+        profileForm = ProfileForm(request.POST)
+        if userform.is_valid() and profileForm.is_valid():
+            print("Data from the user is valid")
             username = request.POST.get('username')
             password = request.POST.get('password')
             f_name = request.POST.get('first_name')
             l_name = request.POST.get('last_name')
             email = request.POST.get('email')
+            print("username:", username)
+            print("password", password)
+            print("first_name", f_name)
+            print("last_name", l_name)
 
             user = User.objects.create_user(username=username, password=password, first_name=f_name, last_name=l_name, email=email)
             user.save()
+            print("User subject is saved")
+            print("Loggin user in")
             user = authenticate(username=username, password=password)
             auth_login(request, user)
-            #form = LocationForm()
-            #return render(request, 'campaign/partials/register_location.html', {'form':form})
-            location = Location.objects.create(user=request.user, current_country=request.POST.get('current_country'), current_city=request.POST.get('current_city'), region_of_birth = request.POST.get('region_of_birth'),city_of_birth=request.POST.get('city_of_birth'))
-            location.save()
+            print("User is logged in")
+            #form = profileForm()
+            #return render(request, 'campaign/partials/register_profile.html', {'form':form})
+            print("Initializing user profile")
+            profile = Profile.objects.create(user=request.user,
+                        current_country=request.POST.get('current_country'),
+                        city_of_residence=request.POST.get('city_of_residence'),
+                        region_of_birth = request.POST.get('region_of_birth'),
+                        city_of_birth=request.POST.get('city_of_birth'),
+                        phone_no=request.POST.get('phone_no'),
+                        mother_name=request.POST.get('mother_name'),
+                        gender=request.POST.get('gender'),
+                        marital_status=request.POST.get('marital_status'))
+            profile.save()
+            print("Saved user profile")
+            print("Returning to home page.")
             return redirect('index')
 
+    print("Sending a fresh user registration form")
     userform = UserRegistrationForm()
-    locationform = LocationForm()
-    return render(request, 'campaign/partials/registration.html', {'userform':userform, 'locationform':locationform})
+    profileForm = ProfileForm(initial={'country': 'SO'})
+    print("Rendering the form")
+    return render(request, 'campaign/partials/registration.html', {'userform':userform, 'profileForm':profileForm})
 
-def register_location(request):
+def register_profile(request):
     request.session.setdefault('language','so')
-    location = None
-    location = get_object_or_404(Location, user__pk=request.user.pk)
-    if location == None:
+    profile = get_object_or_404(profile, user__pk=request.user.pk)
+    if profile == None:
         if request.method == "POST":
-            locationform = LocationForm(request.POST)
+            profileForm = profileForm(request.POST)
             if request.user.is_authenticated():
-                if locationform.is_valid():
+                if profileForm.is_valid():
                     username = request.POST.get('username')
                     password = request.POST.get('password')
 
-                    location = Location.objects.create(user=request.user, current_country=request.POST.get('current_country'), current_city=request.POST.get('current_city'), region_of_birth = request.POST.get('region_of_birth'),city_of_birth=request.POST.get('city_of_birth'))
-                    location.save()
+                    profile = Profile.objects.create(user=request.user,
+                                current_country=request.POST.get('current_country'),
+                                city_of_residence=request.POST.get('city_of_residence'),
+                                region_of_birth = request.POST.get('region_of_birth'),
+                                city_of_birth=request.POST.get('city_of_birth'),
+                                phone_no=request.POST.get('phone_no'),
+                                mother_name=request.POST.get('mother_name'),
+                                gender=request.POST.get('gender'),
+                                marital_status=request.POST.get('marital_status'))
+                    profile.save()
                     return redirect('index')
     else:
-        locationform = LocationForm(instance=location)
-        return render(request, 'campaign/partials/register_location.html', {'locationform':locationform,'location':location})
+        profileForm = profileForm(instance=profile)
+        return render(request, 'campaign/partials/register_profile.html', {'profileForm':profileForm,'profile':profile})
 
-    locationform = LocationForm()
-    return render(request, 'campaign/partials/register_location.html', {'locationform':locationform})
+    profileForm = profileForm(initial={'country': 'SO'})
+    return render(request, 'campaign/partials/register_profile.html', {'profileForm':profileForm})
 
 
-'''
-def register_location(request):
-    request.session.setdefault('language','so')
-    print("______________________________________________________________")
-    print("Registering user location")
-    if request.method == "POST":
-        form = LocationForm(request.POST)
-        print("______________________________________________________________")
-        print("Form is created using user provided information")
-        if form.is_valid():
-            location = Location.objects.create(user=request.user, current_country=request.POST.get('current_country'), current_city=request.POST.get('current_city'), region_of_birth = request.POST.get('region_of_birth'),city_of_birth=request.POST.get('city_of_birth'))
-            location.save()
-            #msg = {"type":"info","so":"Hambalyo! waad ku guuleysatay isdiiwaangelinta.","en":"Congradulations! You are successfully registered'."}
-            #return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "post":{"pk":0}})
-            print("______________________________________________________________")
-            print("Redirecting to home page")
-            return redirect('index')
-        print("______________________________________________________________")
-        print("User provided invalid data")
-    print("______________________________________________________________")
-    print("Registration form is created for the user")
-    form = LocationForm()
-    print("______________________________________________________________")
-    print("Rendering the template for the form")
-    return render(request, 'campaign/partials/register_location.html', {'form':form})
-'''
 
 def logout(request):
     request.session.setdefault('language','so')
@@ -127,32 +131,6 @@ def logout(request):
     loginForm = LoginForm()
     msg = {"type":"info","so":"Waad kuguuleysatay kabixitaanka.","en":"You have successfully logged out."}
     return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
-'''
-class RegistrationView(CreateView):
-    form_class = UserRegistrationForm
-    model = User
-
-    def form_valid(self, form):
-        obj = form.save(commit=False)
-        obj.set_password(User.objects.make_random_password())
-        obj.save()
-
-        # This form only requires the "email" field, so will validate.
-        reset_form = PasswordResetForm(self.request.POST)
-        reset_form.is_valid()  # Must trigger validation
-        # Copied from django/contrib/auth/views.py : password_reset
-        opts = {
-            'use_https': self.request.is_secure(),
-            'email_template_name': 'registration/verification.html',
-            'subject_template_name': 'registration/verification_subject.txt',
-            'request': self.request,
-            # 'html_email_template_name': provide an HTML content template if you desire.
-        }
-        # This form sends the email on save()
-        reset_form.save(**opts)
-
-        return redirect('accounts:register-done')
-'''
 def details(request, pk):
     request.session.setdefault('language','so')
 

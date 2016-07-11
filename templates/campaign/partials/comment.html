@@ -1,0 +1,18 @@
+{% for comment in post_comments %}
+    <li class="comment">
+      <p>
+        <strong>{{comment.user}}</strong> <em>said</em>: {% markdown %}{{comment.text}}{% endmarkdown %}<br/>{{comment.date}},
+        <strong><span id="comment-{{comment.pk}}-likes-counter">{{comment.likes}}</span></strong> people liked this. <button id="btn-like-comment-{{comment.pk}}" class="btn btn-default like" onclick="likePost('{{comment.pk}}', 'comment')"> <i class="glyphicon glyphicon-heart red-text"></i> like</button>
+      </p>
+      <ul>
+      {% for reply in comment.replies.all %}
+          <li>
+            <p>
+              <strong>{{reply.user}}</strong> <em>said</em>: {{reply.text}}<br/>{{reply.date}},
+              <strong><span id="comment-{{reply.pk}}-likes-counter">{{reply.likes}}</span></strong> people liked this. <button id="btn-like-comment-{{reply.pk}}" class="btn btn-default like" onclick="likePost('{{reply.pk}}', 'comment')"> <i class="glyphicon glyphicon-heart red-text"></i> like</button>
+            </p>
+          </li>
+      {% endfor %}
+      </ul>
+    </li>
+{% endfor %}

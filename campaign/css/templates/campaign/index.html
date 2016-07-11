@@ -1,0 +1,243 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Free Bootstrap Themes by 365Bootstrap dot com - Free Responsive Html5 Templates">
+    <meta name="author" content="mahdi" >
+
+    <title>Jabril Ibrahim Abdulle</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="{% static 'campaign/css/bootstrap.min.css' %}"  type="text/css">
+
+	<!-- Owl Carousel Assets -->
+    <link href="{% static 'campaign/owl-carousel/owl.carousel.css' %}" rel="stylesheet">
+    <link href="{% static 'campaign/owl-carousel/owl.theme.css' %}" rel="stylesheet">
+
+	<!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'campaign/css/style.css' %}">
+	 <link href="{% static 'campaign/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen">
+
+	<!-- Custom Fonts -->
+    <link rel="stylesheet" href="{% static 'campaign/font-awesome-4.4.0/css/font-awesome.min.css' %}"  type="text/css">
+
+	<!-- jQuery and Modernizr-->
+	<script src="{% static 'campaign/js/jquery-2.1.1.js' %}"></script>
+
+	<!-- Core JavaScript Files -->
+    <script src="{% static 'campaign/js/bootstrap.min.js' %}"></script>
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<header>
+	{% include "campaign/partials/header.html" %}
+</header>
+
+  {% include "campaign/partials/featured.html" %}
+
+	<!-- /////////////////////////////////////////Content -->
+	<div id="page-content" class="index-page container">
+    <div class="row">
+      <div id="main-content"><!-- background not working -->
+        <div id="column-one" class="col-md-6">
+          <div class="box wrap-vid shadowed">
+
+            <div class="zoom-container">
+              <div class="zoom-caption">
+                <span class="youtube">Youtube</span>
+                <a href="#">
+                  <i class="fa fa-play icon-play" style="color: #fff"></i>
+                </a>
+                <p>{{featured_items.0.title}}</p>
+              </div>
+              <img src="{{featured_items.0.image}}">
+            </div>
+            <h3>{{featured_items.0.title}}</h3>
+
+ <!-- ################################################################## -->
+
+ <div class="box">
+   <div class="box-header header-vimeo">
+     <h2>Videos</h2>
+   </div>
+   <div class="box-content">
+     <div class="row">
+
+       <div class="col-md-6">
+         <div class="wrap-vid">
+           <div class="zoom-container">
+             <div class="zoom-caption">
+               <span class="vimeo">Vimeo</span>
+               <a href="single.html">
+                 <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
+               </a>
+               <p>{{featured_items.1.title}}</p>
+             </div>
+             <img src="{{featured_items.1.image}}" />
+           </div>
+           <h3 class="vid-name"><a href="#">{{featured_items.1.title}}</a></h3>
+         </div>
+         <p class="more">{{featured_items.1.description}}</p>
+       </div>
+
+       <div class="col-md-6">
+         {% for item in featured_items|slice:":2" %}
+           <div class="post wrap-vid">
+             <div class="zoom-container">
+               <div class="zoom-caption">
+                 <span class="{%if item.type == 'youtube' %}youtube{% else %}vimeo{% endif %}">
+                   {%if item.type == 'youtube' %}Youtube{% else %}Vimeo{% endif %}
+                 </span>
+                 <a href="single.html">
+                   <i class="fa fa-play-circle-o fa-3x" style="color: #fff"></i>
+                 </a>
+                 <p>{{item.title|slice:"0:14:"}}</p>
+               </div>
+               <img src="{{item.image}}" />
+             </div>
+             <div class="wrapper">
+               <h5 class="vid-name"><a href="#">{{item.title}}</a></h5>
+             </div>
+           </div>
+         {% endfor %}
+       </div>
+     </div>
+   </div>
+ </div>
+
+ <!-- ################################################################## -->
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div id="column-two" class="widget wid-vid shadowed">
+            <p><strong>Recent Videos</strong></p>
+            <hr/>
+            <div class="tab-content">
+              <div class="tab-pane fade in active">
+                {% for item in featured_items %}
+                  <div class="post wrap-vid">
+                    <div class="zoom-container">
+                      <div class="zoom-caption">
+                        <span class="{%if item.type == 'youtube' %}youtube{% else %}vimeo{% endif %}">
+                          {%if item.type == 'youtube' %}Youtube{% else %}Vimeo{% endif %}
+                        </span>
+                        <a href="#">
+                          <i class="fa fa-play-circle-o fa-3x" style="color:#fff;"></i>
+                        </a>
+                        <p>{{item.title|slice:"0:14:"}}</p>
+                      </div>
+                      <img src="{{item.image}}">
+                    </div>
+                    <div class="wrapper">
+                      <h5 class="vid-name"><a href="#">{{item.title}}</a></h5>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div id="column-three" class="widget wid-comment shadowed">
+            <p><strong>Social Media</strong></p>
+            <hr/>
+            {% for item in featured_items %}
+              <li><h5>{{item.title}}</h5></li>
+              <hr/>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+	</div>
+
+	<footer>
+		<div class="wrap-footer">
+			<div class="container">
+				<div class="row">
+
+				</div>
+			</div>
+		</div>
+		<div class="copy-right">
+			<p>Copyright 2015 - <a href="http://www.365bootstrap.com" target="_blank" rel="nofollow">Bootstrap Themes</a> Designed by 365Bootstrap.com</p>
+		</div>
+	</footer>
+	<!-- Footer -->
+
+	<!-- JS -->
+	<script src="{% static 'campaign/owl-carousel/owl.carousel.js' %}"></script>
+    <script>
+    $(document).ready(function() {
+      $("#owl-demo-1").owlCarousel({
+        autoPlay: 3000,
+        items : 1,
+        itemsDesktop : [1199,1],
+        itemsDesktopSmall : [400,1]
+      });
+	  $("#owl-demo-2").owlCarousel({
+        autoPlay: 3000,
+        items : 3,
+
+      });
+      var newheight = $("#column-one").height();
+    $("#column-two").height(newheight-20);
+    $("#column-three").height(newheight-20)
+    $(window).resize(function() {
+      $("#column-two").height(0);
+      $("#column-three").height(0)
+      $("#column-two").css('height','auto');
+      $("#column-three").css('height','auto');
+    });
+    });
+    </script>
+
+
+	<script type="text/javascript" src="{% static 'campaign/js/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
+	<script type="text/javascript" src="{% static 'campaign/js/locales/bootstrap-datetimepicker.fr.js' %}" charset="UTF-8"></script>
+	<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+        showMeridian: 1
+    });
+	$('.form_date').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+	$('.form_time').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 1,
+		minView: 0,
+		maxView: 1,
+		forceParse: 0
+    });
+</script>
+</body>
+</html>

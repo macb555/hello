@@ -1,0 +1,29 @@
+{% extends 'campaign/layout.html' %}
+{% load markdown_deux_tags %}
+{% block content %}
+<div id="page-content" class="index-page container">
+  <div class="row">
+    <div id="main-content"><!-- background not working -->
+      <div id="column-one" class="col-md-9">
+        <div class="box wrap-vid column-1">
+            <h1>Feedback</h1>
+            <h5>We really appreciate any feedback be a positive or negative. Please don't hesitate to tell us if we did something wrong or you have a better idea regarding our work.</h5>
+
+            <form	method="POST"	class="form feedbackform" id="feedbackform">{%	csrf_token	%}
+                      {{	form.as_p	}}
+                      <button	type="submit"	class="btn btn-primary">Send</button>
+            </form>
+        </div>
+      </div>
+      <div id="column-two" class="col-md-3">
+        <div class="box wrap-vid column-1">
+          {% include "campaign/partials/sidebar.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  comment_url = "/comment/{{post.pk}}"
+</script>
+{% endblock %}

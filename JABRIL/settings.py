@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'kts+d%(k4wh7pag%g2ss4^_cb31#%5w6)9x%w!+9#ky=91px@%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False #True
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -80,14 +80,14 @@ WSGI_APPLICATION = 'JABRIL.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+'''
 #POSTGRES
 DATABASES = {
     'default': {
@@ -99,7 +99,7 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default.
     }
 }
-'''
+
 #MARIADB
 DATABASES = {
     'default': {
@@ -112,7 +112,7 @@ DATABASES = {
     }
 }
 
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators

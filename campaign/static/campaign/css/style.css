@@ -6,7 +6,7 @@
 /* ------------------------------------Html-Body------------------------------- */
 /* ---------------------------------------------------------------------------- */
 //body {height: 100%; margin: 0;font-family: 'Ek Mukta', sans-serif;color: #666;/*background:#00CCCC;*//*#8CEAFF;*/ background:url(../images/bg2.jpg) fixed ;font-size: 15px;line-height: 1.6em;font-weight: 400;}
-body {height: 100%; margin: 0;font-family: 'Ek Mukta', sans-serif;color: #666;background:#00CCCC;/*#8CEAFF;*/ /*background:url(../images/bg2.jpg) fixed ;*/font-size: 15px;line-height: 1.6em;font-weight: 400;}
+body {height: 100%; margin: 0;font-family: 'Ek Mukta', sans-serif;color: #666;background-image: url('/static/campaign/images/BG.png');background-size:100%;background-repeat:no-repeat;background-color:#33CCDD;/*#8CEAFF;background:url(../images/bg2.jpg) fixed ;*/font-size: 15px;line-height: 1.6em;font-weight: 400;}
 html, body {width:100%; padding:0; margin:0;}
 
 ::-moz-selection{background:#000;color:#fff;text-shadow:none}
@@ -636,7 +636,15 @@ span.white-text {color:#fff;}
 */
 .registration-form-container { padding: 5em; padding-top: 5em; padding-bottom: 3em;background-size: 120%;margin: auto;border-radius: .8em;box-shadow: inset 1px 1px 10px black;}
 
-.inner-registration-container {background: #fff; padding: .5em;border-radius: .3em; margin: 12em; margin-top: 3em; margin-bottom: 3em;box-shadow: 1px 1px 10px black;}
+.inner-registration-container {background: #fff; padding-left: 9em; padding-right: 9em; padding-top: 4em; margin: 12em; margin-top: 3em; margin-bottom: 0;font-family: Arial, sans;/*box-shadow: 1px 1px 10px black;*/}
+.registration-form-header{padding-top: 4em;margin-left:12em;}
+.registration-form-header span.h2 {color:white;font-family: Arial, sans;}
+.fieldWrapper input {border-radius: 0;border: 2px groove lightgray;}
+
+.registration-header-personal {border-bottom: 2px groove lightgray;margin-bottom: 1.5em;padding-bottom: 1.5em;}
+
+.right-label-1{float:right; margin-top:-5em;margin-right: -7em;height: 120px;width: 84px;background-image: url('/static/campaign/images/numbers.png');background-size: 100%;background-repeat: no-repeat;}
+.right-label-1 p {margin: auto; padding-top: 1em;margin-left: 1em;}
 
 /*********************** transition *********************/
 .height-transition {

@@ -1,0 +1,38 @@
+{% extends 'campaign/layout.html' %}
+{% load markdown_deux_tags %}
+{% block content %}
+<div id="page-content" class="index-page container">
+  <div class="row">
+    <div id="main-content"><!-- background not working -->
+      <div id="column-one" class="col-md-9">
+        <div class="box wrap-vid">
+          {% if request.session.language == "so" %}
+            <h1>Arrimaha</h1>
+            {% if not posts %}<p>Wili waxba lama soo gelin.</p>{% endif %}
+          {% else %}
+            <h1>Issues</h1>
+            {% if not posts %}<p>No items added yet</p>{% endif %}
+          {% endif %}
+          {% for post in posts %}
+          <a href="{% url 'details' pk=post.pk %}">
+            <h5>{{post.title}}</h5>
+          </a>
+            <p>
+              {{post.description|slice:"0:100:"}}<br/>
+              Date: <strong>{{post.published_date}}</strong> | Likes: <strong>{{post.likes}}</strong> | By: <strong>{{post.author}}</strong>
+            </p>
+          {% endfor %}
+        </div>
+      </div>
+      <div id="column-two" class="col-md-3">
+        <div class="box wrap-vid">
+          {% include "campaign/partials/sidebar.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  comment_url = "/comment/{{post.pk}}"
+</script>
+{% endblock %}

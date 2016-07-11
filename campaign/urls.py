@@ -21,18 +21,9 @@ urlpatterns = [
     url(r'^manage/comments$', views.comments, name='comments'),
     url(r'^manage/comments/(?P<status>[0-9]+)$', views.comments, name='comments'),
 
-    #url(r'^register$', views.RegistrationView, name='register'),
-
     url(r'^join$', views.register, name='join'),
-    url(r'^location-registration$', views.register_location, name='register_location'),
-    url(r'^location-registration/update$', views.register_location, name='register_location_update'),
-    #url('^register/', CreateView.as_view(
-    #        template_name='campaign/partials/registration.html',
-    #        form_class=UserCreationForm,
-    #        success_url='/'
-    #)),
-    #url('^accounts/', include('django.contrib.auth.urls')),
-
+    url(r'^profile-registration$', views.register_profile, name='register_profile'),
+    url(r'^profile-registration/update$', views.register_profile, name='register_profile_update'),
 
     url(r'^post/(?P<pk>[0-9]+)/$', views.details, name='details'),
     url(r'^issues$', views.issues, name='issues'),
@@ -62,22 +53,6 @@ urlpatterns = [
     url(r'^language/(?P<language>[a-z]{2})', views.changeLanguage, name='language'),
 ]
 
-'''
-urlpatterns += [
-    url(r'^register/$', RegistrationView.as_view(), name='register'),
-    url(r'^register/done/$', auth_views.password_reset_done, {
-        'template_name': 'registration/initial_done.html',
-    }, name='register-done'),
-
-    url(r'^register/password/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', auth_views.password_reset_confirm, {
-        'template_name': 'registration/initial_confirm.html',
-        'post_reset_redirect': 'accounts:register-complete',
-    }, name='register-confirm'),
-    url(r'^register/complete/$', auth_views.password_reset_complete, {
-        'template_name': 'registration/initial_complete.html',
-    }, name='register-complete'),
-]
-'''
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

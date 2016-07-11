@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User, AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django_countries.fields import CountryField
 from easy_thumbnails.fields import ThumbnailerImageField
+from . import choices
 
 # Create your models here.
 class Category(models.Model):
@@ -102,11 +103,22 @@ class Message(models.Model):
     def __str__(self):
         return "From: " + self.email
 
-class Location(models.Model):
-    user =  models.OneToOneField(User)
-    current_country = CountryField()
-    current_city = models.CharField(max_length=30)
-    region_of_birth = models.CharField(max_length=30, choices=[("Awdal","Awdal"), ("Bakool","Bakoo"), ("Banaadir","Banaadir"), ("Bari","Bari"), ("Bay", "Bay"), ("Galguduud","Galguduud"),("Gedo","Gedo"), ("Hiiraan","Hiiraan"),("Jubada Dhexe","Jubada Dhexe"),("Jubada Hoose","Jubada Hoose"), ("Nugaal","Nugaal"), ("Sanaag","Sanaag"), ("Shabeelaha Dhexe", "Shabeelaha Dhexe"), ("Shabeelaha Hoose","Shabeelaha Hoose"), ("Sool","Sool"), ("Togdheer","Togdheer"), ("Waqooyi Galbeed", "Waqooyi Galbeed")])
+class Profile(models.Model):
+    user = models.OneToOneField(User)
+    mother_name = models.CharField(max_length=30, null=True, blank=True)
+    gender = models.CharField(max_length=10, choices=choices.GENDER, default='male')
+    region_of_birth = models.CharField(max_length=30, blank=True, null=True, choices=choices.REGIONS, default='Banaadir')
     city_of_birth = models.CharField(max_length=30)
+    marital_status = models.CharField(max_length=30, choices=choices.MARITAL, default='single')
+    current_country = CountryField()
+    city_of_residence = models.CharField(max_length=30)
+    phone_no = models.IntegerField(default=0)
     def __str__(self):
-        return str(self.user.username)+" lives in " + str(self.current_city) + ", "+ str(self.current_country.name)
+        if self.first_name and self.current_city:
+            return self.first_name + ' in '+ self.current_city
+        elif self.first_name and self.current_country:
+            return self.first_name + ' in '+ self.current_country
+        elif self.current_country:
+            return self.username + ' in '+ self.current_country
+        else:
+            return self.username

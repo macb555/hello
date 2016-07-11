@@ -1,0 +1,61 @@
+{% extends 'campaign/layout.html' %}
+{% block content %}
+<div id="page-content" class="index-page container">
+  <div class="row">
+    <div id="main-content"><!-- background not working -->
+      <div id="column-one" class="col-md-9">
+        <div class="box wrap-vid column-1">
+          <div class="post-detail">
+            <h1 class="page-title">Contact Infromation</h1>
+            <h5 class="head-title-2">Emails:</h5>
+            <ul>
+              {% for email in contacts.emails %}
+                <li>{{email}}</li>
+              {% endfor %}
+            </ul>
+            <h5 class="head-title-2">Social Media:</h5>
+            <strong>facebook</strong>
+            <ul>
+              {% for item in contacts.facebookPages %}
+                <li>{{item}}</li>
+              {% endfor %}
+            </ul>
+            <strong>twitter</strong>
+            <ul>
+              {% for item in contacts.twitter%}
+                <li>{{item}}</li>
+              {% endfor %}
+            </ul>
+            <strong>youtube</strong>
+            <ul>
+              {% for item in contacts.youtubeChannels %}
+                <li>{{item}}</li>
+              {% endfor %}
+            </ul>
+            <h5 class="head-title-2">Phones:</h5>
+            <ul>
+              {% for item in contacts.phones %}
+                <li>{{item}}</li>
+              {% endfor %}
+            </ul>
+            <h5 class="head-title-2">Websites:</h5>
+            <ul>
+              {% for item in contacts.websites %}
+                <li>{{item}}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div id="column-two" class="col-md-3">
+        <div class="box wrap-vid column-2">
+          {% include "campaign/partials/sidebar.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $("")
+</script>
+{% endblock %}

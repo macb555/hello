@@ -1,0 +1,101 @@
+{% extends 'campaign/layout.html' %}
+{% load markdown_deux_tags %}
+{% block content %}
+<div id="page-content" class="index-page container">
+  <div class="row">
+    <div id="main-content"><!-- background not working -->
+      <div id="column-one" class="col-md-9">
+        <div class="box wrap-vid column-1">
+          {% if post %}
+          <div class="post-detail">
+            <div class="row controls-holder">
+              <div class='col-sm-9'>
+                <h1>{{post.title}}</h1>
+                <p>
+                  {% if request.session.language== "so" %}Qoraaga:{% else %}Author:{% endif %} <strong>{{post.author}},</strong>
+                  {% if request.session.language== "so" %} waxaa la baahiyay:{% else %}published{% endif %}<strong>{{post.published_date}}</strong>
+                </p>
+              </div>
+              <div class="col-sm-3">
+                {% if user.is_authenticated %}
+                <button id="btn-like-post-{{post.pk}}" onclick="likePost({{post.pk}}, 'post')" class="btn btn-default btn-block like"> <i class="glyphicon glyphicon-thumbs-up blue-text"></i> like</button><button id="btn-like-post-{{post.pk}}" class="btn btn-default btn-block dislike" onclick="dislike('{{post.pk}}', 'post')"> <i class="glyphicon glyphicon glyphicon-thumbs-down red-text"></i> dislike</button>
+                <strong><span id="post-{{post.pk}}-likes-counter">{{post.likes}}</span></strong> reader{{post.likes|pluralize}} liked this.
+                {% else %}
+                <span class="text text-danger">Sign in to like</span>
+                {% endif %}
+              </div>
+            </div>
+
+            {% if post.video %}
+              <iframe class="post-video" width="640" height="360" src="https://www.youtube.com/embed/{{post.video.videoId}}" frameborder="0" allowfullscreen></iframe>
+            {% endif %}
+
+
+            {% markdown %}{{post.content}}{% endmarkdown %}
+            <hr/>
+          </div>
+          <h5 class="head-title">Comments</h5>
+            {% if post_comments %}
+            <ul class="list-unstyled comments" id="comments">
+            {% for comment in post_comments %}
+                <li class="comment">
+                  <div class="row">
+                    <div class='col-sm-10'>
+                      <strong>{{comment.user}}</strong> <em>said</em>: {% markdown %}{{comment.text}}{% endmarkdown %}{{comment.date}},
+                      <strong><span id="comment-{{comment.pk}}-likes-counter">{{comment.likes}}</span></strong> reader{{comment.likes|pluralize}} liked this.
+                    </div>
+                    <div class="col-sm-2 controls-holder">
+                      <button id="btn-like-comment-{{comment.pk}}" class="btn btn-default btn-block like" onclick="likePost({{comment.pk}}, 'comment')"> <i class="glyphicon glyphicon glyphicon-thumbs-up blue-text"></i> like</button><button id="btn-like-comment-{{comment.pk}}" class="btn btn-default btn-block dislike" onclick="dislike('{{comment.pk}}', 'comment')"> <i class="glyphicon glyphicon glyphicon-thumbs-down red-text"></i> dislike</button>
+                    </div>
+
+                </li>
+            {% endfor %}
+                <li id="lastcomment">
+                  {% if user.is_authenticated %}
+                  <form	method="POST"	class="form commentform" id="commentform">{%	csrf_token	%}
+                						{{	form.as_p	}}
+                            <button	type="submit"	class="btn btn-default">Comment</button>
+                	</form>
+                  {% else %}
+                  <strong>Please login to be able to post comment</strong>
+                  {% endif %}
+                </li>
+            </ul>
+            {% else %}
+            <ul class="list-unstyled comments" id="comments">
+              <li class='hidden'>This is hidden item</li>
+            </ul>
+              {% if user.is_authenticated %}
+                <form	method="POST"	class="form commentform" id="commentform">{%	csrf_token	%}
+                          {{	form.as_p	}}
+                          <button	type="submit"	class="btn btn-default">Comment</button>
+                </form>
+              {% else %}
+              <strong>Please login to be able to post comment</strong>
+              {% endif %}
+
+              </li>
+
+            {% endif %}
+          {% else %}
+
+          <div class="post-detail">
+            <h1>Sorry! Content is not available.</h1>
+          </div>
+
+          {% endif %}
+        </div>
+
+      </div>
+      <div id="column-two" class="col-md-3">
+        <div class="box wrap-vid column-1">
+          {% include "campaign/partials/sidebar.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  comment_url = "/comment/{{post.pk}}"
+</script>
+{% endblock %}

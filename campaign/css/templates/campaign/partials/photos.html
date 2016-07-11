@@ -1,0 +1,51 @@
+{% extends 'campaign/layout.html' %}
+{% block content %}
+
+<div id="page-content" class="index-page container">
+  <div class="row">
+    <!--<div id="main-content"> background not working -->
+
+        <div class="col-sm-8 box wrap-vid column-1 container">
+					<h1>Photos</h1>
+            <div class="row">
+              <div>
+                <img id="wide-image-preview" class='img-responsive preview-image-img' src="media/{{photos.0.photo}}" />
+                <button class="btn btn-default" disabled="true" id="prev-image">Prev</button>
+                <button class="btn btn-default pull-right" id="next-image">Next</button>
+              </div>
+            </div>
+						<div class="row">
+
+                <div class="row container-fluid">
+                  {% for image in photos|slice:":50" %}
+                  <div class="col-sm-4 thumbnail-container" style="margin-bottom:2em;"  onclick="showImage('media/{{image.photo}}')">
+      		          <div class="zoom-container">
+      		            <div class="zoom-caption">
+      		              <span class="youtube">Image</span>
+      		              <p>{{image.alt|slice:":14"}}</p>
+      		            </div>
+      		            <img id="thumb-{{image.pk}}" src="media/{% if image.photo.avatar %}{{image.photo.avatar}}{% else %}{{image.photo}}{% endif %}")/>
+                      <span class="hidden" id="image-{{image.pk}}-link" title="media/{{image.photo}}"></span>
+      		          </div>
+      						</div>
+
+  	              {% endfor %}
+                </div>
+
+            </div>
+					</div>
+
+    </div>
+  </div>
+
+<script>
+  function showImage(url){
+    $('#wide-image-preview').attr('src',url);
+  }
+  $('#next-image').click(function(e) {
+    e.preventDefault();
+    
+  });
+
+</script>
+{% endblock %}

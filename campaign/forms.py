@@ -44,16 +44,9 @@ class UserRegistrationForm(ModelForm):
         widgets = {
             'password': forms.PasswordInput(),
         }
-'''
-class RegistrationForm(forms.ModelForm):
 
+class ProfileForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ('email', )
-'''
-
-class LocationForm(forms.ModelForm):
-    class Meta:
-        model = Location
-        fields = ('current_country','current_city','region_of_birth','city_of_birth',)
-        widgets = {'country': CountrySelectWidget()}
+        model = Profile
+        fields = ('mother_name', 'gender', 'marital_status', 'current_country','city_of_residence','region_of_birth','city_of_birth', 'phone_no')
+        widgets = {'current_country': CountrySelectWidget()}

@@ -4,47 +4,93 @@
   <div class="row">
     <div id="main-content"><!-- background not working -->
       <div id="column-one" class="col-md-10">
-        <div class="box wrap-vid registration-form-container" style="background-image: url(/static/campaign/images/registration-bg.png)">
+        <!--<div class="box wrap-vid registration-form-container">-->
+
           <div class="post-detail">
-              <div class="inner-registration-container">
-              <h2>{% if request.session.language = "so" %}Diiwaangelin{% else %}Register{% endif %}</h2>
+            <div class="registration-form-header">
+              <span class='h2'>{% if request.session.language == "so" %}Foomka Diiwaangelinta{% else %}Registration Form{% endif %}</span>
+            </div>
+            <div class="inner-registration-container">
 
               {% if not user.is_authenticated %}
-                {% if userform and locationform %}
+                {% if userform %}
                 <!-- ############# LOGGIN FORM ############### -->
                 <div id="login-area">
+                  <div class="right-label-1">
+                    <p>1.2k</p>
+                  </div>
                   <form	method="POST"	class="form loginform" action="/join" id="loginform">{%	csrf_token	%}
-                    <h5>Personal Info</h5>
-                    {% for field in userform %}
-                        <div class="fieldWrapper">
-                            {{ field.errors }}
-                            {{ field.label_tag }}: {{ field }}
-                        </div>
-                    {% endfor %}
-                    <br>
-                    <h5>Location Info</h5>
-                    {% for field in locationform %}
-                        <div class="fieldWrapper">
-                            {{ field.errors }}
-                            {{ field.label_tag }}: {{ field }}
-                        </div>
-                    {% endfor %}
-                    <br>
-                    <button	type="submit"	class="btn btn-primary btn-block">{% if request.session.language = "so" %}Is Diiwaangeli{% else %}Register{% endif%}</button>
+                    <h5 class='registration-header-personal'>Personal Info</h5>
+
+                      <div class="fieldWrapper">
+                        <label for="id_email">{% if request.session.language == "so" %}Email-ka:{% else %}Email:{% endif %}</label>
+                        {{userform.email}}
+                      </div>
+                      <div class="fieldWrapper">
+                        <label for="id_first_name">{% if request.session.language == "so" %}Magacaaga:{% else %}First Name:{% endif %}</label>
+                        {{userform.first_name}}
+                      </div>
+                      <div class="fieldWrapper">
+                        <label for="id_last_name">{% if request.session.language == "so" %}Magaca Awoowgaa{% else %}Last Name:{% endif %}</label>
+                        {{userform.last_name}}
+                      </div>
+                      <div class="fieldWrapper">
+                        <label for="id_username">{% if request.session.language == "so" %}Magackugalka:{% else %}Username:{% endif %}</label>
+                        {{userform.username}}
+                      </div>
+                      <div class="fieldWrapper">
+                        <label for="id_password">{% if request.session.language == "so" %}Ereysireedka:{% else %}Password:{% endif %}</label>
+                        {{userform.password}}
+                      </div>
+                      <hr/>
+                      <div class="fieldWrapper">
+                        <label for="id_gender">{% if request.session.language == "so" %}Jinsiga:{% else %}Gender:{% endif %}</label>
+                        {{profileForm.gender}}
+                      </div>
+                      <div class="fieldWrapper">
+                        <label for="id_marital_status">{% if request.session.language == "so" %}Xaas ahaan:{% else %}Marital Status:{% endif %}</label>
+                        {{profileForm.marital_status}}
+                      </div>
+                      <div class="fieldWrapper">
+                        <label for="id_mother_name">{% if request.session.language == "so" %}Magaca Hooyada:{% else %}Mother's Name:{% endif %}</label>
+                        {{profileForm.mother_name}}
+                      </div>
+                      <div class="fieldWrapper">
+                        <label for="id_current_country">{% if request.session.language == "so" %}Dalka aad ku nooshahay:{% else %}Country of Residence:{% endif %}</label>
+                        {{profileForm.current_country}}
+                      </div>
+                      <div class="fieldWrapper">
+                        <label for="id_city_of_residence">{% if request.session.language == "so" %}Magaaladee{% else %}City of Residence:{% endif %}</label>
+                        {{profileForm.city_of_residence}}
+                      </div>
+                      <div class="fieldWrapper">
+                        <label for="id_region_of_birth">{% if request.session.language == "so" %}Gobolka aad ku dhalatay:{% else %}Region of Birth:{% endif %}</label>
+                        {{profileForm.region_of_birth}}
+                      </div>
+                      <div class="fieldWrapper">
+                        <label for="id_city_of_birth">{% if request.session.language == "so" %}Magaalada aad ku dhalatay:{% else %}City of Birth:{% endif %}</label>
+                        {{profileForm.city_of_birth}}
+                      </div>
+                      <div class="fieldWrapper">
+                        <label for="id_phone_no">{% if request.session.language == "so" %}Lambarka Taleefanka:{% else %}Phone No.:{% endif %}</label>
+                        {{profileForm.phone_no}}
+                      </div>
+                      <br>
+                      <button	type="submit"	class="btn btn-primary btn-block">{% if request.session.language == "so" %}Diiwaangeli{% else %}Register{% endif%}</button>
                   </form>
                 </div>
                 {% endif %}
               {% else %}
-                <h5>{% if request.session.language = "so" %}{{user.username|title}}! Cinwaankaaga ayaa kacsan{% else %}You are already logged in{% endif %}</h5>
-                <p>{% if request.session.language = "so" %}Ma dooneysaa in aad <a href="/logout">kabaxdo</a> cinwaankan?{% else %}Do you want to <a href="/logout">logout</a>?{% endif %}</p>
+                <h5>{% if request.session.language == "so" %}{{user.username|title}}! Cinwaankaaga ayaa kacsan{% else %}You are already logged in{% endif %}</h5>
+                <p>{% if request.session.language == "so" %}Ma dooneysaa in aad <a href="/logout">kabaxdo</a> cinwaankan?{% else %}Do you want to <a href="/logout">logout</a>?{% endif %}</p>
 
               {% endif %}
 
               <hr/>
             </div>
-          </div>
-        </div>
-      </div>
+          </div><!--post-detail-->
+        <!--</div>box wrap-vid-->
+      </div><!--column-one-->
 
 
     </div>
