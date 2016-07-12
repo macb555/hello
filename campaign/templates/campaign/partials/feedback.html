@@ -1,7 +1,6 @@
 {% extends 'campaign/layout.html' %}
 {% load markdown_deux_tags %}
 {% block content %}
-<div id="page-content" class="index-page container">
   <div class="row">
     <div id="main-content"><!-- background not working -->
       <div id="column-one" class="col-md-9">
@@ -22,8 +21,4 @@
       </div>
     </div>
   </div>
-</div>
-<script>
-  comment_url = "/comment/{{post.pk}}"
-</script>
 {% endblock %}

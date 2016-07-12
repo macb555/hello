@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^manage/comments$', views.comments, name='comments'),
     url(r'^manage/comments/(?P<status>[0-9]+)$', views.comments, name='comments'),
 
-    url(r'^join$', views.register, name='join'),
+    url(r'^join$', views.getNewUser, name='join'),
     url(r'^profile-registration$', views.register_profile, name='register_profile'),
     url(r'^profile-registration/update$', views.register_profile, name='register_profile_update'),
 

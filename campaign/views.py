@@ -4,6 +4,7 @@ from campaign.models import *
 from campaign.forms import *
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.db.models import Q, F
+from django.core.mail import send_mail
 
 # Create your views here.
 def index(request):
@@ -48,7 +49,7 @@ def register(request):
 
     if request.method == "POST":
         print("Got data from user")
-        
+
         userform = UserRegistrationForm(request.POST)
         profileForm = ProfileForm(request.POST)
         if userform.is_valid() and profileForm.is_valid():
@@ -122,7 +123,75 @@ def register_profile(request):
     profileForm = profileForm(initial={'country': 'SO'})
     return render(request, 'campaign/partials/register_profile.html', {'profileForm':profileForm})
 
+def getNewUser(request):
+    #check if user is logged in
+    print("User registration view:")
+    #If user posts a form
+    if request.method=='POST':
+        if not request.user.is_authenticated():
+            print("No logged in user")
+            form = UserInfoForm(request.POST)
+            if form.is_valid():
+                print("User provided a valid form")
+                #if not, check if username or email exists in the database
+                username = request.POST.get('username')
+                email = request.POST.get('email')
+                password = request.POST.get('password')
+                f_name = request.POST.get('first_name')
+                l_name = request.POST.get('last_name')
 
+                newUser = User.objects.filter(Q(username=username)|Q(email=email))
+                #if there is some other user with this username or email
+                if len(newUser)>0:
+                    print("There is already another user with:")
+                    #If the email is already registered
+                    if newUser[0].email == email:
+                        print("This email")
+                        loginForm = LoginForm()
+                        msg = {"type":"danger","so":"Waan ka xunnahay, email-kan horay ayaa loo diiwaangeliyay. Fadlan midkale isticmaal.","en":"Sorry, this email is already registered. Please use a different email"}
+                        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+                    #If the username was already taken
+                    elif newUser.username == username:
+                        print("This username")
+                        loginForm = LoginForm()
+                        msg = {"type":"danger","so":"Waan ka xunnahay, magackugalkan(username-kan) horay ayaa loo diiwaangeliyay. Fadlan isku day markale adigoo adeegsanaya magackugal kale.","en":"Sorry, this username is already registered. Please use a different username and try again"}
+                        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+                #if not, create new user and set active to false
+                elif len(newUser)==0:
+                    print("Your username and email are OK")
+                    user = User.objects.create_user(username=username, password=password, first_name=f_name, last_name=l_name, email=email)
+                    user.is_active = False
+                    user.save()
+                    send_mail('Subject here','Here is the message.','boolow5@hotmail.com',['boolow5@gmail.com'],fail_silently=False)
+                    #user = authenticate(username=username, password=password)
+                    #auth_login(request, user)
+                    loginForm = LoginForm()
+                    msg = {"type":"info","so":"Waad ku guuleysatay isdiiwaangelinta Hal Qaran. Si aad noogu xaqiijiso in aad email-kan leedahay, fariinta aan kusoo dirnay fur kadib riix mareegta kujirta si laguugu fasax adeegyada uu bogga siiyo xubnaha Hal Qaran","en":"You have successfully registered to Hal Qaran"}
+                    return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+            #If the form is not valid
+            return render(request, 'campaign/partials/registration1.html', {'userform':form})
+    #If the user requested a form
+    userform=UserInfoForm()
+    print("Rendering a fresh user registration form")
+    return render(request, 'campaign/partials/registration1.html', {'userform':userform})
+
+def getNewPerson(request):
+    #check if user is loggedin.
+    #   if loggedin, check if user is active
+    #       if not active, ask to varify and send varification code.
+    #   if active, show the form to be filled.
+    #       if successfully filled, take him/her to location form
+    #   if not loggedin, ask to Loggin
+    pass
+
+def getNewLocation(request):
+    #check if user is loggedin.
+    #   if loggedin, check if user is active
+    #       if not active, ask to varify and send varification code.
+    #   if active, show the form to be filled
+    #       if successfully filled, tell him/her the registration finished message.
+    #   if not loggedin, ask to loggin.
+    pass
 
 def logout(request):
     request.session.setdefault('language','so')
@@ -392,3 +461,9 @@ def getLanguage(request):
         return current_language
     else:
         return 'en'
+
+################ SIGNALS ################
+'''@receiver(user_signed_up)
+def user_signed_up_(request, user, **kwargs):
+    user.is_active = False
+    user.save()'''

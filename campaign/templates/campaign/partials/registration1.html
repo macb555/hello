@@ -1,0 +1,102 @@
+{% extends 'campaign/layout.html' %}
+{% block content %}
+  <div class="row">
+    <div id="main-content"><!-- background not working -->
+      <div id="column-one" class="col-md-10">
+        <!--<div class="box wrap-vid registration-form-container">-->
+
+          <div class="post-detail">
+            <div class="registration-form-header">
+              <span class='h2'>{% if request.session.language == "so" %}Foomka Diiwaangelinta{% else %}Registration Form{% endif %}</span>
+            </div>
+            <div class="inner-registration-container">
+
+              {% if not user.is_authenticated %}
+                {% if userform %}
+                <!-- ############# LOGGIN FORM ############### -->
+                <div id="login-area">
+                  <div class="right-label-1">
+                    <p>1.2k</p>
+                  </div>
+                  <form	method="POST"	class="form loginform" action="/join" id="loginform">{%	csrf_token	%}
+                    <h5 class='registration-header-personal'>Personal Info</h5>
+
+                    {% if userform.errors %}
+                        {% for error in userform.non_field_errors %}
+                            <div class="alert alert-error">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% csrf_token %}
+
+                    <div class="fieldWrapper">
+                      <label for="id_first_name">{% if request.session.language == "so" %}Magacaaga:{% else %}First Name:{% endif %}</label>
+                      {{userform.first_name}}
+                      {% for err in userform.first_name.errors %}
+                        <div class="alert alert-danger">
+                          <strong>{{err|escape}}</strong>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    <div class="fieldWrapper">
+                      <label for="id_last_name">{% if request.session.language == "so" %}Magaca Awoowgaa{% else %}Last Name:{% endif %}</label>
+                      {{userform.last_name}}
+                      {% for err in userform.last_name.errors %}
+                        <div class="alert alert-danger">
+                          <strong>{{err|escape}}</strong>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    <div class="fieldWrapper">
+                      <label for="id_email">{% if request.session.language == "so" %}Email-ka:{% else %}Email:{% endif %}</label>
+                      {{userform.email}}
+                      {% for err in userform.email.errors %}
+                        <div class="alert alert-danger">
+                          <strong>{{err|escape}}</strong>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    <div class="fieldWrapper">
+                      <label for="id_username">{% if request.session.language == "so" %}Magackugalka:{% else %}Username:{% endif %}</label>
+                      {{userform.username}}
+                      {% for err in userform.username.errors %}
+                        <div class="alert alert-danger">
+                          <strong>{{err|escape}}</strong>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    <div class="fieldWrapper">
+                      <label for="id_password">{% if request.session.language == "so" %}Ereysireedka:{% else %}Password:{% endif %}</label>
+                      {{userform.password}}
+                      {% for err in userform.password.errors %}
+                        <div class="alert alert-danger">
+                          <strong>{{err|escape}}</strong>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    <hr/>
+
+                      <button	type="submit"	class="btn btn-primary btn-block">{% if request.session.language == "so" %}Diiwaangeli{% else %}Register{% endif%}</button>
+                  </form>
+                </div>
+                {% endif %}
+              {% else %}
+                <h5>{% if request.session.language == "so" %}{{user.username|title}}! Cinwaankaaga ayaa kacsan{% else %}You are already logged in{% endif %}</h5>
+                <p>{% if request.session.language == "so" %}Ma dooneysaa in aad <a href="/logout">kabaxdo</a> cinwaankan?{% else %}Do you want to <a href="/logout">logout</a>?{% endif %}</p>
+
+              {% endif %}
+
+              <hr/>
+            </div>
+          </div><!--post-detail-->
+        <!--</div>box wrap-vid-->
+      </div><!--column-one-->
+
+
+    </div>
+  </div>
+
+
+{% endblock %}

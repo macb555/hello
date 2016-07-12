@@ -1,11 +1,11 @@
 {% extends 'campaign/layout.html' %}
 {% load markdown_deux_tags %}
 {% block content %}
-<div id="page-content" class="index-page container">
   <div class="row">
     <!--<div id="main-content"> background not working -->
       <div id="column-one" class="col-md-9">
         <div class="box wrap-vid column-1">
+          {% if user.is_authenticated and user.is_active %}
           <h5 class="head-title">{{title}}</h5>
           <ul class="list-unstyled comments" id="comments">
             {% for comment in comments %}
@@ -22,18 +22,16 @@
             {% endfor %}
           </ul>
         </div>
-
+        {% else %}
+          <h5>Access Denied!</h5>
+          <p>Sorry, you don't have access to this section of the site.</p>
+        {% endif %}
       </div>
       <div id="column-two" class="col-md-3">
         <div class="box wrap-vid column-2">
-          <h5>Latest on Social Media</h5>
           {% include "campaign/partials/sidebar.html" %}
         </div>
       </div>
     </div>
   </div>
-</div>
-<script>
-  $("")
-</script>
 {% endblock %}

@@ -162,6 +162,8 @@ header{background:#cfc;//#3a6fa9;}
 #page-content{padding: 0;}
 #page-content.index-page, #page-content.single-page, #page-content.archive-page{margin-top: 20px;}
 
+#page-content .bottom-city {background-image: url('/static/campaign/images/City.png');background-size: 100%;background-repeat: no-repeat; background-position: bottom;margin-bottom: -1em;padding-bottom: 9em;margin-left: -6em;margin-right: -6em;}
+
 .archive-page {}
 .archive-page .box .zoom-container{max-width: 250px;display: inline-block;float: left;margin-right: 5px;}
 
