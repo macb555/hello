@@ -19,7 +19,7 @@
                     <p>1.2k</p>
                   </div>
                   <form	method="POST" role='form' class="form loginform" id="loginform">{%	csrf_token	%}
-                    <img class="img-responsive" src="/static/campaign/images/step3.png">
+                    <img class="img-responsive steps-img" src="/static/campaign/images/step3.png">
                     <h5 class='registration-header-personal'>Personal Info</h5>
 
                     {% if locationform.errors %}
@@ -30,7 +30,6 @@
                         {% endfor %}
                     {% endif %}
 
-                    {% csrf_token %}
 
                     <div class="fieldWrapper">
                       <label for="id_current_country">{% if request.session.language == "so" %}Dalka aad ku nooshahay:{% else %}Current Country:{% endif %}</label>

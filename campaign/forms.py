@@ -74,3 +74,7 @@ class LocationInfoForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('current_country','city_of_residence', 'region_of_birth', 'city_of_birth',)
+
+class VerficationForm(forms.Form):
+    class Meta:
+        verification_code = forms.CharField(label='Verification Code', max_length=100)

@@ -1,0 +1,60 @@
+{% extends 'campaign/layout.html' %}
+{% block content %}
+
+  <div class="row">
+    <!--<div id="main-content"> background not working -->
+      <div id="column-one" class="col-md-9">
+        <div class="box wrap-vid column-1">
+
+          {% if message %}
+            <div class="alert alert-{{message.type}}">
+              <strong>
+                {% if request.session.language = "so" %}{% if message.type = 'danger' %}Cillad{% else %}Fariin{% endif %}:</strong> {{message.so}}{% else %}{% if message.type = 'danger' %}Error{% else %}Info{% endif %}:</strong> {{message.en}}{% endif %}
+            </div>
+          {% endif %}
+          <h5>{% if request.session.language == "so" %}Halkan Ka Xaqiiji Cinwaankaaga{% else %}Verfy Your Account Here{% endif %}</h5>
+          {% if verificationform %}
+          <form	method="POST" role='form' class="form loginform" id="loginform">{%	csrf_token	%}
+            {% if verificationform.errors %}
+                {% for error in verificationform.non_field_errors %}
+                    <div class="alert alert-error">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <br/>
+
+            <div class="fieldWrapper">
+              <label for="id_verification_code">{% if request.session.language == "so" %}Qoraal sireedka:{% else %}Verfication code:{% endif %}</label>
+              {{verificationform.current_country}}
+              {% for err in verificationform.verification_code.errors %}
+                <div class="alert alert-danger">
+                  <strong>{{err|escape}}</strong>
+                </div>
+              {% endfor %}
+            </div>
+            <button	type="submit"	class="btn btn-primary btn-block">{% if request.session.language == "so" %}Xaqiiji Cinwaankeyga{% else %}Verify my account{% endif%}</button>
+          </form>
+          {% endif %}
+          <hr/>
+          <h5>Links:</h5>
+          <ul class="list-inline">
+            <li>{% if request.session.language = "so" %}<a href="/">Hoyga</a>{% else %}<a href="/">Home</a>{% endif %}</li>
+            <li>{% if request.session.language = "so" %}<a href="/issues">Arimaha</a>{% else %}<a href="/issues">Issues</a>{% endif %}</li>
+            <li>{% if request.session.language = "so" %}<a href="/feed">Dhamaan</a>{% else %}<a href="/feed">Feed</a>{% endif %}</li>
+            <li>{% if request.session.language = "so" %}<a href="/events">Dhacdooyinka</a>{% else %}<a href="/events">Events</a>{% endif %}</li>
+            <li>{% if request.session.language = "so" %}<a href="/about">Ku Saabsan</a>{% else %}<a href="/about">About</a>{% endif %}</li>
+          </ul>
+        </div>
+
+      </div>
+      <div id="column-two" class="col-md-3">
+        <div class="box wrap-vid column-2">
+          <h5>Latest on Social Media</h5>
+          {% include "campaign/partials/sidebar.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -188,6 +188,7 @@ THUMBNAIL_ALIASES = {
 }
 
 #######################  SITE VARIABLES ###################
+SITE_DOMAIN = 'localhost:8000'
 SITE_NAME = {"so":"Hal Qaran", "en":"Hal Qaran"}
 SITE_MOTO = {"so":"Horumar iyo Hal Qaran baan Rabnaa!", "en":"We need development and Hal Qaran"}
 SITE_DESCRIPTION = {"so":"Bogga Rasmiga ah ee Hal Qaran", "en":"The official page for Hal Qaran Movement (HQM)."}

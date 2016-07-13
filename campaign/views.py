@@ -41,7 +41,7 @@ def login(request):
             return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "post":{"pk":0}})
         else:
             loginForm = LoginForm()
-            msg = {'type':'danger','so':"Waan kaxunnahay cinwaankan wuu xiran yahay.", 'en':'Sorry, Your account is not active.'}
+            msg = {'type':'danger','so':"Waan kaxunnahay cinwaankan wili uma fasaxno adeegyada, hadii aad dooneyso riix mareegta kujirta emailka laguugu soo diray xiligi aad diiwaangelinta sameyneysay. Waana ka xunnahay in sidaan dhacdo..", 'en':'Sorry, Your account is not active. Please open the email we sent you during the registration and use the link inside.'}
             return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
     else:
         posts = Post.objects.filter(language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
@@ -172,13 +172,14 @@ def getNewUser(request):
                     user.is_active = False
                     user.save()
                     new_user_profile = Profile.objects.create(user=user)
-                    new_user_profile.activation_code = generate_unique_code()
-                    try:
-                        sendVarificationEmail(request, user, new_user_profile.activation_code)
-                    except:pass
+                    new_user_profile.activation_code = str(uuid.uuid4())
+                    new_user_profile.save()
+                    sendVarificationEmail(request, user, new_user_profile.activation_code)
+
                     loginForm = LoginForm()
-                    msg = {"type":"info","so":"Waad ku guuleysatay iska diiwaangelinta Hal Qaran. Si aad noogu xaqiijiso in aad email-kan leedahay, fariinta aan kusoo dirnay fur kadib riix mareegta kujirta si laguugu fasaxo adeegyada ay helaan xubnaha Hal Qaran","en":"You have successfully registered to Hal Qaran. To varify this email belongs to you, open the email we sent you and click the link in the message."}
-                    return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+                    verificationform = VerficationForm()
+                    msg = {"type":"info","so":"Waad ku guuleysatay iska diiwaangelinta Hal Qaran. Si aad noogu xaqiijiso in aad email-kan leedahay, fariinta aan kusoo dirnay fur kadib isticmaal qoraalka sirta ah ee kujira si laguugu fasaxo adeegyada ay helaan xubnaha Hal Qaran","en":"You have successfully registered to Hal Qaran. To varify this email belongs to you, open the email we sent you and use secret code in the message."}
+                    return render(request, 'campaign/partials/verification-message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "verificationform":verificationform})
             #If the form is not valid
             print("The form is invalid")
             return render(request, 'campaign/partials/registration1.html', {'userform':form, 'usercounter':allUsers})
@@ -217,25 +218,27 @@ def getNewPerson(request, serialNo):
         return redirect('login')
 
 
-def varifyUser(request, user, varification_code):
-    if request.user.is_authenticated():
-        print("")
-        if request.user.is_active():
-            return redirect('index')
-        else:
-            profile = Profile.objects.get(user=request.user)
-            if profile.activation_code == varification_code:
-                print("Your serial no is correct")
-                profile.user.is_active = True
-                profile.save()
-                return redirect('getNewPerson')
+def varifyUser(request, pk, activation_code):
+    if not request.user.is_authenticated():
+        user = User.objects.filter(pk=pk)
+        if len(user):
+            form = VerficationForm(request.POST)
+            if user[0].is_active:
+                return redirect('index')
             else:
-                loginForm = LoginForm()
-                msg = {"type":"danger","so":"Waan ka xunnahay, lambarka xaqiijinta aad isticmaashay ma ahan mid sax ah. Hadii aad u aragto arintan cillad fadlan la xiriir maamulka boggan.","en":"Sorry, you have used an invalid activation number. If you think this is related to some other problem, please contact the this page's administrator."}
-                return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
-    else:
-        print("Sorry, no loggedin user to varify")
-        print("Redirecting to login page")
+                if user[0].profile.activation_code == activation_code:
+                    print("Your serial no is correct")
+                    user[0].profile.user.is_active = True
+                    user[0].profile.save()
+                    return redirect('getNewPerson')
+                else:
+                    loginForm = LoginForm()
+                    msg = {"type":"danger","so":"Waan ka xunnahay, lambarka xaqiijinta aad isticmaashay ma ahan mid sax ah. Hadii aad u aragto arintan cillad fadlan la xiriir maamulka boggan.","en":"Sorry, you have used an invalid activation number. If you think this is related to some other problem, please contact the this page's administrator."}
+                    return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+        loginForm = LoginForm()
+        msg = {"type":"danger","so":"Waan ka xunnahay, aqoonsiga qofka aad soo dalbatay ma ahan mid jira.","en":"Sorry, The id number for this user is invalid."}
+        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+
 
 
 def getNewLocation(request):
@@ -539,12 +542,13 @@ def sendVarificationEmail(request, user, activation_code):
     subject = "Welcome to Hal Qaran"
     sender = settings.EMAIL_HOST_USER
     receiver = user.email
-    site_domain = settings.SITE_DOMAIN
-    url=site_domain+"/activate/"+activation_code
+    code = activation_code
+    print("*************************** ACTIVATION CODE *******************************")
+    print(code)
     ctx = {
         "user":user.first_name,
         "date":timezone.now(),
-        "url":url
+        "code":code
         }
     if request.session.get('language', 'so') == 'so':
         message = get_template('registration/so-email.html').render(Context(ctx))
@@ -556,6 +560,29 @@ def sendVarificationEmail(request, user, activation_code):
     msg.content_subtype = 'html'
     msg.send()
     return 1
+
+def resendVarificationCode(request, email):
+    user = User.objects.filter(email=email)
+    if not len(user) == 0:
+        #got user
+        profile = Profile.objects.get(user=user[0])
+        sendVarificationEmail(request, user[0], profile.activation_code)
+        loginForm = LoginForm()
+        msg = {
+            'type':'info',
+            'so':"Lambarka xaqiijinta markale ayaa laguu soo diray. Hadii aad weyso wax fariin ah waxa ay macnaheedu noqoneysaa in email-kaaga aadan si sax ah u gelin. Hadii aad arintan cillad u aragto fadlan nala soo socodsii, anagaa kaa caawin doonno furitaanka adeegaaga.",
+            'en':'You activation code is resent to your email. If you don\'t get this email it means your email was not correct. If you think this another error, please contact us to help you activate your account.'
+            }
+        return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "loginform":loginForm})
+    else:
+        loginForm = LoginForm()
+        msg = {
+            'type':'info',
+            'so':"Waan ka xunnahay email-ka aad gelisay majirto qof ku diiwaansan. Fadlan iska hubi oo markale ku celi.",
+            'en':'Sorry, this email does\'t belong to any of our users. Please make sure you have written the correct email and try again.'
+            }
+        return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "loginform":loginForm})
+
 
 def generate_unique_code():
     return uuid.uuid4()

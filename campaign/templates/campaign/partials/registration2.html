@@ -19,7 +19,7 @@
                     <p>1.2k</p>
                   </div>
                   <form	method="POST" role='form' class="form loginform" id="loginform">{%	csrf_token	%}
-                    <img class="img-responsive" src="/static/campaign/images/step2.png">
+                    <img class="img-responsive steps-img" src="/static/campaign/images/step2.png">
                     <h5 class='registration-header-personal'>{% if request.session.language == "so" %}Macluumaadka Shakhsiyeed:{% else %}Personal Info{% endif %}</h5>
 
                     {% if personalform.errors %}
