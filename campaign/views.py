@@ -7,7 +7,7 @@ from django.db.models import Q, F
 from django.core.mail import EmailMessage
 from django.utils import timezone
 from JABRIL import settings
-
+import uuid
 
 from django.template import Context
 from django.template.loader import render_to_string, get_template
@@ -31,8 +31,6 @@ def loginPage(request):
 
 def login(request):
     request.session.setdefault('language','so')
-
-
     username = request.POST.get('username')
     password = request.POST.get('password')
     user = authenticate(username=username, password=password)
@@ -132,13 +130,16 @@ def register_profile(request):
     return render(request, 'campaign/partials/register_profile.html', {'profileForm':profileForm})
 
 def getNewUser(request):
+    request.session.setdefault('language','so')
     #check if user is logged in
     print("User registration view:")
+    allUsers = User.objects.all().count()
     #If user posts a form
     if request.method=='POST':
         if not request.user.is_authenticated():
             print("No logged in user")
             form = UserInfoForm(request.POST)
+
             if form.is_valid():
                 print("User provided a valid form")
                 #if not, check if username or email exists in the database
@@ -171,32 +172,49 @@ def getNewUser(request):
                     user.is_active = False
                     user.save()
                     new_user_profile = Profile.objects.create(user=user)
+                    new_user_profile.activation_code = generate_unique_code()
                     try:
-                        sendVarificationEmail(request, user)
+                        sendVarificationEmail(request, user, new_user_profile.activation_code)
                     except:pass
-                    #user = authenticate(username=username, password=password)
-                    #auth_login(request, user)
                     loginForm = LoginForm()
-                    msg = {"type":"info","so":"Waad ku guuleysatay isdiiwaangelinta Hal Qaran. Si aad noogu xaqiijiso in aad email-kan leedahay, fariinta aan kusoo dirnay fur kadib riix mareegta kujirta si laguugu fasax adeegyada uu bogga siiyo xubnaha Hal Qaran","en":"You have successfully registered to Hal Qaran"}
+                    msg = {"type":"info","so":"Waad ku guuleysatay iska diiwaangelinta Hal Qaran. Si aad noogu xaqiijiso in aad email-kan leedahay, fariinta aan kusoo dirnay fur kadib riix mareegta kujirta si laguugu fasaxo adeegyada ay helaan xubnaha Hal Qaran","en":"You have successfully registered to Hal Qaran. To varify this email belongs to you, open the email we sent you and click the link in the message."}
                     return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
             #If the form is not valid
             print("The form is invalid")
-            return render(request, 'campaign/partials/registration1.html', {'userform':form})
+            return render(request, 'campaign/partials/registration1.html', {'userform':form, 'usercounter':allUsers})
     #If the user requested a form
     userform=UserInfoForm()
     print("Rendering a fresh user registration form")
-    return render(request, 'campaign/partials/registration1.html', {'userform':userform})
+    return render(request, 'campaign/partials/registration1.html', {'userform':userform, 'usercounter':allUsers})
 
 def getNewPerson(request, serialNo):
+    request.session.setdefault('language','so')
     #check if user is loggedin.
     if request.user.is_authenticated() and request.user.is_active():
         form = PersonalInfoForm(request.POST)
+        allUsers = User.objects.all().count()
         if form.is_valid():
-            pass
+            user = request.user
+            try:
+                profile = Profile.objects.get(user=user)
+            except:
+                profile = Profile.objects.create(user=user)
+            mother_name = request.POST.get('mother_name')
+            gender = request.POST.get('gender')
+            marital_status = request.POST.get('marital_status')
+            phone_no = request.POST.get('phone_no')
 
+            profile.mother_name = mother_name
+            profile.gender = gender
+            profile.marital_status = marital_status
+            profile.phone_no = phone_no
+            profile.registration_step = 1
+
+            profile.save()
+            return redirect('getNewLocation')
+        return render(request, 'campaign/partials/registration2.html', {'personalform':form, 'usercounter':allUsers})
     else:
-        print("Sorry, you need to activate and loggin to continue.")
-        print("Redirecting to login page")
+        return redirect('login')
 
 
 def varifyUser(request, user, varification_code):
@@ -205,31 +223,42 @@ def varifyUser(request, user, varification_code):
         if request.user.is_active():
             return redirect('index')
         else:
-            if serialNo == '123354':
+            profile = Profile.objects.get(user=request.user)
+            if profile.activation_code == varification_code:
                 print("Your serial no is correct")
-                if not user.is_active:
-                    print("The user is not active")
-                    print("Activating user")
-                    print("Redirecting to step two page")
-                else:
-                    print("User already active, ignonring activation process.")
-                    print("Redirecting to home page")
+                profile.user.is_active = True
+                profile.save()
+                return redirect('getNewPerson')
             else:
-                print("Sorry your activation code is invalid")
-                print("Redirecting to resend varification page")
+                loginForm = LoginForm()
+                msg = {"type":"danger","so":"Waan ka xunnahay, lambarka xaqiijinta aad isticmaashay ma ahan mid sax ah. Hadii aad u aragto arintan cillad fadlan la xiriir maamulka boggan.","en":"Sorry, you have used an invalid activation number. If you think this is related to some other problem, please contact the this page's administrator."}
+                return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
     else:
         print("Sorry, no loggedin user to varify")
         print("Redirecting to login page")
 
 
 def getNewLocation(request):
-    #check if user is loggedin.
-    #   if loggedin, check if user is active
-    #       if not active, ask to varify and send varification code.
-    #   if active, show the form to be filled
-    #       if successfully filled, tell him/her the registration finished message.
-    #   if not loggedin, ask to loggin.
-    pass
+    if request.user.is_authenticated() and request.user.is_active():
+        if registration_step > 1:
+            form = LocationInfoForm(request.POST)
+            allUsers = User.objects.all().count()
+            if form.is_valid():
+                user = request.user
+                location = Profile.objects.get(user=user)
+
+                location.current_country = request.POST.get('current_country')
+                location.city_of_residence = request.POST.get('city_of_residence')
+                location.region_of_birth = request.POST.get('region_of_birth')
+                location.city_of_birth = request.POST.get('city_of_birth')
+
+                location.save()
+        else:
+            form = LocationInfoForm()
+            return render(request, 'campaign/partials/registration3.html', {'locationform':form, 'usercounter':allUsers})
+    return redirect('login')
+
+
 
 def logout(request):
     request.session.setdefault('language','so')
@@ -506,11 +535,12 @@ def user_signed_up_(request, user, **kwargs):
     user.is_active = False
     user.save()'''
 
-def sendVarificationEmail(request, user):
+def sendVarificationEmail(request, user, activation_code):
     subject = "Welcome to Hal Qaran"
     sender = settings.EMAIL_HOST_USER
     receiver = user.email
-    url='li1487-184.members.linode.com'
+    site_domain = settings.SITE_DOMAIN
+    url=site_domain+"/activate/"+activation_code
     ctx = {
         "user":user.first_name,
         "date":timezone.now(),
@@ -526,3 +556,6 @@ def sendVarificationEmail(request, user):
     msg.content_subtype = 'html'
     msg.send()
     return 1
+
+def generate_unique_code():
+    return uuid.uuid4()

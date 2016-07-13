@@ -656,8 +656,8 @@ span.white-text {color:#fff;}
 
 .registration-header-personal {border-bottom: 2px groove lightgray;margin-bottom: 1.5em;padding-bottom: 1.5em;}
 
-.right-label-1{float:right; margin-top:-5em;margin-right: -10%;height: 120px;width: 84px;background-image: url('/static/campaign/images/numbers.png');background-size: 100%;background-repeat: no-repeat;}
-.right-label-1 p {margin: auto; padding-top: 1em;margin-left: 2%;}
+.right-label-1{float:right; margin-top:-5em;margin-right: 2%;height: 120px;width: 84px;background-image: url('/static/campaign/images/numbers.png');background-size: 100%;background-repeat: no-repeat;}
+.right-label-1 p {margin: auto; padding-top: 1em;margin-left: 20px}
 
 /*********************** transition *********************/
 .height-transition {

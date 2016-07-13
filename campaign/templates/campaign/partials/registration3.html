@@ -12,18 +12,18 @@
             <div class="inner-registration-container">
 
               {% if not user.is_authenticated %}
-                {% if userform %}
+                {% if locationform %}
                 <!-- ############# LOGGIN FORM ############### -->
                 <div id="login-area">
                   <div class="right-label-1">
-                    <p>{{usercounter}}</p>
+                    <p>1.2k</p>
                   </div>
-                  <form	method="POST" role='form'	class="form loginform" id="loginform">{%	csrf_token	%}
-                    <img class="img-responsive" src="/static/campaign/images/step1.png">
-                    <h5 class='registration-header-personal'>{% if request.session.language == "so" %}Macluumaadka Adeegsadaha:{% else %}User Info{% endif %}</h5>
+                  <form	method="POST" role='form' class="form loginform" id="loginform">{%	csrf_token	%}
+                    <img class="img-responsive" src="/static/campaign/images/step3.png">
+                    <h5 class='registration-header-personal'>Personal Info</h5>
 
-                    {% if userform.errors %}
-                        {% for error in userform.non_field_errors %}
+                    {% if locationform.errors %}
+                        {% for error in locationform.non_field_errors %}
                             <div class="alert alert-error">
                                 <strong>{{ error|escape }}</strong>
                             </div>
@@ -33,45 +33,36 @@
                     {% csrf_token %}
 
                     <div class="fieldWrapper">
-                      <label for="id_first_name">{% if request.session.language == "so" %}Magacaaga(first name):{% else %}First Name:{% endif %}</label>
-                      {{userform.first_name}}
-                      {% for err in userform.first_name.errors %}
+                      <label for="id_current_country">{% if request.session.language == "so" %}Dalka aad ku nooshahay:{% else %}Current Country:{% endif %}</label>
+                      {{locationform.current_country}}
+                      {% for err in locationform.current_country.errors %}
                         <div class="alert alert-danger">
                           <strong>{{err|escape}}</strong>
                         </div>
                       {% endfor %}
                     </div>
                     <div class="fieldWrapper">
-                      <label for="id_last_name">{% if request.session.language == "so" %}Magaca Awoowgaa(last name):{% else %}Last Name:{% endif %}</label>
-                      {{userform.last_name}}
-                      {% for err in userform.last_name.errors %}
+                      <label for="id_city_of_residence">{% if request.session.language == "so" %}Magaalada aad degan tahay:{% else %}City of Residence:{% endif %}</label>
+                      {{locationform.city_of_residence}}
+                      {% for err in locationform.city_of_residence.errors %}
                         <div class="alert alert-danger">
                           <strong>{{err|escape}}</strong>
                         </div>
                       {% endfor %}
                     </div>
                     <div class="fieldWrapper">
-                      <label for="id_email">{% if request.session.language == "so" %}Email-ka:{% else %}Email:{% endif %}</label>
-                      {{userform.email}}
-                      {% for err in userform.email.errors %}
+                      <label for="id_region_of_birth">{% if request.session.language == "so" %}Gobolka aad ku dhalatay:{% else %}Region of Birth:{% endif %}</label>
+                      {{locationform.region_of_birth}}
+                      {% for err in locationform.region_of_birth.errors %}
                         <div class="alert alert-danger">
                           <strong>{{err|escape}}</strong>
                         </div>
                       {% endfor %}
                     </div>
                     <div class="fieldWrapper">
-                      <label for="id_username">{% if request.session.language == "so" %}Magackugalka(username):{% else %}Username:{% endif %}</label>
-                      {{userform.username}}
-                      {% for err in userform.username.errors %}
-                        <div class="alert alert-danger">
-                          <strong>{{err|escape}}</strong>
-                        </div>
-                      {% endfor %}
-                    </div>
-                    <div class="fieldWrapper">
-                      <label for="id_password">{% if request.session.language == "so" %}Ereysireedka(password):{% else %}Password:{% endif %}</label>
-                      {{userform.password}}
-                      {% for err in userform.password.errors %}
+                      <label for="id_city_of_birth">{% if request.session.language == "so" %}Magaalada aad kudhalatay:{% else %}City of Birth:{% endif %}</label>
+                      {{locationform.city_of_birth}}
+                      {% for err in locationform.city_of_birth.errors %}
                         <div class="alert alert-danger">
                           <strong>{{err|escape}}</strong>
                         </div>

@@ -22,8 +22,12 @@ urlpatterns = [
     url(r'^manage/comments/(?P<status>[0-9]+)$', views.comments, name='comments'),
 
     url(r'^join$', views.getNewUser, name='join'),
-    url(r'^profile-registration$', views.register_profile, name='register_profile'),
-    url(r'^profile-registration/update$', views.register_profile, name='register_profile_update'),
+    #url(r'^profile-registration$', views.register_profile, name='register_profile'),
+    #url(r'^profile-registration/update$', views.register_profile, name='register_profile_update'),
+    ##url(r'^complete-personal-info$', views.getNewPerson, name='complete-personal-info'),
+    url(r'^complete-location-info$', views.getNewLocation, name='complete-location-info'),
+    url(r'^activate/(?P<activation_code>[\w\-]+)', views.getNewPerson, name='getNewPerson'),
+
 
     url(r'^post/(?P<pk>[0-9]+)/$', views.details, name='details'),
     url(r'^issues$', views.issues, name='issues'),

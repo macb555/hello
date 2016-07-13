@@ -113,6 +113,9 @@ class Profile(models.Model):
     current_country = CountryField()
     city_of_residence = models.CharField(max_length=30)
     phone_no = models.IntegerField(default=0)
+    registration_step = models.IntegerField(default=0)
+    activation_code = models.CharField(max_length=400, blank=True)
+
     def __str__(self):
         if self.user.first_name and self.city_of_residence:
             return self.user.first_name + ' in '+ self.city_of_residence
