@@ -76,5 +76,13 @@ class LocationInfoForm(forms.ModelForm):
         fields = ('current_country','city_of_residence', 'region_of_birth', 'city_of_birth',)
 
 class VerficationForm(forms.Form):
-    class Meta:
-        verification_code = forms.CharField(label='Verification Code', max_length=100)
+    verification_code = forms.CharField(label='Verification Code', max_length=100)
+    fields = ('verification_code',)
+
+class EmailVerficationForm(forms.Form):
+    email = forms.CharField(label='Email', max_length=100)
+    verification_code = forms.CharField(label='Verification Code', max_length=100)
+    fields = ('email', 'verification_code')
+    widgets = {
+        'email': forms.EmailInput()
+    }

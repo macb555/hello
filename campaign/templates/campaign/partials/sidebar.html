@@ -19,8 +19,7 @@
 </ul>
 {% endif %}
 {% if not user.is_authenticated %}
-    <a href="/loginpage"><button	type="submit"	class="btn btn-primary btn-block"><i class="fa fa-user"></i> {% if request.session.language = "so" %}Gal{% else %}Login{% endif %}</button></a>
-    <br>
+
 {% endif %}
 
 {% if no_twitter = 5 %}

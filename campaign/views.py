@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.db.models import Q, F
 from django.core.mail import EmailMessage
 from django.utils import timezone
+from django.contrib import messages
 from JABRIL import settings
 import uuid
 
@@ -174,12 +175,11 @@ def getNewUser(request):
                     new_user_profile = Profile.objects.create(user=user)
                     new_user_profile.activation_code = str(uuid.uuid4())
                     new_user_profile.save()
+                    request.session['waiting_user'] = user.email
                     sendVarificationEmail(request, user, new_user_profile.activation_code)
 
                     loginForm = LoginForm()
-                    verificationform = VerficationForm()
-                    msg = {"type":"info","so":"Waad ku guuleysatay iska diiwaangelinta Hal Qaran. Si aad noogu xaqiijiso in aad email-kan leedahay, fariinta aan kusoo dirnay fur kadib isticmaal qoraalka sirta ah ee kujira si laguugu fasaxo adeegyada ay helaan xubnaha Hal Qaran","en":"You have successfully registered to Hal Qaran. To varify this email belongs to you, open the email we sent you and use secret code in the message."}
-                    return render(request, 'campaign/partials/verification-message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "verificationform":verificationform})
+                    return redirect('verficationpage')
             #If the form is not valid
             print("The form is invalid")
             return render(request, 'campaign/partials/registration1.html', {'userform':form, 'usercounter':allUsers})
@@ -217,6 +217,30 @@ def getNewPerson(request, serialNo):
     else:
         return redirect('login')
 
+def verficationpage(request):
+    
+    email = request.session.get('waiting_user')
+    if request.method == 'POST':
+        print("User sent some data")
+        form = VerficationForm(request.POST)
+        if form.is_valid():
+            user = User.objects.filter(email=email)
+            print("The data is valid")
+            if user[0].profile.activation_code == request.POST.get('verification_code'):
+                print("The activation code in the data is correct")
+                user[0].profile.user.is_active = True
+                user[0].profile.save()
+                print("successfully activated")
+                activated_user = authenticate(username=user[0].username, password=user[0].password)
+                auth_login(request, activated_user)
+                print("loggin in the activated user")
+                return redirect('index')
+            print("The activation code is not correct")
+        print("User didn't give a valid data")
+        return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form})
+    print("Sending a fresh form")
+    form = VerficationForm()
+    return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form})
 
 def varifyUser(request, pk, activation_code):
     if not request.user.is_authenticated():

@@ -161,19 +161,20 @@ header{background:#cfc;//#3a6fa9;}
 /* ---------------------------------------------------------------------------- */
 #page-content{padding: 0;}
 #page-content.index-page, #page-content.single-page, #page-content.archive-page{margin-top: 20px;}
-
-#page-content.bottom-city {
-  background-image: url('/static/campaign/images/City.png');
-  background-repeat: no-repeat;
-  background-position: bottom;
-  //margin-top: 0;
-  //padding-bottom: 9em;
-  margin-left: -6em;
-  margin-right: -6em;
-  height: 5em;
+/*
+.bottom-city {
+  //background-image: url('/static/campaign/images/City.png');
+  //background-repeat: no-repeat;
+  //background-position: bottom;
+  margin: -7em;
+  margin-top: 0;
+  padding-bottom: 2em;
+  height: 6em;
   bottom: 0;
   border:3px solid black;
-}
+}*/
+
+div.bottom-city {margin-left: -6em;margin-right: -6em;margin-bottom: -2.9em;}
 
 .archive-page {}
 .archive-page .box .zoom-container{max-width: 250px;display: inline-block;float: left;margin-right: 5px;}
@@ -239,7 +240,7 @@ ul.pagination li a{color: #444;}
 .widget .content {}
 
 .widget.wid-vid ul a{display:inline;margin: 3px 2px;float:left;color:#333;padding:5px;border-bottom: 1px solid transparent;border-top: none;border-right: none;border-left: none;font-weight: bold;}
-.widget.wid-vid .tab-content{margin-top: 13px;}
+.widget.wid-vid .tab-content{/*margin-top: 13px;*/}
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover{background: none;}
 .widget.wid-vid ul a:hover,.widget.wid-vid ul a:focus{background: none;border-top: none;border-right: none;border-left: none;}
 .widget.wid-vid ul li {border-bottom: 1px solid transparent;}
@@ -528,8 +529,8 @@ ul .titles, li {list-style-type: none;padding-left: -1em;text-indent: 0;}
   height: 100%;
   flex: 1 1 auto;
 }head-title
-//#column-one, #column-two, #column-three {min-height: 10.1em;max-height: 100em; overflow: auto; height: 61em;}
-.column-1, .column-2, .column-3 {min-height: 10.1em; overflow: hidden; height: 61em;}
+div#column-one, #column-two, #column-three {min-height: 7.5em; overflow: auto; /*height: 61em;*/}
+
 button.like {color:#00f;}
 button.dislike {color:#f00;}
 ul.comments {color:#000;}
