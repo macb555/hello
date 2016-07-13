@@ -114,11 +114,11 @@ class Profile(models.Model):
     city_of_residence = models.CharField(max_length=30)
     phone_no = models.IntegerField(default=0)
     def __str__(self):
-        if self.first_name and self.current_city:
-            return self.first_name + ' in '+ self.current_city
-        elif self.first_name and self.current_country:
-            return self.first_name + ' in '+ self.current_country
+        if self.user.first_name and self.city_of_residence:
+            return self.user.first_name + ' in '+ self.city_of_residence
+        elif self.user.first_name and self.current_country:
+            return self.user.first_name + ' in '+ self.current_country
         elif self.current_country:
-            return self.username + ' in '+ self.current_country
+            return self.user.username + ' in '+ self.current_country
         else:
-            return self.username
+            return self.user.username

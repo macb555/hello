@@ -189,8 +189,17 @@ THUMBNAIL_ALIASES = {
 
 #######################  SITE VARIABLES ###################
 SITE_NAME = {"so":"Hal Qaran", "en":"Hal Qaran"}
-SITE_MOTO = {"so":"Waaga cusub ee u curtay Ummadda Soomaaliyeed!", "en":"New Dawn for the Somali People"}
+SITE_MOTO = {"so":"Horumar iyo Hal Qaran baan Rabnaa!", "en":"We need development and Hal Qaran"}
 SITE_DESCRIPTION = {"so":"Bogga Rasmiga ah ee Hal Qaran", "en":"The official page for Hal Qaran Movement (HQM)."}
 
 #GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-80178068-1'
 CLICKY_SITE_ID = '100971100'
+
+############## EMAIL VARIABLES ###############
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'halqaraninfocenter@gmail.com'
+EMAIL_HOST_PASSWORD = 'hic/sharaf.143'
+DEFAULT_FROM_EMAIL = 'halqaraninfocenter@gmail.com'
+DEFAULT_TO_EMAIL = 'boolow5@gmail.com'

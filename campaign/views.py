@@ -4,7 +4,15 @@ from campaign.models import *
 from campaign.forms import *
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.db.models import Q, F
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
+from django.utils import timezone
+from JABRIL import settings
+
+
+from django.template import Context
+from django.template.loader import render_to_string, get_template
+
+
 
 # Create your views here.
 def index(request):
@@ -162,27 +170,57 @@ def getNewUser(request):
                     user = User.objects.create_user(username=username, password=password, first_name=f_name, last_name=l_name, email=email)
                     user.is_active = False
                     user.save()
-                    send_mail('Subject here','Here is the message.','boolow5@hotmail.com',['boolow5@gmail.com'],fail_silently=False)
+                    new_user_profile = Profile.objects.create(user=user)
+                    try:
+                        sendVarificationEmail(request, user)
+                    except:pass
                     #user = authenticate(username=username, password=password)
                     #auth_login(request, user)
                     loginForm = LoginForm()
                     msg = {"type":"info","so":"Waad ku guuleysatay isdiiwaangelinta Hal Qaran. Si aad noogu xaqiijiso in aad email-kan leedahay, fariinta aan kusoo dirnay fur kadib riix mareegta kujirta si laguugu fasax adeegyada uu bogga siiyo xubnaha Hal Qaran","en":"You have successfully registered to Hal Qaran"}
                     return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
             #If the form is not valid
+            print("The form is invalid")
             return render(request, 'campaign/partials/registration1.html', {'userform':form})
     #If the user requested a form
     userform=UserInfoForm()
     print("Rendering a fresh user registration form")
     return render(request, 'campaign/partials/registration1.html', {'userform':userform})
 
-def getNewPerson(request):
+def getNewPerson(request, serialNo):
     #check if user is loggedin.
-    #   if loggedin, check if user is active
-    #       if not active, ask to varify and send varification code.
-    #   if active, show the form to be filled.
-    #       if successfully filled, take him/her to location form
-    #   if not loggedin, ask to Loggin
-    pass
+    if request.user.is_authenticated() and request.user.is_active():
+        form = PersonalInfoForm(request.POST)
+        if form.is_valid():
+            pass
+
+    else:
+        print("Sorry, you need to activate and loggin to continue.")
+        print("Redirecting to login page")
+
+
+def varifyUser(request, user, varification_code):
+    if request.user.is_authenticated():
+        print("")
+        if request.user.is_active():
+            return redirect('index')
+        else:
+            if serialNo == '123354':
+                print("Your serial no is correct")
+                if not user.is_active:
+                    print("The user is not active")
+                    print("Activating user")
+                    print("Redirecting to step two page")
+                else:
+                    print("User already active, ignonring activation process.")
+                    print("Redirecting to home page")
+            else:
+                print("Sorry your activation code is invalid")
+                print("Redirecting to resend varification page")
+    else:
+        print("Sorry, no loggedin user to varify")
+        print("Redirecting to login page")
+
 
 def getNewLocation(request):
     #check if user is loggedin.
@@ -467,3 +505,24 @@ def getLanguage(request):
 def user_signed_up_(request, user, **kwargs):
     user.is_active = False
     user.save()'''
+
+def sendVarificationEmail(request, user):
+    subject = "Welcome to Hal Qaran"
+    sender = settings.EMAIL_HOST_USER
+    receiver = user.email
+    url='li1487-184.members.linode.com'
+    ctx = {
+        "user":user.first_name,
+        "date":timezone.now(),
+        "url":url
+        }
+    if request.session.get('language', 'so') == 'so':
+        message = get_template('registration/so-email.html').render(Context(ctx))
+    else:
+        message = get_template('registration/en-email.html').render(Context(ctx))
+
+    #send_mail(subject,message,sender,[receiver],fail_silently=False)
+    msg = EmailMessage(subject, message, to=[receiver], from_email=sender)
+    msg.content_subtype = 'html'
+    msg.send()
+    return 1

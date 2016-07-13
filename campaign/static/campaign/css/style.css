@@ -162,7 +162,18 @@ header{background:#cfc;//#3a6fa9;}
 #page-content{padding: 0;}
 #page-content.index-page, #page-content.single-page, #page-content.archive-page{margin-top: 20px;}
 
-#page-content .bottom-city {background-image: url('/static/campaign/images/City.png');background-size: 100%;background-repeat: no-repeat; background-position: bottom;margin-bottom: -1em;padding-bottom: 9em;margin-left: -6em;margin-right: -6em;}
+#page-content.bottom-city {
+  background-image: url('/static/campaign/images/City.png');
+  background-repeat: no-repeat;
+  background-position: bottom;
+  //margin-top: 0;
+  //padding-bottom: 9em;
+  margin-left: -6em;
+  margin-right: -6em;
+  height: 5em;
+  bottom: 0;
+  border:3px solid black;
+}
 
 .archive-page {}
 .archive-page .box .zoom-container{max-width: 250px;display: inline-block;float: left;margin-right: 5px;}
@@ -335,7 +346,7 @@ footer .footer-3 ul li a:hover{color: #666;}
 /* ---------------------------------------------------------------------------- */
 /* -------------------------------------Contact-------------------------------- */
 /* ---------------------------------------------------------------------------- */
-.featured{background-color:#fff; /*#CCFFFF;*/padding: 15px ;border: 1px solid #ddd;min-height: 15em;}
+.featured{background-color:#fff; /*#CCFFFF;*/padding: 15px ;border: 1px solid #ddd;min-height: 15em;margin-bottom: .5em;}
 
 .contact h2{font-size: 34px; font-weight: 500;letter-spacing: 3px;padding-top: 20px ;text-align: center;}
 
@@ -636,17 +647,17 @@ span.white-text {color:#fff;}
     transition: all 5s ease;
 }
 */
-.registration-form-container { padding: 5em; padding-top: 5em; padding-bottom: 3em;background-size: 120%;margin: auto;border-radius: .8em;box-shadow: inset 1px 1px 10px black;}
+.registration-form-container { padding: 10%; padding-top: 10%; padding-bottom: 3em;background-size: 120%;margin: auto;border-radius: .8em;box-shadow: inset 1px 1px 10px black;}
 
-.inner-registration-container {background: #fff; padding-left: 9em; padding-right: 9em; padding-top: 4em; margin: 12em; margin-top: 3em; margin-bottom: 0;font-family: Arial, sans;/*box-shadow: 1px 1px 10px black;*/}
-.registration-form-header{padding-top: 4em;margin-left:12em;}
+.inner-registration-container {background: #fff; padding-left: 5%; padding-right: 5%; padding-top: 4em; margin: 10%; margin-top: 3em; margin-bottom: 0;font-family: Arial, sans;/*box-shadow: 1px 1px 10px black;*/}
+.registration-form-header{padding-top: 4em;margin-left:10%;}
 .registration-form-header span.h2 {color:white;font-family: Arial, sans;}
-.fieldWrapper input {border-radius: 0;border: 2px groove lightgray;}
+.fieldWrapper input {border-radius: 0;border: 2px groove lightgray;min-width: 10em;}
 
 .registration-header-personal {border-bottom: 2px groove lightgray;margin-bottom: 1.5em;padding-bottom: 1.5em;}
 
-.right-label-1{float:right; margin-top:-5em;margin-right: -7em;height: 120px;width: 84px;background-image: url('/static/campaign/images/numbers.png');background-size: 100%;background-repeat: no-repeat;}
-.right-label-1 p {margin: auto; padding-top: 1em;margin-left: 1em;}
+.right-label-1{float:right; margin-top:-5em;margin-right: -10%;height: 120px;width: 84px;background-image: url('/static/campaign/images/numbers.png');background-size: 100%;background-repeat: no-repeat;}
+.right-label-1 p {margin: auto; padding-top: 1em;margin-left: 2%;}
 
 /*********************** transition *********************/
 .height-transition {
