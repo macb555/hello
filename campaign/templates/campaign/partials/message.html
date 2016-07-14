@@ -12,6 +12,9 @@
                 {% if request.session.language = "so" %}{% if message.type = 'danger' %}Cillad{% else %}Fariin{% endif %}:</strong> {{message.so}}{% else %}{% if message.type = 'danger' %}Error{% else %}Info{% endif %}:</strong> {{message.en}}{% endif %}
             </div>
           {% endif %}
+          {% if user.is_authenticated %}
+          <h5><a href="/myprofile">{{request.user}} this is your profile page</a></h5>
+          {% endif %}
           <h5>Links:</h5>
           <ul class="list-inline">
             <li>{% if request.session.language = "so" %}<a href="/">Hoyga</a>{% else %}<a href="/">Home</a>{% endif %}</li>

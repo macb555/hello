@@ -181,6 +181,7 @@ def getNewUser(request):
                     user.save()
                     new_user_profile = Profile.objects.create(user=user)
                     new_user_profile.activation_code = str(uuid.uuid4())
+                    new_user_profile.registration_step = 1
                     new_user_profile.save()
                     request.session['waiting_user'] = user.email
                     sendVarificationEmail(request, user, new_user_profile.activation_code)
@@ -689,8 +690,9 @@ def profile(request):
                 print("user is in the second step of registration")
                 #take user to last step registration
                 return redirect('complete-location-info')
-            else:
-                #show profile
-                return render(request, 'campaign/partials/profile.html', {'profile':profile})
+            #else:
+            #    #show profile
+            #    redirect()
+            #    return render(request, 'campaign/partials/profile.html', {'profile':profile})
     else:
         return redirect('loginpage')
