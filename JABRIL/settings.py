@@ -24,13 +24,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'kts+d%(k4wh7pag%g2ss4^_cb31#%5w6)9x%w!+9#ky=91px@%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False #True
 
 ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -89,16 +88,16 @@ DATABASES = {
 }
 '''
 #POSTGRES
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'hello',
-        'USER': 'hello_django',
-        'PASSWORD': '0615538193',
-        'HOST': 'localhost',
-        'PORT': '',                      # Set to empty string for default.
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'hello',
+#        'USER': 'hello_django',
+#        'PASSWORD': '0615538193',
+#        'HOST': 'localhost',
+#        'PORT': '',                      # Set to empty string for default.
+#    }
+#}
 
 #MARIADB
 DATABASES = {
@@ -111,8 +110,8 @@ DATABASES = {
         'PORT': '',
     }
 }
-
 '''
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -188,7 +187,7 @@ THUMBNAIL_ALIASES = {
 }
 
 #######################  SITE VARIABLES ###################
-SITE_DOMAIN = 'localhost:8000'
+SITE_DOMAIN = 'li1487-184.members.linode.com'
 SITE_NAME = {"so":"Hal Qaran", "en":"Hal Qaran"}
 SITE_MOTO = {"so":"Horumar iyo Hal Qaran baan Rabnaa!", "en":"We need development and Hal Qaran"}
 SITE_DESCRIPTION = {"so":"Bogga Rasmiga ah ee Hal Qaran", "en":"The official page for Hal Qaran Movement (HQM)."}
@@ -204,3 +203,12 @@ EMAIL_HOST_USER = 'halqaraninfocenter@gmail.com'
 EMAIL_HOST_PASSWORD = 'hic/sharaf.143'
 DEFAULT_FROM_EMAIL = 'halqaraninfocenter@gmail.com'
 DEFAULT_TO_EMAIL = 'boolow5@gmail.com'
+
+############# CUSTOM MESSAGES SETTINGS ##############
+from django.contrib.messages import constants as message_constants
+MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
+                message_constants.INFO: 'info',
+                message_constants.SUCCESS: 'success',
+                message_constants.WARNING: 'warning',
+                message_constants.ERROR: 'danger',
+                }

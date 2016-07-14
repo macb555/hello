@@ -45,19 +45,25 @@ def login(request):
     if user is not None:
         if user.is_active:
             auth_login(request, user)
-            return redirect('profile')
+            #return redirect('profile')
             msg = {'type':'info','so':"Waad ku guuleysatay gelitaanka!", 'en':'You loggedin successfully!'}
-            return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "profile":profile})
+            showMessage(request, msg)
+            return redirect('index')
+            #return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "profile":profile})
         else:
             loginForm = LoginForm()
             msg = {'type':'danger','so':"Waan kaxunnahay cinwaankan wili uma fasaxno adeegyada, hadii aad dooneyso riix mareegta kujirta emailka laguugu soo diray xiligi aad diiwaangelinta sameyneysay. Waana ka xunnahay in sidaan dhacdo..", 'en':'Sorry, Your account is not active. Please open the email we sent you during the registration and use the link inside.'}
-            return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+            showMessage(request, msg)
+            return redirect('index')
+            #return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
     else:
         posts = Post.objects.filter(language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
         videos = Video.objects.all()
         loginForm = LoginForm()
         msg = {"type":"danger","so":"Waan kaxunnahay waxaad gelisay cinwaan ama ereysireed qaldan.","en":"Sorry! Your username or password is incorrect."}
-        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+        showMessage(request, msg)
+        return redirect('index')
+        #return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
 
 def register(request):
     request.session.setdefault('language','so')
@@ -83,8 +89,8 @@ def register(request):
             user.save()
             print("User subject is saved")
             print("Loggin user in")
-            user = authenticate(username=username, password=password)
-            auth_login(request, user)
+            #user = authenticate(username=username, password=password)
+            #auth_login(request, user)
             print("User is logged in")
             #form = profileForm()
             #return render(request, 'campaign/partials/register_profile.html', {'form':form})
@@ -139,6 +145,8 @@ def register_profile(request):
     return render(request, 'campaign/partials/register_profile.html', {'profileForm':profileForm})
 
 def getNewUser(request):
+    if request.user.is_authenticated and request.user.is_active:
+        return redirect('profile')
     request.session.setdefault('language','so')
     #check if user is logged in
     print("User registration view:")
@@ -167,13 +175,17 @@ def getNewUser(request):
                         print("This email")
                         loginForm = LoginForm()
                         msg = {"type":"danger","so":"Waan ka xunnahay, email-kan horay ayaa loo diiwaangeliyay. Fadlan midkale isticmaal.","en":"Sorry, this email is already registered. Please use a different email"}
-                        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+                        showMessage(request, msg)
+                        return redirect('index')
+                        #return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
                     #If the username was already taken
                     elif newUser.username == username:
                         print("This username")
                         loginForm = LoginForm()
                         msg = {"type":"danger","so":"Waan ka xunnahay, magackugalkan(username-kan) horay ayaa loo diiwaangeliyay. Fadlan isku day markale adigoo adeegsanaya magackugal kale.","en":"Sorry, this username is already registered. Please use a different username and try again"}
-                        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+                        showMessage(request, msg)
+                        return redirect('join')
+                        #return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
                 #if not, create new user and set active to false
                 elif len(newUser)==0:
                     print("Your username and email are OK")
@@ -227,6 +239,8 @@ def getNewPerson(request):
         return redirect('login')
 
 def verficationpage(request, email):
+    if request.user.is_authenticated and request.user.is_active:
+        return redirect('profile')
     if request.method == 'POST':
         print("User sent some data")
         form = VerficationForm(request.POST)
@@ -255,6 +269,8 @@ def verficationpage(request, email):
     return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form})
 
 def directverficationpage(request, email, activation_code):
+    if request.user.is_authenticated and request.user.is_active:
+        return redirect('profile')
     print("+++++++++++++++++++++++++++++++++++++ VERIFICATION ++++++++++++++++++++++++++++++")
     print("Email", email)
     print("Activation: #",activation_code)
@@ -278,15 +294,17 @@ def directverficationpage(request, email, activation_code):
             messages.add_message(request, messages.INFO, 'Congradulations! Activation Succeeded. Login using your cridentials.')
             messages.add_message(request, messages.INFO, 'Guul! Xaqiijinti waad ku guuleysatay. Ku gal aqoonsigaaga.')
             return redirect('loginpage')
-    messages.add_message(request, messages.ERROR, 'Sorry, Make sure the varification code you used is correct.')
-    messages.add_message(request, messages.ERROR, 'Waan kaxunnahay, Fadlan iska hubi qoraalsireedka aad gelisay.')
+    msg = {"type":"danger", "en":"Sorry, Make sure the varification code you used is correct.", "so":"Waan kaxunnahay, Fadlan iska hubi qoraalsireedka aad gelisay."}
+    showMessage(request, msg)
     return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form})
-    print("Sending a fresh form")
-    form = VerficationForm()
-    return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form})
+    #print("Sending a fresh form")
+    #form = VerficationForm()
+    #return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form})
 
 
 def varifyUser(request, pk, activation_code):
+    if request.user.is_authenticated and request.user.is_active:
+        return redirect('profile')
     if not request.user.is_authenticated():
         print("Varifying user", pk)
         user = User.objects.filter(id=pk)
@@ -312,20 +330,27 @@ def varifyUser(request, pk, activation_code):
                         #print(activated_user)
                         #auth_login(request, activated_user)
                         #return redirect('loguserin', email=user[0].email)
+                        msg = {"type":"info","so":"Waad ku guuleystay xaqiijinta email-kaaga. Fadlan adeegso magackugalkaaga(username) iyo ereysireedkaaga(password) si aad u gasho.","en":"You've successfully verified your email. Please use your username and password to login."}
+                        showMessage(request, msg)
                         return redirect(reverse('loguserin',kwargs={'email':user[0].email}))
                     else:
                         print("Activation code is incorrect")
                         loginForm = LoginForm()
                         msg = {"type":"danger","so":"Waan ka xunnahay, lambarka xaqiijinta aad isticmaashay ma ahan mid sax ah. Hadii aad u aragto arintan cillad fadlan la xiriir maamulka boggan.","en":"Sorry, you have used an invalid activation number. If you think this is related to some other problem, please contact the this page's administrator."}
+                        showMessage(request, msg)
+                        #return redirect(reverse('verficationpage',kwargs={'email':user[0].email}))
                         return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
             print("Didnt't provide a valid form")
         print("Didn't get any user with this id")
         loginForm = LoginForm()
         msg = {"type":"danger","so":"Waan ka xunnahay, aqoonsiga qofka aad soo dalbatay ma ahan mid jira.","en":"Sorry, The id number for this user is invalid."}
+        showMessage(request, msg)
         return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
 
 
 def getNewLocation(request):
+    if request.user.is_authenticated and request.user.is_active:
+        return redirect('profile')
     allUsers = User.objects.all().count()
     print("Gettin new location form")
     if request.user.is_authenticated() and request.user.is_active:
@@ -346,7 +371,8 @@ def getNewLocation(request):
 
                 location.registration_step = 3
                 location.save()
-                print("location is saved")
+                msg = {"type":"info","so":"Waad ku guuleystay, dhameystirka buuxinta macluumaadkaaga. Guul wacan ayaan kuu rajeyneynaa.","en":"You have successfully completed your registration steps."}
+                showMessage(request, msg)
                 return redirect('profile')
 
             else:
@@ -359,15 +385,11 @@ def getNewLocation(request):
 
 
 def logout(request):
-    request.session.setdefault('language','so')
-
     auth_logout(request)
     loginForm = LoginForm()
     msg = {"type":"info","so":"Waad kuguuleysatay kabixitaanka.","en":"You have successfully logged out."}
     return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
 def details(request, pk):
-    request.session.setdefault('language','so')
-
     loginForm = LoginForm()
     post = get_object_or_404(Post, pk=pk)
     post_comments = Comment.objects.filter(post=pk, approved=True)
@@ -376,12 +398,10 @@ def details(request, pk):
     return render(request, 'campaign/partials/details.html',{"loginform":loginForm,"post":post, "latest_posts":"posts", "post_comments":post_comments,"form":form})
 
 def contact(request):
-    request.session.setdefault('language','so')
-
     loginForm = LoginForm()
     contact_info = {
         "emails":["halqaran@gmail.com",],
-        "phones":["+252-618-270616","+252-698-270616",],
+        "phones":["",],
         "websites":["halqaran.org",],
         "facebookPages":["http://facebook.com/halqaran",],
         "youtubeChannels":["http://youtube.com/halqaran",],
@@ -427,6 +447,7 @@ def comments(request, status=None):
     else:
         loginForm = LoginForm()
         msg = {"type":"danger","so":"Waan kaxunnahay! Uma fasaxnid inaad gasho boggan.","en":"Sorry! you don't have permission to access this page."}
+        showMessage(request, msg)
         return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "status":status})
 
 def addReply(request, post, parent):
@@ -475,7 +496,9 @@ def feedback(request):
             feedback = form.save()
             loginForm = LoginForm()
             msg = {"type":"info","so":"Waad kuguuleysatay diritaanka fariintan. Waxaan jecelnahay inaan jawaab ama wax kaqabad degdega naga aragto","en":"You have successfully sent your feedback. We promise for response soon."}
-            return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+            showMessage(request, msg)
+            return redirect('index')
+            #return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
             #return JsonResponse({"feedback":feedback})
     else:
         form = FeedbackForm()
@@ -483,30 +506,22 @@ def feedback(request):
 
 
 def events(request):
-    request.session.setdefault('language','so')
-
     loginForm = LoginForm()
     posts = Post.objects.filter(category__name="Events",language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
     return render(request, 'campaign/partials/events.html',{"loginform":loginForm,"posts":posts, "post":{"pk":0}})
 
 def about(request):
-    request.session.setdefault('language','so')
-
     loginForm = LoginForm()
     posts = get_object_or_404(Post, category__name="About", language=request.session.get('language'))
     return render(request, 'campaign/partials/about.html',{"loginform":loginForm,"post":posts})
 
 def issues(request):
-    request.session.setdefault('language','so')
-
     loginForm = LoginForm()
     #posts = get_object_or_404(Post, category__name="issues")
     posts = Post.objects.filter(category__name="Issues",language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
     return render(request, 'campaign/partials/issues.html',{"loginform":loginForm,"posts":posts, "post":{"pk":0}})
 
 def faq(request):
-    request.session.setdefault('language','so')
-
     loginForm = LoginForm()
     posts = get_object_or_404(Post, category__name="faq")
     return render(request, 'campaign/partials/details.html',{"loginform":loginForm,"post":posts})
@@ -601,7 +616,9 @@ def unapproveComment(request, pk):
 
 def deleteComment(request, pk):
     if request.user.is_authenticated() and request.user.is_staff:
-        comment = Comment.objects.filter(pk=pk).delete()
+        try:
+            comment = Comment.objects.filter(pk=pk).delete()
+        except:pass
         return JsonResponse({"status":True})
 
 def AmIIn(request):
@@ -612,16 +629,20 @@ def changeLanguage(request, language):
         request.session["language"] = language
         loginForm = LoginForm()
         msg = {'type':'info','so':"Waad ku guuleysatay bedelidda luqadda.", 'en':'You have successfully changed the language.'}
-        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+        showMessage(request, msg)
+        return redirect('index')
+        #return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
     else:
         request.session.setdefault('language','so')
         loginForm = LoginForm()
         msg = {'type':'danger','so':"Waan kaxunnahay luqadda aad dooratay wili ma aanan kusoo derin boggeena.", 'en':"Sorry, we didn't add this language yet."}
-        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+        showMessage(request, msg)
+        return redirect('index')
+        #return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
 
 ################ PURE PYTHON FUNCTIONS ##################
 def getLanguage(request):
-    current_language = request.session['language']
+    current_language = request.session.get('language','so')
     if current_language == 'so':
         return current_language
     else:
@@ -670,6 +691,7 @@ def resendVarificationCode(request, email):
                 'so':"Lambarka xaqiijinta markale ayaa laguu soo diray. Hadii aad weyso wax fariin ah waxa ay macnaheedu noqoneysaa in email-kaaga aadan si sax ah u gelin. Hadii aad arintan cillad u aragto fadlan nala soo socodsii, anagaa kaa caawin doonno furitaanka adeegaaga.",
                 'en':'You activation code is resent to your email. If you don\'t get this email it means your email was not correct. If you think this another error, please contact us to help you activate your account.'
                 }
+            showMessage(request, msg)
             return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "loginform":loginForm})
         else:
             loginForm = LoginForm()
@@ -678,6 +700,7 @@ def resendVarificationCode(request, email):
                 'so':"Waan ka xunnahay email-ka aad gelisay majirto qof ku diiwaansan. Fadlan iska hubi oo markale ku celi.",
                 'en':'Sorry, this email does\'t belong to any of our users. Please make sure you have written the correct email and try again.'
                 }
+            showMessage(request, msg)
             return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "loginform":loginForm})
     except:
         loginForm = LoginForm()
@@ -686,7 +709,9 @@ def resendVarificationCode(request, email):
             'so':"Waan ka xunnahay kuma guuleysan in aad dib u dirto xaqiijinta. Fadlan markale isku day.",
             'en':'Sorry, there was a problem sending your verification message. Please try again.'
             }
-        return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "loginform":loginForm})
+        showMessage(request, msg)
+        return redirect('index')
+        #return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "loginform":loginForm})
 
 def generate_unique_code():
     return uuid.uuid4()
@@ -707,13 +732,17 @@ def loguserin(request, email=None):
         else:
             loginForm = LoginForm(username=username, password=password)
             msg = {'type':'danger','so':"Waan kaxunnahay cinwaankan wili uma fasaxno adeegyada, hadii aad dooneyso riix mareegta kujirta emailka laguugu soo diray xiligi aad diiwaangelinta sameyneysay. Waana ka xunnahay in sidaan dhacdo..", 'en':'Sorry, Your account is not active. Please open the email we sent you during the registration and use the link inside.'}
-            return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+            showMessage(request, msg)
+            return redirect('index')
+            #return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
     else:
         posts = Post.objects.filter(language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
         videos = Video.objects.all()
         loginForm = LoginForm()
         msg = {"type":"danger","so":"Waan kaxunnahay waxaad gelisay cinwaan ama ereysireed qaldan.","en":"Sorry! Your username or password is incorrect."}
-        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+        showMessage(request, msg)
+        return redirect('index')
+        #return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
 
 def profile(request):
     if request.user.is_authenticated() and request.user.is_active:
@@ -739,3 +768,26 @@ def profile(request):
             #    return render(request, 'campaign/partials/profile.html', {'profile':profile})
     else:
         return redirect('loginpage')
+
+def showMessage(request, msg={}):
+    try:
+        if msg is not None:
+            language = request.session.get("language", None)
+            if language =="so":
+                if msg['type']=='info':
+                    messages.add_message(request, messages.SUCCESS, msg['so'])
+                elif msg['type']=='danger':
+                    messages.add_message(request, messages.ERROR, msg['so'])
+                else:
+                    messages.add_message(request, messages.INFO, msg['so'])
+            else:
+                if msg['type']=='info':
+                    messages.add_message(request, messages.SUCCESS, msg['en'])
+                elif msg['type']=='danger':
+                    messages.add_message(request, messages.ERROR, msg['en'])
+                else:
+                    messages.add_message(request, messages.INFO, msg['en'])
+    except:
+        pass
+    finally:
+        return 1
