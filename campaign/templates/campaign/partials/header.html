@@ -24,9 +24,9 @@
         <!--<li><a href="/language/{% if request.session.language == 'so'%}en{% else %}so{% endif %}"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}English{% else %}Af Soomaali{% endif %}</a></li>-->
         <li title="Luqadda Bedel | Change Language">
             {% if request.session.language == "so" %}
-            <a href="/language/en"><strong class='language-flag'>ENGLISH</strong></a>
+            <a href="/language/en{{next}}"><strong class='language-flag'>ENGLISH</strong></a>
             {% else %}
-            <a href="/language/so"><strong class='language-flag'>AFSOOMAALI</strong></a>
+            <a href="/language/so{{next}}"><strong class='language-flag'>AFSOOMAALI</strong></a>
             {% endif %}
           </li>
           {% if user.is_authenticated %}

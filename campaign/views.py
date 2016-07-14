@@ -512,7 +512,9 @@ def events(request):
 
 def about(request):
     loginForm = LoginForm()
-    posts = get_object_or_404(Post, category__name="About", language=request.session.get('language'))
+    posts = Post.objects.filter(category__name="About", language=request.session.get('language'))
+    if posts:
+        posts = posts[0]
     return render(request, 'campaign/partials/about.html',{"loginform":loginForm,"post":posts})
 
 def issues(request):
@@ -625,19 +627,20 @@ def AmIIn(request):
     return JsonResponse({"status":user.is_authenticated()})
 
 def changeLanguage(request, language):
+    redirect_to = request.POST.get('next', request.GET.get('next', '/'))
     if language == 'so' or language == 'en':
         request.session["language"] = language
         loginForm = LoginForm()
         msg = {'type':'info','so':"Waad ku guuleysatay bedelidda luqadda.", 'en':'You have successfully changed the language.'}
         showMessage(request, msg)
-        return redirect('index')
+        return redirect(redirect_to)
         #return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
     else:
         request.session.setdefault('language','so')
         loginForm = LoginForm()
         msg = {'type':'danger','so':"Waan kaxunnahay luqadda aad dooratay wili ma aanan kusoo derin boggeena.", 'en':"Sorry, we didn't add this language yet."}
         showMessage(request, msg)
-        return redirect('index')
+        return redirect(redirect_to)
         #return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
 
 ################ PURE PYTHON FUNCTIONS ##################
