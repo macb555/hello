@@ -30,6 +30,13 @@ def loginPage(request):
     loginForm = LoginForm()
     return render(request, 'campaign/partials/login.html', {"nosidebarlogin":True,"loginform":loginForm,"post":{"pk":0}})
 
+def loginPage2(request):
+    username = request.session.get('username',None)
+    password = request.session.get('password',None)
+    loginForm = LoginForm(username=username, password=password)
+    return render(request, 'campaign/partials/login.html', {"nosidebarlogin":True,"loginform":loginForm,"post":{"pk":0}})
+
+
 def login(request):
     request.session.setdefault('language','so')
     username = request.POST.get('username')
@@ -39,7 +46,7 @@ def login(request):
         if user.is_active:
             auth_login(request, user)
             msg = {'type':'info','so':"Waad ku guuleysatay gelitaanka!", 'en':'You loggedin successfully!'}
-            return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "post":{"pk":0}})
+            return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "profile":profile})
         else:
             loginForm = LoginForm()
             msg = {'type':'danger','so':"Waan kaxunnahay cinwaankan wili uma fasaxno adeegyada, hadii aad dooneyso riix mareegta kujirta emailka laguugu soo diray xiligi aad diiwaangelinta sameyneysay. Waana ka xunnahay in sidaan dhacdo..", 'en':'Sorry, Your account is not active. Please open the email we sent you during the registration and use the link inside.'}
@@ -179,7 +186,7 @@ def getNewUser(request):
                     sendVarificationEmail(request, user, new_user_profile.activation_code)
 
                     loginForm = LoginForm()
-                    return redirect('verficationpage')
+                    return redirect('verficationpage', email=user.email)
             #If the form is not valid
             print("The form is invalid")
             return render(request, 'campaign/partials/registration1.html', {'userform':form, 'usercounter':allUsers})
@@ -188,10 +195,10 @@ def getNewUser(request):
     print("Rendering a fresh user registration form")
     return render(request, 'campaign/partials/registration1.html', {'userform':userform, 'usercounter':allUsers})
 
-def getNewPerson(request, serialNo):
+def getNewPerson(request):
     request.session.setdefault('language','so')
     #check if user is loggedin.
-    if request.user.is_authenticated() and request.user.is_active():
+    if request.user.is_authenticated() and request.user.is_active:
         form = PersonalInfoForm(request.POST)
         allUsers = User.objects.all().count()
         if form.is_valid():
@@ -209,33 +216,37 @@ def getNewPerson(request, serialNo):
             profile.gender = gender
             profile.marital_status = marital_status
             profile.phone_no = phone_no
-            profile.registration_step = 1
+            profile.registration_step = 2
 
             profile.save()
-            return redirect('getNewLocation')
+            return redirect('complete-location-info')
         return render(request, 'campaign/partials/registration2.html', {'personalform':form, 'usercounter':allUsers})
     else:
         return redirect('login')
 
-def verficationpage(request):
-    
-    email = request.session.get('waiting_user')
+def verficationpage(request, email):
+
     if request.method == 'POST':
         print("User sent some data")
         form = VerficationForm(request.POST)
         if form.is_valid():
             user = User.objects.filter(email=email)
-            print("The data is valid")
-            if user[0].profile.activation_code == request.POST.get('verification_code'):
-                print("The activation code in the data is correct")
-                user[0].profile.user.is_active = True
-                user[0].profile.save()
-                print("successfully activated")
-                activated_user = authenticate(username=user[0].username, password=user[0].password)
-                auth_login(request, activated_user)
-                print("loggin in the activated user")
-                return redirect('index')
-            print("The activation code is not correct")
+            if not len(user) ==0:
+                print("Redirectin to Verification page")
+                user = user[0]
+                #return redirect('varifyUser', pk=user.pk, activation_code=request.POST.get('verification_code'))
+                print("The data is valid")
+                if user.profile.activation_code == request.POST.get('verification_code'):
+                    print("The activation code in the data is correct")
+                    user.is_active = True
+                    user.profile.registration_step = 1
+                    user.save()
+                    request.session['username']=user.username
+                    request.session['password']=user.password
+                    print("successfully activated")
+                    print("Redirecting to loginuser view.")
+                    return redirect('loginpage')
+                print("The activation code is not correct")
         print("User didn't give a valid data")
         return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form})
     print("Sending a fresh form")
@@ -244,33 +255,54 @@ def verficationpage(request):
 
 def varifyUser(request, pk, activation_code):
     if not request.user.is_authenticated():
-        user = User.objects.filter(pk=pk)
-        if len(user):
+        print("Varifying user", pk)
+        user = User.objects.filter(id=pk)
+        print("USER:",user)
+        if not len(user)==0:
+            print("Got user")
             form = VerficationForm(request.POST)
-            if user[0].is_active:
-                return redirect('index')
-            else:
-                if user[0].profile.activation_code == activation_code:
-                    print("Your serial no is correct")
-                    user[0].profile.user.is_active = True
-                    user[0].profile.save()
-                    return redirect('getNewPerson')
+            if form.is_valid():
+                if user[0].is_active:
+                    print("But this user was already activated")
+                    return redirect('index')
                 else:
-                    loginForm = LoginForm()
-                    msg = {"type":"danger","so":"Waan ka xunnahay, lambarka xaqiijinta aad isticmaashay ma ahan mid sax ah. Hadii aad u aragto arintan cillad fadlan la xiriir maamulka boggan.","en":"Sorry, you have used an invalid activation number. If you think this is related to some other problem, please contact the this page's administrator."}
-                    return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+                    print("And this user is not yet activated")
+                    if str(user[0].profile.activation_code) == str(activation_code):
+                        print("Your serial no is correct")
+                        user[0].is_active = True
+                        user[0].save()
+                        user[0].profile.registration_step = 1
+                        user[0].profile.save()
+                        print("User activated!")
+                        #activated_user = authenticate(username=user[0].username, password=user[0].password)
+                        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+                        #print(activated_user)
+                        #auth_login(request, activated_user)
+                        #return redirect('loguserin', email=user[0].email)
+                        return redirect(reverse('loguserin',kwargs={'email':user[0].email}))
+                    else:
+                        print("Activation code is incorrect")
+                        loginForm = LoginForm()
+                        msg = {"type":"danger","so":"Waan ka xunnahay, lambarka xaqiijinta aad isticmaashay ma ahan mid sax ah. Hadii aad u aragto arintan cillad fadlan la xiriir maamulka boggan.","en":"Sorry, you have used an invalid activation number. If you think this is related to some other problem, please contact the this page's administrator."}
+                        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+            print("Didnt't provide a valid form")
+        print("Didn't get any user with this id")
         loginForm = LoginForm()
         msg = {"type":"danger","so":"Waan ka xunnahay, aqoonsiga qofka aad soo dalbatay ma ahan mid jira.","en":"Sorry, The id number for this user is invalid."}
         return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
 
 
-
 def getNewLocation(request):
-    if request.user.is_authenticated() and request.user.is_active():
-        if registration_step > 1:
+    allUsers = User.objects.all().count()
+    print("Gettin new location form")
+    if request.user.is_authenticated() and request.user.is_active:
+        print("User is logged in")
+        if request.user.profile.registration_step == 2:
+            print("User is in the second step")
             form = LocationInfoForm(request.POST)
-            allUsers = User.objects.all().count()
+
             if form.is_valid():
+                print("User gave a valid data")
                 user = request.user
                 location = Profile.objects.get(user=user)
 
@@ -279,10 +311,15 @@ def getNewLocation(request):
                 location.region_of_birth = request.POST.get('region_of_birth')
                 location.city_of_birth = request.POST.get('city_of_birth')
 
+                location.registration_step = 3
                 location.save()
+                print("location is saved")
+                return redirect('profile')
         else:
+            print("return to the same form because the step is not the second.")
             form = LocationInfoForm()
             return render(request, 'campaign/partials/registration3.html', {'locationform':form, 'usercounter':allUsers})
+    print("user is not logged in or is not active")
     return redirect('login')
 
 
@@ -610,3 +647,50 @@ def resendVarificationCode(request, email):
 
 def generate_unique_code():
     return uuid.uuid4()
+def loguserin(request, email=None):
+    if email is not None:
+        user = User.objects.filter(email=email)
+        if len(user)!=0:
+            user = user[0]
+    else:
+        return redirect('loginpage')
+    username = user.username
+    password = user.password
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            auth_login(request, user)
+            redirect('getNewPerson')
+        else:
+            loginForm = LoginForm(username=username, password=password)
+            msg = {'type':'danger','so':"Waan kaxunnahay cinwaankan wili uma fasaxno adeegyada, hadii aad dooneyso riix mareegta kujirta emailka laguugu soo diray xiligi aad diiwaangelinta sameyneysay. Waana ka xunnahay in sidaan dhacdo..", 'en':'Sorry, Your account is not active. Please open the email we sent you during the registration and use the link inside.'}
+            return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+    else:
+        posts = Post.objects.filter(language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
+        videos = Video.objects.all()
+        loginForm = LoginForm()
+        msg = {"type":"danger","so":"Waan kaxunnahay waxaad gelisay cinwaan ama ereysireed qaldan.","en":"Sorry! Your username or password is incorrect."}
+        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+
+def profile(request):
+    if request.user.is_authenticated() and request.user.is_active:
+        print("user is logged in")
+        #user is active and logged in
+        profile = Profile.objects.filter(user = request.user)
+        if len(profile)!=0:
+            print("got the profile")
+            profile = profile[0]
+            print("profile step", profile.registration_step)
+            if profile.registration_step == 1:
+                print("user is in the first step of registration")
+                #take user to registration step 2
+                return redirect('getNewPerson')
+            elif profile.registration_step == 2:
+                print("user is in the second step of registration")
+                #take user to last step registration
+                return redirect('complete-location-info')
+            else:
+                #show profile
+                return render(request, 'campaign/partials/profile.html', {'profile':profile})
+    else:
+        return redirect('loginpage')

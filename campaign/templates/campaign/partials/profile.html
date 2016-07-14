@@ -5,9 +5,9 @@
       <div id="column-one" class="col-md-9">
         <div class="box wrap-vid">
           <div class="post-detail">
-            <h1>{% if request.session.language = "so" %}Gelitaanka{% else %}Login{% endif %}</h1>
 
             {% if not user.is_authenticated %}
+              <h1>{% if request.session.language = "so" %}Gelitaanka{% else %}Login{% endif %}</h1>
               {% if loginform %}
               <!-- ############# LOGGIN FORM ############### -->
               <div id="login-area">
@@ -21,13 +21,17 @@
               </div>
               {% endif %}
             {% else %}
-              <h5>{% if request.session.language = "so" %}{{user.username|title}}! Cinwaankaaga ayaa kacsan{% else %}You are already logged in{% endif %}</h5>
-              <p>{% if request.session.language = "so" %}Ma dooneysaa in aad <a href="/logout">kabaxdo</a> cinwaankan?{% else %}Do you want to <a href="/logout">logout</a>?{% endif %}</p>
-              <br/>
-              <h5>{% if request.session.language = "so" %} <a href="{% url 'profile' %}">Macluumaadkaaga</a>{% else %}<a href="{% url 'profile' %}">Profile</a>{% endif %}</h5>
-            {% endif %}
+              <h5>{% if request.session.language = "so" %}Macluumaadka {{user}}!{% else %}{{user}}'s Profile{% endif %}</h5>
+
+              <div class="row">
+                <div class="col-sm-4">
+                  <p>Name: <strong>{{profile.user.first_name}} {{profile.user.last_name}}</strong></p>
+                  <p>Gender: <strong>{{profile.gender}}</strong></p>
+                </div>
+              </div>
 
             <hr/>
+            {% endif %}
           </div>
         </div>
       </div>

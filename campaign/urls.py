@@ -18,17 +18,19 @@ urlpatterns = [
     url(r'^loginpage$', views.loginPage, name='loginpage'),
     url(r'^login$', views.login, name='login'),
     url(r'^logout$', views.logout, name='logout'),
+    url(r'^myprofile$', views.profile, name='profile'),
+
     url(r'^manage/comments$', views.comments, name='comments'),
     url(r'^manage/comments/(?P<status>[0-9]+)$', views.comments, name='comments'),
 
     url(r'^join$', views.getNewUser, name='join'),
     #url(r'^profile-registration$', views.register_profile, name='register_profile'),
     #url(r'^profile-registration/update$', views.register_profile, name='register_profile_update'),
-    ##url(r'^complete-personal-info$', views.getNewPerson, name='complete-personal-info'),
+    url(r'^complete-personal-info$', views.getNewPerson, name='getNewPerson'),
     url(r'^complete-location-info$', views.getNewLocation, name='complete-location-info'),
     url(r'^activate/(?P<pk>[0-9]+)/(?P<activation_code>[\w\-]+)', views.varifyUser, name='varifyUser'),
     url(r"^resend/(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})",views.resendVarificationCode, name='resendVarificationCode'),
-    url(r'^verfication$', views.verficationpage, name='verficationpage'),
+    url(r'^verfication/(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})$', views.verficationpage, name='verficationpage'),
 
     url(r'^post/(?P<pk>[0-9]+)/$', views.details, name='details'),
     url(r'^issues$', views.issues, name='issues'),
