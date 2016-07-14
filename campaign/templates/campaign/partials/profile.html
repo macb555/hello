@@ -25,8 +25,21 @@
 
               <div class="row">
                 <div class="col-sm-4">
-                  <p>Name: <strong>{{profile.user.first_name}} {{profile.user.last_name}}</strong></p>
-                  <p>Gender: <strong>{{profile.gender}}</strong></p>
+                  <p>
+                    {% if request.session.language = "so" %}
+                      Name: <strong>{{profile.user.first_name}} {{profile.user.last_name}}</strong> <br>
+                      Gender: <strong>{{profile.gender}}</strong> <br>
+                      Current location: <strong>{{profile.city_of_residence}}</strong>, <strong>{{profile.current_country.name}}</strong>.<br>
+                      Birth place: <strong>{{profile.city_of_birth}}</strong>, <strong>{{profile.region_of_birth}}</strong>.<br>
+                      Marital status: <strong>{{profile.marital_status}}</strong>.
+                    {% else %}
+                      Magagaca: <strong>{{profile.user.first_name}} {{profile.user.last_name}}</strong> <br>
+                      Jinsiga: <strong>{{profile.gender}}</strong> <br>
+                      Halka aad ku nooshahay: <strong>{{profile.city_of_residence}}</strong>, <strong>{{profile.current_country.name}}</strong>.<br>
+                      Halka aad ku dhalatay: <strong>{{profile.city_of_birth}}</strong>, <strong>{{profile.region_of_birth}}</strong>.<br>
+                      Xaas ahaanshiyo: <strong>{{profile.marital_status}}</strong>.
+                    {% endif %}
+                  </p>
                 </div>
               </div>
 

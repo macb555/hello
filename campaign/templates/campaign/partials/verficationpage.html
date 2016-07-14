@@ -14,6 +14,13 @@
           {% endif %}
           {% if verificationform %}
           <h5>{% if request.session.language == "so" %}Halkan Ka Xaqiiji Cinwaankaaga{% else %}Verfy Your Account Here{% endif %}</h5>
+          <p>
+            {% if request.session.language == "so" %}
+              Waxaan kuu dirnay fariin email-ah oo ay kujirto mareeg hadii aad riixdo xaqiijinta aad ku guuleysan doonto, hadii kale qoraalsireedka ku jira soo guuri oo halkan hoose geli. Waad ku mahadsantahay booqashadaada Hal Qaran.
+            {% else %}
+              We have sent you an email containing a link if you click will automatically verify your email, if you like you can also copy the verification code to the box below. Thanks for visiting Hal Qaran.
+            {% endif %}
+          </p>
 
           <form	method="POST" role='form' class="form loginform" id="loginform">{%	csrf_token	%}
             {% if verificationform.errors %}

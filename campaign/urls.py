@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^activate/(?P<pk>[0-9]+)/(?P<activation_code>[\w\-]+)', views.varifyUser, name='varifyUser'),
     url(r"^resend/(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})",views.resendVarificationCode, name='resendVarificationCode'),
     url(r'^verfication/(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})$', views.verficationpage, name='verficationpage'),
+    url(r'^verfication/(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/(?P<activation_code>[\w\-]+)$', views.directverficationpage, name='directverficationpage'),
 
     url(r'^post/(?P<pk>[0-9]+)/$', views.details, name='details'),
     url(r'^issues$', views.issues, name='issues'),

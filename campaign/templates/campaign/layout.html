@@ -53,6 +53,16 @@
 <header>
 	{% include "campaign/partials/header.html" %}
 </header>
+{% if messages %}
+<div class="row">
+  <div class="col-sm-12">
+    {% for message in messages %}
+      <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
 <div id="page-content" class="index-page container">
   {% block content %}{% endblock %}
   <div class="row bottom-city">
