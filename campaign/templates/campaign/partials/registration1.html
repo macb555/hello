@@ -19,7 +19,9 @@
                     <p>{{usercounter}}</p>
                   </div>
                   <form	method="POST" role='form'	class="form loginform" id="loginform">{%	csrf_token	%}
-                    <img class="img-responsive steps-img" src="/static/campaign/images/step1.png">
+                    <div class="row">
+                      <img class="img-responsive steps-img" src="/static/campaign/images/step1.png">
+                    </div>
                     <h5 class='registration-header-personal'>{% if request.session.language == "so" %}Macluumaadka Adeegsadaha:{% else %}User Info{% endif %}</h5>
 
                     {% if userform.errors %}

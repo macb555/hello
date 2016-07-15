@@ -5,34 +5,11 @@
 <nav id="top">
   <div class="container-fluid header-container">
     <div class="row header-row">
-      <!--
-      <div class="col-md-6">
-        <strong>{% if request.session.language = "so" %}Waaga cusub ee u curtay Ummadda Soomaaliyeed!{% else %}New dawn for Somali people!{% endif %}</strong>
-      </div>
-      -->
       <div class="col-md-5 halqaran-header">
         <a href="/"><img class="img-responsive" src="{% static 'campaign/images/logo1.png' %}"/></a>
       </div>
       <div class="col-md-7 header-links-side">
         <!--<ul class="list-inline top-link link">-->
-        <ul class="list-inline header-links-list">
-          {% if request.session.language = "so" %}{% else %}{% endif %}
-          <li><a href="/"><i class="fa fa-home"></i>{% if request.session.language = "so" %}Hoyga{% else %}Home{% endif %}</a></li>
-          <li><a href="/contact"><i class="fa fa-comments"></i> {% if request.session.language = "so" %}Xiriirada{% else %}Contacts{% endif %}</a></li>
-          <li><a href="/feedback"><i class="fa fa-send-o"></i> {% if request.session.language = "so" %}Warcelin{% else %}Send Feedback{% endif %}</a></li>
-          <li><a href="/faq"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}Su'aalo{% else %}FAQ{% endif %}</a></li>
-        <!--<li><a href="/language/{% if request.session.language == 'so'%}en{% else %}so{% endif %}"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}English{% else %}Af Soomaali{% endif %}</a></li>-->
-        <li title="Luqadda Bedel | Change Language">
-            {% if request.session.language == "so" %}
-            <a href="/language/en{{next}}"><strong class='language-flag'>ENGLISH</strong></a>
-            {% else %}
-            <a href="/language/so{{next}}"><strong class='language-flag'>AFSOOMAALI</strong></a>
-            {% endif %}
-          </li>
-          {% if user.is_authenticated %}
-          <li class="user-welcome-area"><a href="/myprofile"><span class="yellow-text">{{user.username|title}}!</span></a> <span class="white-text">{% if request.session.language = "so" %}Kuso dhawow Hal Qaran.{% else %}Welcome to Hal Qaran.{% endif%}</span></li>
-          {% endif %}
-        </ul>
         <div class="login-area">
           {% if not user.is_authenticated %}
             {% if loginform %}
@@ -47,10 +24,32 @@
                 </div>
                 <button	type="submit"	class="btn btn-primary">{% if request.session.language = "so" %}Gal{% else %}Login{% endif%}</button>
             </form>
-            <p>{% if request.session.language = "so" %}<span class="yellow-text">Hadii aad ku cusubtahay boggan.</span> <a href="/join">Halkan riix si aad xubin uga noqoto Hal Qaran</a>.{% else %}<span class="yellow-text">If this is your first time.</span> <a href="/join">Please click here to join Hal Qaran.</a>{% endif%}</p>
+            <p>{% if request.session.language = "so" %}<span class="yellow-text">Kusoo biir Hal Qaran.</span> <a href="/join">Halkan Riix!</a>. <span class="yellow-text">Ereysireedka(password-ka) maa kaa lumay?</span> <a href="/forgot/password"> Halkan Riix!</a>{% else %}<span class="yellow-text">Is this your first time.</span> <a href="/join">Join Hal Qaran.</a> -- <span class="yellow-text">Did you forgot your password?</span> <a href="/forgot/password"> Click Here!</a>{% endif%}</p>
             {% endif %}
           {% endif %}
         </div>
+        {% if user.is_authenticated %}
+          <ul class="list-inline header-links-list loged-in-label">
+            <li class="user-welcome-area"><span><a class="yellow-text" href="/myprofile"><strong>{% if request.session.language == "so" %}Haye{% else %}Hi{% endif %}, {{user.username|title}}!</strong></a></span> <span class="white-text">{% if request.session.language == "so" %}Kuso dhawow Hal Qaran. <a href="{% url 'logout' %}">Ka bax</a>{% else %}Welcome to Hal Qaran. <a href="{% url 'logout' %}">Logout</a>{% endif%}</span></li>
+          </ul>
+        {% endif %}
+        <ul class="list-inline header-links-list">
+          {% if request.session.language = "so" %}{% else %}{% endif %}
+          <li><a href="/"><i class="fa fa-home"></i>{% if request.session.language = "so" %}Hoyga{% else %}Home{% endif %}</a></li>
+          <li><a href="/contact"><i class="fa fa-comments"></i> {% if request.session.language = "so" %}Xiriirada{% else %}Contacts{% endif %}</a></li>
+          <li><a href="/feedback"><i class="fa fa-send-o"></i> {% if request.session.language = "so" %}Warcelin{% else %}Send Feedback{% endif %}</a></li>
+          <li><a href="/faq"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}Su'aalo{% else %}FAQ{% endif %}</a></li>
+        <!--<li><a href="/language/{% if request.session.language == 'so'%}en{% else %}so{% endif %}"><i class="fa fa-question-circle"></i> {% if request.session.language = "so" %}English{% else %}Af Soomaali{% endif %}</a></li>-->
+        <li title="Luqadda Bedel | Change Language">
+            {% if request.session.language == "so" %}
+            <a href="/language/en{{next}}"><strong class='language-flag'>ENGLISH</strong></a>
+            {% else %}
+            <a href="/language/so{{next}}"><strong class='language-flag'>AF-SOOMAALI</strong></a>
+            {% endif %}
+          </li>
+
+        </ul>
+
       </div>
     </div>
   </div>

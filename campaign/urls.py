@@ -30,8 +30,15 @@ urlpatterns = [
     url(r'^complete-location-info$', views.getNewLocation, name='complete-location-info'),
     url(r'^activate/(?P<pk>[0-9]+)/(?P<activation_code>[\w\-]+)', views.varifyUser, name='varifyUser'),
     url(r"^resend/(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})",views.resendVarificationCode, name='resendVarificationCode'),
+
     url(r'^verfication/(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})$', views.verficationpage, name='verficationpage'),
     url(r'^verfication/(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/(?P<activation_code>[\w\-]+)$', views.directverficationpage, name='directverficationpage'),
+
+
+    #PASSWORD RESET URLS:
+    url(r'^forgot/password/$',views.forgotpassword, name='forgotpassword'),
+    url(r"^send/password/(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})",views.sendPasswordReset, name='sendPasswordReset'),
+    url(r'^reset/(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/(?P<activation_code>[\w\-]+)$', views.resetPassword, name='resetPassword'),
 
     url(r'^post/(?P<pk>[0-9]+)/$', views.details, name='details'),
     url(r'^issues$', views.issues, name='issues'),

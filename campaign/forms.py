@@ -86,3 +86,41 @@ class EmailVerficationForm(forms.Form):
     widgets = {
         'email': forms.EmailInput()
     }
+
+class ForgotPasswordForm(forms.Form):
+    email = forms.CharField(label='Email', max_length=100)
+    fields = ('email',)
+    widgets = {
+        'email': forms.EmailInput()
+    }
+
+class ResetPasswordForm(forms.Form):
+    password1 = forms.CharField(widget=forms.PasswordInput)
+    password2 = forms.CharField(widget=forms.PasswordInput)
+    fields = ('password1', 'password2')
+
+    def __init__(self, *args, **kwargs):
+        super(ResetPasswordForm, self).__init__(*args, **kwargs)
+        self.fields['password1'].label = 'Password'
+        self.fields['password2'].label = 'Confirm Password'
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        password1 = cleaned_data.get('password1', None)
+        password2 = cleaned_data.get('password2', None)
+        if not (password1):
+            error_msg = u'This field is required.'
+            self._errors['password1'] = self.error_class([error_msg])
+        if not (password2):
+            error_msg = u'This field is required.'
+            self._errors['password2'] = self.error_class([error_msg])
+        # password fields must match
+        if password1 != password2:
+            error_msg = u'Password doesn\'t match the confirmation.'
+            self._errors['password1'] = self.error_class([error_msg])
+            del cleaned_data['password1']
+        return cleaned_data
+
+    widgets = {
+        'password1': forms.PasswordInput(),
+        'password2': forms.PasswordInput(),
+    }

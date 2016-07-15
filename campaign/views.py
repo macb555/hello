@@ -383,11 +383,13 @@ def getNewLocation(request):
 
 
 def logout(request):
+    language = request.session.get('language', 'so')
     auth_logout(request)
     loginForm = LoginForm()
+    request.session['language']=language
     msg = {"type":"info","so":"Waad kuguuleysatay kabixitaanka.","en":"You have successfully logged out."}
     showMessage(request, msg)
-    redirect('index')
+    return redirect('index')
     #return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
 def details(request, pk):
     loginForm = LoginForm()
@@ -681,6 +683,8 @@ def sendVarificationEmail(request, user, activation_code):
     except:pass
     return 1
 
+
+
 def resendVarificationCode(request, email):
     try:
         user = User.objects.filter(email=email)
@@ -793,3 +797,138 @@ def showMessage(request, msg={}):
         pass
     finally:
         return 1
+
+def forgotpassword(request):
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    print("Sorry you forgot your password")
+    if not request.user.is_authenticated():
+        if request.method == "POST":
+            print("You sent some data")
+            form = ForgotPasswordForm(request.POST)
+            if form.is_valid():
+                print("The data is valid")
+                user = User.objects.filter(email=request.POST.get('email'))
+                if not len(user) ==0:
+                    print("Got user with this email")
+                    profile = user[0].profile
+                    profile.activation_code = str(uuid.uuid4())
+                    profile.save()
+                    print("Generated a new code for this user")
+                    print("Redirecting to SEND PASSWORD RESET VIEW")
+                    return redirect('sendPasswordReset', email=request.POST.get('email'))
+                msg = {'type':'danger','so':"Waan ka xunnahay majirto cid email-kan ku diiwaansan.", 'en':'Sorry there is no one registered with this email.'}
+                showMessage(request, msg)
+                print("There is no user with this email")
+                return redirect('index')
+            print("The data is invalid")
+        form = ForgotPasswordForm()
+        print("Sending a fresh Fortgot Password Form")
+        return render(request, 'campaign/partials/forgotpassword.html', {'forgotpasswordform':form})
+    msg = {'type':'danger','so':"Waxaaba kuu furan cinwaankaaga.", 'en':'You are already loged in.'}
+    showMessage(request, msg)
+    print("You are already logged in")
+    return redirect('index')
+
+def resetPassword(request, email, activation_code):
+    user = User.objects.filter(email=email)
+    if not len(user) ==0:
+        profile = user[0].profile
+        if profile.activation_code == activation_code:
+            new_password = request.POST.get('password1')
+            user[0].set_password(new_password)
+            user[0].save()
+            msg = {'type':'info','so':"Ereysireedkaaga (password) waa la bedelay. Fadlan midka cusub ku gal hada.", 'en':'Your password has been changed. Please login using your new password.'}
+            showMessage(request, msg)
+        msg = {'type':'danger','so':"Waan kaxunnahay, ereysireedkaaga (password) lama bedelin. iska hubi in mareegta (link) aad soo raacday ay tahay sida email-kaaga aan kugu soo dirnay.", 'en':'Sorry, your password didn\'t change. Please make sure the link is the same as the one we sent you through your email.'}
+        showMessage(request, msg)
+        return redirect('index')
+    if request.method == "POST":
+        form = ResetPasswordForm(request.POST)
+        if form.is_valid():
+            user = User.objects.filter(email=email)
+            if not len(user) ==0:
+                profile = user[0].profile
+                if profile.activation_code == activation_code:
+                    new_password = request.POST.get('password1')
+                    user[0].set_password(new_password)
+                    user[0].save()
+                    msg = {'type':'info','so':"Ereysireedkaaga (password) waa la bedelay. Fadlan midka cusub ku gal hada.", 'en':'Your password has been changed. Please login using your new password.'}
+                    showMessage(request, msg)
+                msg = {'type':'danger','so':"Waan kaxunnahay, ereysireedkaaga (password) lama bedelin. iska hubi in mareegta (link) aad soo raacday ay tahay sida email-kaaga aan kugu soo dirnay.", 'en':'Sorry, your password didn\'t change. Please make sure the link is the same as the one we sent you through your email.'}
+                showMessage(request, msg)
+                #return redirect('resetPassword', email=request.POST.get('email'))
+    form = ResetPasswordForm()
+    return render(request, 'campaign/partials/resetpassword.html', {'resetpasswordform':form})
+
+def sendPasswordReset(request, email):
+    print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+    print("in SEND PASSWORD RESET VIEW")
+    #try:
+    user = User.objects.filter(email=email)
+    if not len(user) ==0:
+        #generate key
+        print("There is user with this email")
+        profile = user[0].profile
+        profile.activation_code = str(uuid.uuid4())
+        profile.save()
+        sendPasswordEmail(request, user[0], profile.activation_code)
+        msg = {'type':'info','so':"Mareegti aad u adeegsan laheyd bedelidda ereysireedkaaga waxaa loo diray email-kaaga. Fadlan raac mareegtaas si aad u bedesho ereysireedka", 'en':'A link for resetting your password is sent to your email. Please follow that link to reset your password.'}
+        showMessage(request, msg)
+    #except:pass
+    print("Redirecting to home page")
+    return redirect('index')
+    '''
+    if request.method == "POST":
+        print("Got some data")
+        form = ResetPasswordForm(request.POST)
+        if form.is_valid():
+            print("Data is valid")
+            user = User.objects.filter(email=email)
+            if not len(user) ==0:
+                #generate key
+                print("There is user with this email")
+                profile = user[0].profile
+                profile.activation_code = str(uuid.uuid4())
+                profile.save()
+                #send email
+                print("Generated a new code")
+                print("Sending an email")
+                sendPasswordEmail(request, user[0], profile.activation_code)
+                print("Sent an email")
+                #return to home and tell user to wait for email
+                msg = {'type':'info','so':"Mareegti aad u adeegsan laheyd bedelidda ereysireedkaaga waxaa loo diray email-kaaga. Fadlan raac mareegtaas si aad u bedesho ereysireedka", 'en':'A link for resetting your password is sent to your email. Please follow that link to reset your password.'}
+                showMessage(request, msg)
+                print("Redirecting to home page")
+                #return redirect('sendPasswordEmail', email=email, activation_code=profile.activation_code)
+                return redirect('index')
+        return render(request, 'campaign/partials/forgotpassword.html', {'forgotpasswordform':form})'''
+    #form = ForgotPasswordForm()
+    #return render(request, 'campaign/partials/forgotpassword.html', {'forgotpasswordform':form})
+
+
+def sendPasswordEmail(request, user, activation_code):
+    print("PASSWORD RESET EMAIL VIEW")
+    subject = "Welcome to Hal Qaran"
+    sender = settings.EMAIL_HOST_USER
+    receiver = user.email
+    link = settings.SITE_DOMAIN + '/reset/' +str(receiver)+'/'+ str(activation_code)
+    #http://localhost:8000/verfication/boolow5@gmail.com/12d6de94-86b9-494a-8626-cde95bdd25c4
+    ctx = {
+        "user":user.first_name,
+        "date":timezone.now(),
+        "link":link
+        }
+    if request.session.get('language', 'so') == 'so':
+        message = get_template('registration/so-reset-email.html').render(ctx)
+    else:
+        message = get_template('registration/en-reset-email.html').render(ctx)
+
+    #send_mail(subject,message,sender,[receiver],fail_silently=False)
+    #try:
+    msg = EmailMessage(subject, message, to=[receiver], from_email=sender)
+    msg.content_subtype = 'html'
+    msg.send()
+    print("SENT EMAIL")
+    #except:pass
+
+    return 1

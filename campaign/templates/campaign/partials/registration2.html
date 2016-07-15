@@ -16,10 +16,12 @@
                 <!-- ############# LOGGIN FORM ############### -->
                 <div id="login-area">
                   <div class="right-label-1">
-                    <p>1.2k</p>
+                    <p>{{usercounter}}</p>
                   </div>
                   <form	method="POST" role='form' class="form loginform" id="loginform">{%	csrf_token	%}
-                    <img class="img-responsive steps-img" src="/static/campaign/images/step2.png">
+                    <div class="row">
+                      <img class="img-responsive steps-img" src="/static/campaign/images/step2.png">
+                    </div>
                     <h5 class='registration-header-personal'>{% if request.session.language == "so" %}Macluumaadka Shakhsiyeed:{% else %}Personal Info{% endif %}</h5>
 
                     {% if personalform.errors %}
