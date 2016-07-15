@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'JABRIL.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -110,7 +110,7 @@ DATABASES = {
         'PORT': '',
     }
 }
-'''
+
 
 
 # Password validation
@@ -205,11 +205,11 @@ DEFAULT_FROM_EMAIL = 'halqaraninfocenter@gmail.com'
 DEFAULT_TO_EMAIL = 'boolow5@gmail.com'
 
 ############# CUSTOM MESSAGES SETTINGS ##############
-'''from django.contrib.messages import constants as message_constants
+from django.contrib.messages import constants as message_constants
 MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
                 message_constants.INFO: 'info',
                 message_constants.SUCCESS: 'success',
                 message_constants.WARNING: 'warning',
                 message_constants.ERROR: 'danger',
                 }
-'''
+

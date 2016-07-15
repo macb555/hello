@@ -30,7 +30,7 @@
             {% endif %}
           </li>
           {% if user.is_authenticated %}
-          <li class="user-welcome-area"><span class="yellow-text">{{user.username|title}}!</span> <span class="white-text">{% if request.session.language = "so" %}Kuso dhawow Hal Qaran.{% else %}Welcome to Hal Qaran.{% endif%}</span></li>
+          <li class="user-welcome-area"><a href="/myprofile"><span class="yellow-text">{{user.username|title}}!</span></a> <span class="white-text">{% if request.session.language = "so" %}Kuso dhawow Hal Qaran.{% else %}Welcome to Hal Qaran.{% endif%}</span></li>
           {% endif %}
         </ul>
         <div class="login-area">

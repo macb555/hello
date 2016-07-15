@@ -48,7 +48,7 @@ def login(request):
             #return redirect('profile')
             msg = {'type':'info','so':"Waad ku guuleysatay gelitaanka!", 'en':'You loggedin successfully!'}
             showMessage(request, msg)
-            return redirect('index')
+            return redirect('profile')
             #return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "profile":profile})
         else:
             loginForm = LoginForm()
@@ -349,8 +349,6 @@ def varifyUser(request, pk, activation_code):
 
 
 def getNewLocation(request):
-    if request.user.is_authenticated and request.user.is_active:
-        return redirect('profile')
     allUsers = User.objects.all().count()
     print("Gettin new location form")
     if request.user.is_authenticated() and request.user.is_active:
@@ -373,14 +371,14 @@ def getNewLocation(request):
                 location.save()
                 msg = {"type":"info","so":"Waad ku guuleystay, dhameystirka buuxinta macluumaadkaaga. Guul wacan ayaan kuu rajeyneynaa.","en":"You have successfully completed your registration steps."}
                 showMessage(request, msg)
-                return redirect('profile')
+                return redirect('index')
 
             else:
                 print("return to the same form because the step is not the second.")
                 form = LocationInfoForm()
                 return render(request, 'campaign/partials/registration3.html', {'locationform':form, 'usercounter':allUsers})
     print("user is not logged in or is not active")
-    return redirect('login')
+    return redirect('profile')
 
 
 
@@ -388,7 +386,9 @@ def logout(request):
     auth_logout(request)
     loginForm = LoginForm()
     msg = {"type":"info","so":"Waad kuguuleysatay kabixitaanka.","en":"You have successfully logged out."}
-    return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+    showMessage(request, msg)
+    redirect('index')
+    #return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
 def details(request, pk):
     loginForm = LoginForm()
     post = get_object_or_404(Post, pk=pk)
@@ -760,12 +760,11 @@ def profile(request):
                 print("user is in the first step of registration")
                 #take user to registration step 2
                 return redirect('getNewPerson')
-            elif profile.registration_step < 3:
+            elif profile.registration_step == 2:
                 print("user is in the second step of registration")
                 #take user to last step registration
                 return redirect('complete-location-info')
-            else:
-                return render(request, 'campaign/partials/profile.html', {'profile':profile})
+        return render(request, 'campaign/partials/profile.html', {'profile':profile})
             #    #show profile
             #return redirect('getNewPerson')
             #    return render(request, 'campaign/partials/profile.html', {'profile':profile})
