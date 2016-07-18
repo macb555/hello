@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'kts+d%(k4wh7pag%g2ss4^_cb31#%5w6)9x%w!+9#ky=91px@%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False #True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -197,11 +197,11 @@ CLICKY_SITE_ID = '100971100'
 
 ############## EMAIL VARIABLES ###############
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'halqaraninfocenter@gmail.com'
-EMAIL_HOST_PASSWORD = 'hic/sharaf.143'
-DEFAULT_FROM_EMAIL = 'halqaraninfocenter@gmail.com'
+EMAIL_HOST_USER = 'halqaran@outlook.com'
+EMAIL_HOST_PASSWORD = 'hal/sharaf.143'
+DEFAULT_FROM_EMAIL = 'halqaran@outlook.com'
 DEFAULT_TO_EMAIL = 'boolow5@gmail.com'
 
 ############# CUSTOM MESSAGES SETTINGS ##############
