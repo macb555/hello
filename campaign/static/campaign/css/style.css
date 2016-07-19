@@ -673,7 +673,7 @@ span.white-text {color:#fff;}
 
 
 img.steps-img {max-width: 80%;float: left; margin: auto;}
-.featured2-column {width: 85%;}
+.featured2-column {width: 100%;}
 .indent-from-left {padding-left: 3em;}
 
 
@@ -681,4 +681,4 @@ img.steps-img {max-width: 80%;float: left; margin: auto;}
 .light-header {font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-weight:lighter;}
 .light-header-2 {font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-weight:100;}
 
-.sidebar-column {padding-top: 3.5em;}
+.sidebar-column {padding-top: 4.7em;}

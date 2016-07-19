@@ -79,6 +79,8 @@
       {% block content %}{% endblock %}
     </div>
     <div class="col-sm-2 sidebar-column">
+      {% include "campaign/partials/twitter-sidebar.html" %}
+      {% include "campaign/partials/facebook-sidebar.html" %}
       {% include "campaign/partials/sidebar.html" %}
     </div>
   </div>
