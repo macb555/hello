@@ -71,17 +71,18 @@
 </div>
 
 <div id="page-content" class="index-page container">
-  <div class="right-label-1">
+  <div class="right-label-1" title="Number of Members">
     <p>{{request.session.usercounter}}</p>
   </div>
   <div class="row">
-    <div class="col-sm-10">
+    <div class="col-sm-10 content-side">
       {% block content %}{% endblock %}
     </div>
     <div class="col-sm-2 sidebar-column">
       {% include "campaign/partials/twitter-sidebar.html" %}
+      <hr/>
       {% include "campaign/partials/facebook-sidebar.html" %}
-      {% include "campaign/partials/sidebar.html" %}
+      <hr/>
     </div>
   </div>
 </div><!-- #page-content -->

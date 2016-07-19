@@ -162,7 +162,7 @@ header{background:#cfc;//#3a6fa9;}
 #page-content{padding: 0;background-color: #fff;padding-left: 3em; padding-right: 2em;padding-top: 4em;border: 2px groove whitesmoke;}
 #page-content.index-page, #page-content.single-page, #page-content.archive-page{margin-top: 3em;}
 
-div.bottom-city {margin-left: -6em;margin-right: -6em;margin-bottom: -2.9em;}
+div.bottom-city {margin-left: -6em;margin-right: -6em;margin-bottom: -2.9em;margin-top: 1em;}
 
 .archive-page {}
 .archive-page .box .zoom-container{max-width: 250px;display: inline-block;float: left;margin-right: 5px;}
@@ -681,4 +681,5 @@ img.steps-img {max-width: 80%;float: left; margin: auto;}
 .light-header {font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-weight:lighter;}
 .light-header-2 {font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-weight:100;}
 
-.sidebar-column {padding-top: 4.7em;}
+.sidebar-column {margin-top: 4.7em;}
+.content-side {border-right: 1px groove #EEE;}
