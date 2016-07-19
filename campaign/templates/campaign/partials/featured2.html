@@ -16,18 +16,15 @@
         <div class="carousel-inner">
           {% for item in featured_items|slice:"0:3" %}
           <div class="item {% if item == featured_items.0 %}active{% endif %}">
-            <div class="carsl-image image-container" style="background-image: url(media/{{item.featured_image.photo}})">
-              <!--<img src="media/{{item.featured_image.photo}}" alt="First slide">-->
-            </div>
+            <a href="/post/{{item.pk}}">
+              <div class="carsl-image image-container" style="background: url(media/{{item.featured_image.photo}}) no-repeat left center;background-size:100%;">
+                <!--<img src="media/{{item.featured_image.photo}}" alt="First slide">-->
+              </div>
+            </a>
             <!-- Static Header -->
             <div class="header-text hidden-xs">
               <div class="col-md-12 text-center">
-                <h3>
-                  <a href="/post/{{item.pk}}">{{item.title|slice:"0:22:" }}...</a>
-                </h3>
-                <br>
-                <h5 class="shadowed-text">{{item.description|slice:"0:100:"}}...</h5>
-                <br>
+
               </div>
             </div><!-- /header-text -->
           </div>

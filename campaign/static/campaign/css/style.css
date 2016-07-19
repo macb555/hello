@@ -128,7 +128,7 @@ header{background:#cfc;//#3a6fa9;}
 
 
 /* Carousel Styles */
-.carousel-inner img {width: 100%;max-height: 640px;}
+.carousel-inner img {width: 100%;max-height: 10em;}
 
 .carousel-control {width: 0;}
 .carousel-control.left,
@@ -159,20 +159,8 @@ header{background:#cfc;//#3a6fa9;}
 /* ---------------------------------------------------------------------------- */
 /* -------------------------------------Content-------------------------------- */
 /* ---------------------------------------------------------------------------- */
-#page-content{padding: 0;background-color: #fff;padding-left: 1em; padding-right: 1em;}
+#page-content{padding: 0;background-color: #fff;padding-left: 1em; padding-right: 1em;padding-top: 4em;}
 #page-content.index-page, #page-content.single-page, #page-content.archive-page{margin-top: 20px;}
-/*
-.bottom-city {
-  //background-image: url('/static/campaign/images/City.png');
-  //background-repeat: no-repeat;
-  //background-position: bottom;
-  margin: -7em;
-  margin-top: 0;
-  padding-bottom: 2em;
-  height: 6em;
-  bottom: 0;
-  border:3px solid black;
-}*/
 
 div.bottom-city {margin-left: -6em;margin-right: -6em;margin-bottom: -2.9em;}
 
@@ -348,7 +336,7 @@ footer .footer-3 ul li a:hover{color: #666;}
 /* -------------------------------------Contact-------------------------------- */
 /* ---------------------------------------------------------------------------- */
 .featured{background-color:#fff; /*#CCFFFF;*/padding: 15px ;border: 1px solid #ddd;min-height: 15em;margin-bottom: .5em;}
-.featured2{background-color:#fff; /*#CCFFFF;*/padding: 15px ;/*border: 1px solid #ddd;*/min-height: 5em;margin-bottom: .5em;}
+.featured2{background-color:#fff; /*#CCFFFF;*/padding: 15px ;/*border: 1px solid #ddd;*/min-height: 5em;margin-bottom: .5em;margin: auto;}
 
 
 .contact h2{font-size: 34px; font-weight: 500;letter-spacing: 3px;padding-top: 20px ;text-align: center;}
@@ -549,9 +537,17 @@ h5.head-title-2 {background: #e6f0ff;box-shadow: 1px 0 6px darkgray;padding: .5e
 .carsl-image-small-2 { height: 300px; overflow: hidden; }
 .carsl-image-small-2 img {height: 100%;}
 .image-container {
-    background-size: cover;
+    /*background-size: cover;
     background-repeat: no-repeat;
-    background-position: 50% 50%;
+    background-position:center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-size: 100%
+    margin-top: -2em;
+    height: 20em;
+    padding-bottom: 30em;*/
 }​
 .image-container-2 {
     background-size: cover;
@@ -658,7 +654,7 @@ span.white-text {color:#fff;}
 
 .registration-header-personal {border-bottom: 2px groove lightgray;margin-bottom: 1.5em;padding-bottom: 1.5em;}
 
-.right-label-1{float:right; margin-top:-.4em;margin-right: 2%;height: 120px;width: 84px;background-image: url('/static/campaign/images/numbers.png');background-size: 100%;background-repeat: no-repeat;position: absolute;margin-left: 75%; z-index: 999;}
+.right-label-1{float:right; margin-top:-4.5em;margin-right: 2%;height: 120px;width: 84px;background-image: url('/static/campaign/images/numbers.png');background-size: 100%;background-repeat: no-repeat;position: absolute;margin-left: 75%; z-index: 999;}
 .right-label-1 p {margin: auto; padding-top: 1em;margin-left: 2em}
 
 .content-header h1 {color: #fff;text-shadow: 1px 1px 1px #333;}
@@ -678,4 +674,5 @@ span.white-text {color:#fff;}
 
 
 img.steps-img {max-width: 80%;float: left; margin: auto;}
-.featured2-column {width: 95%; margin: auto;}
+.featured2-column {width: 85%;}
+.indent-from-left {padding-left: 3em;}
