@@ -3,39 +3,36 @@
 
   <div class="row">
     <!--<div id="main-content"> background not working -->
-      <div id="column-one" class="col-md-9">
+      <div id="column-one" class="col-md-12">
         <div class="box wrap-vid column-1">
-          {% if request.session.language = "so" %}
-            <h1>Fiidiyeyaal</h1>
-            {% if not posts %}<p>Wili wax fiidiye ah lama soo gelin.</p>{% endif %}
+          {% if not videos %}
+            {% if request.session.language = "so" %}
+              <h1>Fiidiyeyaal</h1>
+              {% if not posts %}<p>Wili wax fiidiye ah lama soo gelin.</p>{% endif %}
+            {% else %}
+              <h1>Videos</h1>
+              {% if not posts %}<p>No videos added yet</p>{% endif %}
+            {% endif %}
           {% else %}
-            <h1>Videos</h1>
-            {% if not posts %}<p>No videos added yet</p>{% endif %}
-          {% endif %}
+  						<div class="row container-fluid">
+  						{% for video in videos|slice:":24" %}
+  						<div class="col-sm-3" style="margin-bottom:2em;">
+  		          <div class="zoom-container">
+  		            <div class="zoom-caption">
+  		              <span class="youtube">Youtube</span>
+  		              <a href="/watch/{{video.videoId}}">
+  		                <i class="fa fa-play icon-play" style="color: #fff"></i>
+  		              </a>
+  		              <p>{{video.title}}</p>
+  		            </div>
+  		            <img src="http://img.youtube.com/vi/{{video.videoId}}/0.jpg" />
 
-						<div class="row container-fluid">
-						{% for video in videos|slice:":24" %}
-						<div class="col-sm-3" style="margin-bottom:2em;">
-		          <div class="zoom-container">
-		            <div class="zoom-caption">
-		              <span class="youtube">Youtube</span>
-		              <a href="/watch/{{video.videoId}}">
-		                <i class="fa fa-play icon-play" style="color: #fff"></i>
-		              </a>
-		              <p>{{video.title}}</p>
-		            </div>
-		            <img src="http://img.youtube.com/vi/{{video.videoId}}/0.jpg" />
-
-		          </div>
-						</div>
-	          {% endfor %}
-					</div>
+  		          </div>
+  						</div>
+  	          {% endfor %}
+  					</div>
+            {% endif %}
 				</div>
-      </div>
-      <div id="column-two" class="col-md-3">
-        <div class="box wrap-vid column-2">
-          {% include "campaign/partials/sidebar.html" %}
-        </div>
       </div>
     </div>
 

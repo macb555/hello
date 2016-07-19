@@ -6,7 +6,7 @@
         {% if latest_videos %}
           {% for item in latest_videos|slice:"0:2" %}
             {% if item.type.name == 'Youtube' %}
-              <iframe width="420" height="315" src="https://www.youtube.com/embed/{{item.videoId}}" frameborder="0" allowfullscreen></iframe>
+              <iframe width="336" height="252" src="https://www.youtube.com/embed/{{item.videoId}}" frameborder="0" allowfullscreen></iframe>
             {% else %}
               <iframe class="" src="https://player.vimeo.com/video/{{item.videoId}}" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
             {% endif %}
@@ -19,7 +19,7 @@
           {% for item in latest_videos|slice:"3:4" %}
           <div class="videowrapper">
             {% if item.type.name == 'Youtube' %}
-              <iframe width="420" height="315" src="https://www.youtube.com/embed/{{item.videoId}}" frameborder="0" allowfullscreen></iframe>
+              <iframe width="378" height="284" src="https://www.youtube.com/embed/{{item.videoId}}" frameborder="0" allowfullscreen></iframe>
             {% else %}
               <iframe class="" src="https://player.vimeo.com/video/{{item.videoId}}" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
             {% endif %}
@@ -30,7 +30,7 @@
         <div class="row">
           {% if latest_videos %}
             {% for item in latest_videos|slice:"0:4" %}
-              <div class="post wrap-vid col-sm-4">
+              <div class="post wrap-vid col-sm-3">
                 <div class="zoom-container">
                   <div class="zoom-caption">
                     <span class="youtube">Youtube</span>

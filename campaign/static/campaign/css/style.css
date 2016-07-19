@@ -159,8 +159,8 @@ header{background:#cfc;//#3a6fa9;}
 /* ---------------------------------------------------------------------------- */
 /* -------------------------------------Content-------------------------------- */
 /* ---------------------------------------------------------------------------- */
-#page-content{padding: 0;background-color: #fff;padding-left: 1em; padding-right: 1em;padding-top: 4em;}
-#page-content.index-page, #page-content.single-page, #page-content.archive-page{margin-top: 20px;}
+#page-content{padding: 0;background-color: #fff;padding-left: 3em; padding-right: 2em;padding-top: 4em;border: 2px groove whitesmoke;}
+#page-content.index-page, #page-content.single-page, #page-content.archive-page{margin-top: 3em;}
 
 div.bottom-city {margin-left: -6em;margin-right: -6em;margin-bottom: -2.9em;}
 
@@ -336,7 +336,7 @@ footer .footer-3 ul li a:hover{color: #666;}
 /* -------------------------------------Contact-------------------------------- */
 /* ---------------------------------------------------------------------------- */
 .featured{background-color:#fff; /*#CCFFFF;*/padding: 15px ;border: 1px solid #ddd;min-height: 15em;margin-bottom: .5em;}
-.featured2{background-color:#fff; /*#CCFFFF;*/padding: 15px ;/*border: 1px solid #ddd;*/min-height: 5em;margin-bottom: .5em;margin: auto;}
+.featured2{background-color:#fff; /*#CCFFFF;*/padding: 0;/*border: 1px solid #ddd;*/min-height: 5em;margin-bottom: .5em;margin: auto;}
 
 
 .contact h2{font-size: 34px; font-weight: 500;letter-spacing: 3px;padding-top: 20px ;text-align: center;}
@@ -602,8 +602,8 @@ h5.head-title-2 {background: #e6f0ff;box-shadow: 1px 0 6px darkgray;padding: .5e
 .halqaran-header img {margin-top: .5em;max-width: 20em;}
 .header-links-side li a {padding-top: .5em;padding-right: .1em;padding-left: .1em;padding-bottom: 0; border-bottom: 2px groove #fff;color: #fff;}
 .header-links-side li {padding: 0em; margin: 1em;margin-bottom: .1em;margin-top: .5em;}
-.header-links-side li:hover {background-color: #fff;color: #000;}
-.header-links-side li:hover a {color: #222;}
+/*.header-links-side li:hover {background-color: #fff;color: #000;}*/
+.header-links-side li:hover a {color: #222;border-bottom: 2px groove #69BF03;}
 li.user-welcome-area {border:0;padding-top: 0; padding-bottom: 0;margin: 0;}
 li.user-welcome-area:hover {background-color: #222;color: #fff;}
 //.somali-language {padding-bottom: .2em;margin-top: .4em;height: 1em;}
@@ -657,7 +657,6 @@ span.white-text {color:#fff;}
 .right-label-1{float:right; margin-top:-4.5em;margin-right: 2%;height: 120px;width: 84px;background-image: url('/static/campaign/images/numbers.png');background-size: 100%;background-repeat: no-repeat;position: absolute;margin-left: 75%; z-index: 999;}
 .right-label-1 p {margin: auto; padding-top: 1em;margin-left: 2em}
 
-.content-header h1 {color: #fff;text-shadow: 1px 1px 1px #333;}
 /*********************** transition *********************/
 .height-transition {
 	/* Initially we don't want any height, and we want the contents to be hidden */
@@ -676,3 +675,10 @@ span.white-text {color:#fff;}
 img.steps-img {max-width: 80%;float: left; margin: auto;}
 .featured2-column {width: 85%;}
 .indent-from-left {padding-left: 3em;}
+
+
+.content-header h1 {color: #fff;text-shadow: 1px 1px 1px #333;}
+.light-header {font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-weight:lighter;}
+.light-header-2 {font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-weight:100;}
+
+.sidebar-column {padding-top: 3.5em;}

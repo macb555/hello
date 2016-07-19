@@ -3,7 +3,7 @@
 {% block content %}
   <div class="row">
     <div id="main-content"><!-- background not working -->
-      <div id="column-one" class="col-md-9">
+      <div id="column-one" class="col-md-12">
         <div class="box wrap-vid column-1">
           {% if request.session.language = "so" %}
             <h1>Dhamaan</h1>
@@ -22,11 +22,6 @@
               Date: <strong>{{post.published_date}}</strong> | Likes: <strong>{{post.likes}}</strong> | By: <strong>{{post.author}}</strong>
             </p>
           {% endfor %}
-        </div>
-      </div>
-      <div id="column-two" class="col-md-3">
-        <div class="box wrap-vid column-1">
-          {% include "campaign/partials/sidebar.html" %}
         </div>
       </div>
     </div>

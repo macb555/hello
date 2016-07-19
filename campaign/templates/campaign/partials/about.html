@@ -3,7 +3,7 @@
 {% block content %}
   <div class="row">
     <div id="main-content"><!-- background not working -->
-      <div id="column-one" class="col-md-9">
+      <div id="column-one" class="col-md-12">
         <div class="box wrap-vid  column-1">
           {% if post %}
           <div class="post-detail">
@@ -86,11 +86,6 @@
           {% endif %}
         </div>
 
-      </div>
-      <div id="column-two" class="col-md-3">
-        <div class="box wrap-vid  column-2">
-          {% include "campaign/partials/sidebar.html" %}
-        </div>
       </div>
     </div>
   </div>

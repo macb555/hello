@@ -1,37 +1,12 @@
 {% extends 'campaign/layout.html' %}
 {% block content %}
-
 <!-- /////////////////////////////////////////Content -->
-<h5 class="indent-from-left">This is another title!</h5>
+<h5 class="indent-from-left light-header">Welcome to Hal Qaran</h5>
 <br/>
 {% include "campaign/partials/featured2.html" %}
 {% include "campaign/partials/last_item.html" %}
 {% include "campaign/partials/last_videos.html" %}
-<!--
-  <div class="row">
-    <div id="main-content">
-      <div class="col-md-6">
-        <div id="column-one">
-          <div class="box wrap-vid">
-            {% if featured_items.0.video.videoId %}
-            <div class="zoom-container">
-              <div class="zoom-caption">
-                <span class="youtube">Youtube</span>
-                <a href="/watch/{{featured_items.0.video.videoId}}">
-                <i class="fa fa-play icon-play" style="color: #fff"></i>
-                </a>
-                <p>{{featured_items.0.title}}</p>
-              </div>
-              <img src="media/{{featured_items.0.featured_image.photo}}">
+{% include "campaign/partials/last_items.html" %}
 
-            </div>
-            <h3>{{featured_items.0.title}}</h3>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
--->
 
 {% endblock %}

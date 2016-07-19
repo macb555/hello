@@ -2,10 +2,13 @@
 {% block last_item %}
   {% if featured_items.0 %}
     <div class="row">
-      <div class="col-sm-10">
-        <h6 style="color:#555;">{{featured_items.0.title}}</h6>
-        <p>{{featured_items.0.content|slice:"0:300:"}}...</p>
+      <div class="col-sm-12">
+        <a href="/post/{{item.pk}}">
+          <h6 style="color:#555;">{{featured_items.0.title}}</h6>
+        </a>
+        <p>{{featured_items.0.content|slice:"0:295:"}}...</p>
       </div>
     </div>
+    <br/>
   {% endif %}
 {% endblock %}
