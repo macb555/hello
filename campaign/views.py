@@ -20,16 +20,24 @@ def index(request):
     language = request.session.setdefault('language','so')
     usercounter = User.objects.all().count()
     request.session['usercounter'] = usercounter
+    if request.session.get('language') == 'so':
+        pageheader = 'Hoyga'
+    else:
+        pageheader = 'Home'
     posts = Post.objects.filter(likes__gte=F('dislikes'),language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
     videos = Video.objects.all()
     loginForm = LoginForm()
     #return render(request, 'campaign/partials/home.html', {'web':web, 'speeches':speeches, 'featured_items':speeches})
-    return render(request, 'campaign/partials/home.html', {"loginform":loginForm,"featured_items":posts,"post":{"pk":0}, "latest_videos":videos})
+    return render(request, 'campaign/partials/home.html', {"loginform":loginForm,"featured_items":posts,"pageheader":pageheader, "latest_videos":videos})
 
 
 def loginPage(request):
+    if request.session.get('language') == 'so':
+        pageheader = 'Bogga Gelitaanka'
+    else:
+        pageheader = 'Login Page'
     loginForm = LoginForm()
-    return render(request, 'campaign/partials/login.html', {"nosidebarlogin":True,"loginform":loginForm,"post":{"pk":0}})
+    return render(request, 'campaign/partials/login.html', {"nosidebarlogin":True,"loginform":loginForm,"pageheader":pageheader})
 
 def loginPage2(request):
     username = request.session.get('username',None)
@@ -146,6 +154,10 @@ def register_profile(request):
     return render(request, 'campaign/partials/register_profile.html', {'profileForm':profileForm})
 
 def getNewUser(request):
+    if request.session.get('language') == 'so':
+        pageheader = 'Diiwaangelinta Adeegsadaha'
+    else:
+        pageheader = 'User Registration'
     if request.user.is_authenticated and request.user.is_active:
         return redirect('profile')
     request.session.setdefault('language','so')
@@ -204,13 +216,17 @@ def getNewUser(request):
                     return redirect('verficationpage', email=user.email)
             #If the form is not valid
             print("The form is invalid")
-            return render(request, 'campaign/partials/registration1.html', {'userform':form, 'usercounter':allUsers})
+            return render(request, 'campaign/partials/registration1.html', {'userform':form, 'usercounter':allUsers, 'pageheader':pageheader})
     #If the user requested a form
     userform=UserInfoForm()
     print("Rendering a fresh user registration form")
-    return render(request, 'campaign/partials/registration1.html', {'userform':userform, 'usercounter':allUsers})
+    return render(request, 'campaign/partials/registration1.html', {'userform':userform, 'usercounter':allUsers, 'pageheader':pageheader})
 
 def getNewPerson(request):
+    if request.session.get('language') == 'so':
+        pageheader = 'Macluumaadka Shakhsiga'
+    else:
+        pageheader = 'Personal Info'
     request.session.setdefault('language','so')
     #check if user is loggedin.
     if request.user.is_authenticated() and request.user.is_active:
@@ -235,11 +251,15 @@ def getNewPerson(request):
 
             profile.save()
             return redirect('complete-location-info')
-        return render(request, 'campaign/partials/registration2.html', {'personalform':form, 'usercounter':allUsers})
+        return render(request, 'campaign/partials/registration2.html', {'personalform':form, 'usercounter':allUsers, 'pageheader':pageheader})
     else:
         return redirect('login')
 
 def verficationpage(request, email):
+    if request.session.get('language') == 'so':
+        pageheader = 'Bogga Xaqiijinta'
+    else:
+        pageheader = 'Verification Page'
     if request.user.is_authenticated and request.user.is_active:
         return redirect('profile')
     if request.method == 'POST':
@@ -264,12 +284,16 @@ def verficationpage(request, email):
                     return redirect('loginpage')
                 print("The activation code is not correct")
         print("User didn't give a valid data")
-        return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form})
+        return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form, 'pageheader':pageheader})
     print("Sending a fresh form")
     form = VerficationForm()
-    return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form})
+    return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form,'pageheader':pageheader})
 
 def directverficationpage(request, email, activation_code):
+    if request.session.get('language') == 'so':
+        pageheader = 'Bogga Xaqiijinta'
+    else:
+        pageheader = 'Verification Page'
     if request.user.is_authenticated and request.user.is_active:
         return redirect('profile')
     print("+++++++++++++++++++++++++++++++++++++ VERIFICATION ++++++++++++++++++++++++++++++")
@@ -297,7 +321,7 @@ def directverficationpage(request, email, activation_code):
             return redirect('loginpage')
     msg = {"type":"danger", "en":"Sorry, Make sure the varification code you used is correct.", "so":"Waan kaxunnahay, Fadlan iska hubi qoraalsireedka aad gelisay."}
     showMessage(request, msg)
-    return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form})
+    return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form,'pageheader':pageheader})
     #print("Sending a fresh form")
     #form = VerficationForm()
     #return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form})
@@ -350,6 +374,10 @@ def varifyUser(request, pk, activation_code):
 
 
 def getNewLocation(request):
+    if request.session.get('language') == 'so':
+        pageheader = 'Macluumaadka Goobta'
+    else:
+        pageheader = 'Location Info'
     allUsers = User.objects.all().count()
     print("Gettin new location form")
     if request.user.is_authenticated() and request.user.is_active:
@@ -377,7 +405,7 @@ def getNewLocation(request):
             else:
                 print("return to the same form because the step is not the second.")
                 form = LocationInfoForm()
-                return render(request, 'campaign/partials/registration3.html', {'locationform':form, 'usercounter':allUsers})
+                return render(request, 'campaign/partials/registration3.html', {'locationform':form, 'usercounter':allUsers, 'pageheader':pageheader})
     print("user is not logged in or is not active")
     return redirect('profile')
 
@@ -393,14 +421,22 @@ def logout(request):
     return redirect('index')
     #return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
 def details(request, pk):
+    if request.session.get('language') == 'so':
+        pageheader = 'Faafaahinta'
+    else:
+        pageheader = 'Details'
     loginForm = LoginForm()
     post = get_object_or_404(Post, pk=pk)
     post_comments = Comment.objects.filter(post=pk, approved=True)
     #posts = Post.objects.all()
     form = CommentForm()
-    return render(request, 'campaign/partials/details.html',{"loginform":loginForm,"post":post, "latest_posts":"posts", "post_comments":post_comments,"form":form})
+    return render(request, 'campaign/partials/details.html',{"loginform":loginForm,"post":post, "latest_posts":"posts", "post_comments":post_comments,"form":form, 'pageheader':pageheader})
 
 def contact(request):
+    if request.session.get('language') == 'so':
+        pageheader = 'Nala Soo Xiriir'
+    else:
+        pageheader = 'Contact us'
     loginForm = LoginForm()
     contact_info = {
         "emails":["halqaran@gmail.com",],
@@ -410,30 +446,46 @@ def contact(request):
         "youtubeChannels":["http://youtube.com/halqaran",],
         "twitter":["http:twitter.com/halqaran",],
     }
-    return render(request, 'campaign/partials/contacts.html',{"loginform":loginForm,"contacts":contact_info, "post":{"pk":0}})
+    return render(request, 'campaign/partials/contacts.html',{"loginform":loginForm,"contacts":contact_info, "pageheader":pageheader})
 
 def videos(request):
+    if request.session.get('language') == 'so':
+        pageheader = 'Fiidiyayaasha'
+    else:
+        pageheader = 'Videos'
     request.session.setdefault('language','so')
     videos = Video.objects.all()
     loginForm = LoginForm()
-    return render(request, 'campaign/partials/videos.html', {'videos':videos,'loginform':loginForm})
+    return render(request, 'campaign/partials/videos.html', {'videos':videos,'loginform':loginForm,'pageheader':pageheader})
 
 def photos(request):
+    if request.session.get('language') == 'so':
+        pageheader = 'Sawirrada'
+    else:
+        pageheader = 'Photos'
     request.session.setdefault('language','so')
     photos = Image.objects.all()
     loginForm = LoginForm()
-    return render(request, 'campaign/partials/photos.html', {'photos':photos,'loginform':loginForm})
+    return render(request, 'campaign/partials/photos.html', {'photos':photos,'loginform':loginForm, 'pageheader':pageheader})
 
 
 def watch(request, pk):
+    if request.session.get('language') == 'so':
+        pageheader = 'Daawo'
+    else:
+        pageheader = 'Watch'
     request.session.setdefault('language','so')
 
     loginForm = LoginForm()
     video = get_object_or_404(Video,videoId=pk)
     post =  post = Post.objects.filter(video_id=video.pk)
-    return render(request, 'campaign/partials/watch.html',{"loginform":loginForm,"no_twitter":True,"video":video, "post":{"pk":0}})
+    return render(request, 'campaign/partials/watch.html',{"loginform":loginForm,"no_twitter":True,"video":video, "pageheader":pageheader})
 
 def comments(request, status=None):
+    if request.session.get('language') == 'so':
+        pageheader = 'Artiyada Bulshada'
+    else:
+        pageheader = 'User Comments'
     request.session.setdefault('language','so')
     print(status)
     print("##############################")
@@ -451,7 +503,7 @@ def comments(request, status=None):
         loginForm = LoginForm()
         msg = {"type":"danger","so":"Waan kaxunnahay! Uma fasaxnid inaad gasho boggan.","en":"Sorry! you don't have permission to access this page."}
         showMessage(request, msg)
-        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "status":status})
+        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "status":status, 'pageheader':pageheader})
 
 def addReply(request, post, parent):
     if request.method == "POST":
@@ -484,14 +536,20 @@ def addComment(request, post):
 
 def feed(request):
     request.session.setdefault('language','so')
-
+    if request.session.get('language') == 'so':
+        pageheader = 'Dhamaan Warbixinada'
+    else:
+        pageheader = 'Feed'
     loginForm = LoginForm()
     posts = Post.objects.filter(language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
-    return render(request, 'campaign/partials/feeds.html',{"loginform":loginForm,"posts":posts, "post":{"pk":0}})
+    return render(request, 'campaign/partials/feeds.html',{"loginform":loginForm,"posts":posts, "pageheader":pageheader})
 
 def feedback(request):
     request.session.setdefault('language','so')
-
+    if request.session.get('language') == 'so':
+        pageheader = 'Warcelin'
+    else:
+        pageheader = 'Feedback'
     loginForm = LoginForm()
     if request.method == "POST":
         form = FeedbackForm(request.POST)
@@ -505,31 +563,47 @@ def feedback(request):
             #return JsonResponse({"feedback":feedback})
     else:
         form = FeedbackForm()
-        return render(request, 'campaign/partials/feedback.html',{"loginform":loginForm,'form':form, "post":{"pk":0}})
+        return render(request, 'campaign/partials/feedback.html',{"loginform":loginForm,'form':form, "pageheader":pageheader})
 
 
 def events(request):
+    if request.session.get('language') == 'so':
+        pageheader = 'Dhacdooyinka iyo Munaasabadaha'
+    else:
+        pageheader = 'Events'
     loginForm = LoginForm()
     posts = Post.objects.filter(category__name="Events",language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
-    return render(request, 'campaign/partials/events.html',{"loginform":loginForm,"posts":posts, "post":{"pk":0}})
+    return render(request, 'campaign/partials/events.html',{"loginform":loginForm,"posts":posts, "pageheader":pageheader})
 
 def about(request):
+    if request.session.get('language') == 'so':
+        pageheader = 'Ku Saabsan '+str(settings.SITE_NAME.get('so'))
+    else:
+        pageheader = 'Feed'
     loginForm = LoginForm()
     posts = Post.objects.filter(category__name="About", language=request.session.get('language'))
     if posts:
         posts = posts[0]
-    return render(request, 'campaign/partials/about.html',{"loginform":loginForm,"post":posts})
+    return render(request, 'campaign/partials/about.html',{"loginform":loginForm,"post":posts, 'pageheader':pageheader})
 
 def issues(request):
+    if request.session.get('language') == 'so':
+        pageheader = 'Arimaha'
+    else:
+        pageheader = 'Issues'
     loginForm = LoginForm()
     #posts = get_object_or_404(Post, category__name="issues")
     posts = Post.objects.filter(category__name="Issues",language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
-    return render(request, 'campaign/partials/issues.html',{"loginform":loginForm,"posts":posts, "post":{"pk":0}})
+    return render(request, 'campaign/partials/issues.html',{"loginform":loginForm,"posts":posts, "pageheader":pageheader})
 
 def faq(request):
+    if request.session.get('language') == 'so':
+        pageheader = "Su'aalaha Badanaa La is Weydiiyo"
+    else:
+        pageheader = 'Frequently Asked Questions'
     loginForm = LoginForm()
     posts = get_object_or_404(Post, category__name="faq")
-    return render(request, 'campaign/partials/details.html',{"loginform":loginForm,"post":posts})
+    return render(request, 'campaign/partials/details.html',{"loginform":loginForm,"post":posts, 'pageheader':pageheader})
 
 
 ##############################
@@ -687,6 +761,10 @@ def sendVarificationEmail(request, user, activation_code):
 
 
 def resendVarificationCode(request, email):
+    if request.session.get('language') == 'so':
+        pageheader = 'Xaqiijinta Markale Iso Dir'
+    else:
+        pageheader = 'Resend Verification'
     try:
         user = User.objects.filter(email=email)
         if not len(user) == 0:
@@ -700,7 +778,7 @@ def resendVarificationCode(request, email):
                 'en':'You activation code is resent to your email. If you don\'t get this email it means your email was not correct. If you think this another error, please contact us to help you activate your account.'
                 }
             showMessage(request, msg)
-            return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "loginform":loginForm})
+            return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "loginform":loginForm, 'pageheader':pageheader})
         else:
             loginForm = LoginForm()
             msg = {
@@ -709,7 +787,7 @@ def resendVarificationCode(request, email):
                 'en':'Sorry, this email does\'t belong to any of our users. Please make sure you have written the correct email and try again.'
                 }
             showMessage(request, msg)
-            return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "loginform":loginForm})
+            return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "loginform":loginForm, 'pageheader':pageheader})
     except:
         loginForm = LoginForm()
         msg = {
@@ -753,6 +831,10 @@ def loguserin(request, email=None):
         #return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
 
 def profile(request):
+    if request.session.get('language') == 'so':
+        pageheader = 'Macluumaadkaaga'
+    else:
+        pageheader = 'Your Profile'
     if request.user.is_authenticated() and request.user.is_active:
         print("user is logged in")
         #user is active and logged in
@@ -769,7 +851,7 @@ def profile(request):
                 print("user is in the second step of registration")
                 #take user to last step registration
                 return redirect('complete-location-info')
-        return render(request, 'campaign/partials/profile.html', {'profile':profile})
+        return render(request, 'campaign/partials/profile.html', {'profile':profile, 'pageheader':pageheader})
             #    #show profile
             #return redirect('getNewPerson')
             #    return render(request, 'campaign/partials/profile.html', {'profile':profile})
@@ -800,6 +882,10 @@ def showMessage(request, msg={}):
         return 1
 
 def forgotpassword(request):
+    if request.session.get('language') == 'so':
+        pageheader = 'Ereysireedki Ayaan Ilaaway'
+    else:
+        pageheader = 'I Forgot My Password'
     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
     print("Sorry you forgot your password")
     if not request.user.is_authenticated():
@@ -824,13 +910,17 @@ def forgotpassword(request):
             print("The data is invalid")
         form = ForgotPasswordForm()
         print("Sending a fresh Fortgot Password Form")
-        return render(request, 'campaign/partials/forgotpassword.html', {'forgotpasswordform':form})
+        return render(request, 'campaign/partials/forgotpassword.html', {'forgotpasswordform':form, 'pageheader':pageheader})
     msg = {'type':'danger','so':"Waxaaba kuu furan cinwaankaaga.", 'en':'You are already loged in.'}
     showMessage(request, msg)
     print("You are already logged in")
     return redirect('index')
 
 def resetPassword(request, email, activation_code):
+    if request.session.get('language') == 'so':
+        pageheader = 'Ereysireedka Iga Bedel'
+    else:
+        pageheader = 'Reset My Password'
     user = User.objects.filter(email=email)
     if not len(user) ==0:
         profile = user[0].profile
@@ -859,7 +949,7 @@ def resetPassword(request, email, activation_code):
                 showMessage(request, msg)
                 #return redirect('resetPassword', email=request.POST.get('email'))
     form = ResetPasswordForm()
-    return render(request, 'campaign/partials/resetpassword.html', {'resetpasswordform':form})
+    return render(request, 'campaign/partials/resetpassword.html', {'resetpasswordform':form, 'pageheader':pageheader})
 
 def sendPasswordReset(request, email):
     print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")

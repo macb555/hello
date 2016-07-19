@@ -147,9 +147,9 @@ header{background:#cfc;//#3a6fa9;}
 .carousel-indicators .active {background-color: #DA251D;}
 .carousel-indicators {bottom: 10px;}
 
-.carousel-inner > .item {margin-left:0;margin-top:0;margin-bottom:0;padding-left: 0;width: 100%;height: 12em;}
+.carousel-inner > .item {margin-left:0;margin-top:0;margin-bottom:0;padding-left: 0;width: 100%;height: 14em;}
 .carousel-inner > .item > img,
-.carousel-inner > .item > a > img {display: block;max-width: 100%;height: auto;margin-left:0;padding-left: 0;}
+.carousel-inner > .item > a > img {display: block;max-width: 100%;height: 12em;margin-left:0;padding-left: 0;}
 
 /* Carousel Header Styles */
 .header-text {position: absolute;top: 33%;left: 1.8%;right: auto;width: 96.66666666666666%;color: #fff;}
@@ -348,7 +348,7 @@ footer .footer-3 ul li a:hover{color: #666;}
 /* -------------------------------------Contact-------------------------------- */
 /* ---------------------------------------------------------------------------- */
 .featured{background-color:#fff; /*#CCFFFF;*/padding: 15px ;border: 1px solid #ddd;min-height: 15em;margin-bottom: .5em;}
-.featured2{background-color:#fff; /*#CCFFFF;*/padding: 15px ;border: 1px solid #ddd;min-height: 5em;margin-bottom: .5em;}
+.featured2{background-color:#fff; /*#CCFFFF;*/padding: 15px ;/*border: 1px solid #ddd;*/min-height: 5em;margin-bottom: .5em;}
 
 
 .contact h2{font-size: 34px; font-weight: 500;letter-spacing: 3px;padding-top: 20px ;text-align: center;}
@@ -658,7 +658,7 @@ span.white-text {color:#fff;}
 
 .registration-header-personal {border-bottom: 2px groove lightgray;margin-bottom: 1.5em;padding-bottom: 1.5em;}
 
-.right-label-1{float:right; margin-top:-.5em;margin-right: 2%;height: 120px;width: 84px;background-image: url('/static/campaign/images/numbers.png');background-size: 100%;background-repeat: no-repeat;}
+.right-label-1{float:right; margin-top:-.4em;margin-right: 2%;height: 120px;width: 84px;background-image: url('/static/campaign/images/numbers.png');background-size: 100%;background-repeat: no-repeat;position: absolute;margin-left: 75%; z-index: 999;}
 .right-label-1 p {margin: auto; padding-top: 1em;margin-left: 2em}
 
 .content-header h1 {color: #fff;text-shadow: 1px 1px 1px #333;}
