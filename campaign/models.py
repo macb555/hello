@@ -23,7 +23,7 @@ class VideoType(models.Model):
 class Video(models.Model):
     title = models.CharField(max_length=100, default="The Title")
     videoId = models.CharField(max_length=100)
-    type = models.ForeignKey(VideoType, blank=False)
+    type = models.ForeignKey(VideoType, blank=False, default=1)
     description = models.CharField(max_length=300)
     def __str__(self):
         return str(self.type) + ": "+self.title

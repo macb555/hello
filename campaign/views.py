@@ -18,7 +18,8 @@ from django.template.loader import render_to_string, get_template
 # Create your views here.
 def index(request):
     language = request.session.setdefault('language','so')
-
+    usercounter = User.objects.all().count()
+    request.session['usercounter'] = usercounter
     posts = Post.objects.filter(likes__gte=F('dislikes'),language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
     videos = Video.objects.all()
     loginForm = LoginForm()
