@@ -8,7 +8,7 @@
           <a href="/post/{{item.pk}}">
             <h6 style="color:#555;">{{item.title}}</h6>
           </a>
-          <p>{{item.content|slice:"0:295:"}}...</p>
+          <p>{{item.description|slice:"0:295:"}}</p>
         </div>
       {% endfor %}
     </div>
