@@ -187,7 +187,7 @@ THUMBNAIL_ALIASES = {
 }
 
 #######################  SITE VARIABLES ###################
-SITE_DOMAIN = 'li1487-184.members.linode.com'
+SITE_DOMAIN = 'halqaran.org'
 SITE_NAME = {"so":"Hal Qaran", "en":"Hal Qaran"}
 SITE_MOTO = {"so":"Horumar iyo Hal Qaran baan Rabnaa!", "en":"We need development and Hal Qaran"}
 SITE_DESCRIPTION = {"so":"Bogga Rasmiga ah ee Hal Qaran", "en":"The official page for Hal Qaran Movement (HQM)."}
@@ -196,14 +196,22 @@ SITE_DESCRIPTION = {"so":"Bogga Rasmiga ah ee Hal Qaran", "en":"The official pag
 CLICKY_SITE_ID = '100971100'
 
 ############## EMAIL VARIABLES ###############
-EMAIL_USE_TLS = True
+'''EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'halqaran@outlook.com'
 EMAIL_HOST_PASSWORD = 'hal/sharaf.143'
 DEFAULT_FROM_EMAIL = 'halqaran@outlook.com'
 DEFAULT_TO_EMAIL = 'boolow5@gmail.com'
+'''
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = 'Hello <hello@halqaran.org>'
 ############# CUSTOM MESSAGES SETTINGS ##############
 from django.contrib.messages import constants as message_constants
 MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
@@ -212,4 +220,3 @@ MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
                 message_constants.WARNING: 'warning',
                 message_constants.ERROR: 'danger',
                 }
-
