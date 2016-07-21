@@ -3,7 +3,7 @@
   {% if featured_items.0 %}
   <hr/>
     <div class="row">
-      {% for item in featured_items %}
+      {% for item in featured_items|slice:"1:15" %}
         <div class="col-sm-12">
           <a href="/post/{{item.pk}}">
             <h6 style="color:#555;">{{item.title}}</h6>
