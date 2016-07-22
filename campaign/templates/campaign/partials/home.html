@@ -2,7 +2,7 @@
 {% load markdown_deux_tags %}
 {% block content %}
 <!-- /////////////////////////////////////////Content -->
-<h5 class="indent-from-left light-header">Welcome to Hal Qaran</h5>
+<h5 class="indent-from-left light-header">{% if request.session.language == "so" %}Kusoo Dhawoow Hal Qaran{% else %}Welcome to Hal Qaran{% endif %}</h5>
 <br/>
 {% include "campaign/partials/featured2.html" %}
 {% include "campaign/partials/last_item.html" %}
