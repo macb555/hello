@@ -203,17 +203,19 @@ def getNewUser(request):
                 elif len(newUser)==0:
                     print("Your username and email are OK")
                     user = User.objects.create_user(username=username, password=password, first_name=f_name, last_name=l_name, email=email)
-                    user.is_active = False
+                    #user.is_active = False
                     user.save()
                     new_user_profile = Profile.objects.create(user=user)
                     new_user_profile.activation_code = str(uuid.uuid4())
                     new_user_profile.registration_step = 1
                     new_user_profile.save()
                     request.session['waiting_user'] = user.email
+                    user = authenticate(username=username, password=password)
+                    auth_login(request, user)
                     sendVarificationEmail(request, user, new_user_profile.activation_code)
-
-                    loginForm = LoginForm()
-                    return redirect('verficationpage', email=user.email)
+                    return redirect('getNewPerson')
+                    #loginForm = LoginForm()
+                    #return redirect('verficationpage', email=user.email)
             #If the form is not valid
             print("The form is invalid")
             return render(request, 'campaign/partials/registration1.html', {'userform':form, 'usercounter':allUsers, 'pageheader':pageheader})
