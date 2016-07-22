@@ -735,6 +735,7 @@ def user_signed_up_(request, user, **kwargs):
     user.save()'''
 
 def sendVarificationEmail(request, user, activation_code):
+    print("Sending email to", user.email)
     subject = "Welcome to Hal Qaran"
     sender = settings.EMAIL_HOST_USER
     receiver = user.email
@@ -752,10 +753,14 @@ def sendVarificationEmail(request, user, activation_code):
 
     #send_mail(subject,message,sender,[receiver],fail_silently=False)
     try:
+        print("Please wait...")
         msg = EmailMessage(subject, message, to=[receiver], from_email=sender)
         msg.content_subtype = 'html'
+        print("Setting the email type to HTML")
         msg.send()
-    except:pass
+        print("SENT!")
+    except Exception as e:
+        print(e)
     return 1
 
 
