@@ -21,8 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'kts+d%(k4wh7pag%g2ss4^_cb31#%5w6)9x%w!+9#ky=91px@%'
-
+#SECRET_KEY = 'kts+d%(k4wh7pag%g2ss4^_cb31#%5w6)9x%w!+9#ky=91px@%'
+SECRET_KEY = str(os.environ.get('HELLO_SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False #True
 
@@ -103,11 +103,11 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hello',
-        'USER': 'halqaran_django',
-        'PASSWORD': 'cudurdilaadhimo',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': str(os.environ.get('HELLO_DATABASE_NAME')),
+        'USER': str(os.environ.get('HELLO_DATABASE_USERNAME')),
+        'PASSWORD': str(os.environ.get('HELLO_DATABASE_PASSWORD')),
+        'HOST': str(os.environ.get('HELLO_DATABASE_HOST')),
+        'PORT': str(os.environ.get('HELLO_DATABASE_PORT')),,
     }
 }
 
@@ -206,12 +206,12 @@ DEFAULT_TO_EMAIL = 'boolow5@gmail.com'
 '''
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 25
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST = str(os.environ.get('HELLO_EMAIL_HOST'))
+EMAIL_PORT = str(os.environ.get('HELLO_EMAIL_PORT'))
+EMAIL_HOST_USER = str(os.environ.get('HELLO_EMAIL_HOST_USER'))
+EMAIL_HOST_PASSWORD = str(os.environ.get('HELLO_EMAIL_PASSWORD'))
 EMAIL_USE_TLS = False
-DEFAULT_FROM_EMAIL = 'Hello <hello@halqaran.org>'
+DEFAULT_FROM_EMAIL = str(os.environ.get('HELLO_EMAIL_DEFAULT_FROM'))
 ############# CUSTOM MESSAGES SETTINGS ##############
 from django.contrib.messages import constants as message_constants
 MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
