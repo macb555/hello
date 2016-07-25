@@ -107,7 +107,7 @@ DATABASES = {
         'USER': str(os.environ.get('HELLO_DATABASE_USERNAME')),
         'PASSWORD': str(os.environ.get('HELLO_DATABASE_PASSWORD')),
         'HOST': str(os.environ.get('HELLO_DATABASE_HOST')),
-        'PORT': str(os.environ.get('HELLO_DATABASE_PORT')),,
+        'PORT': str(os.environ.get('HELLO_DATABASE_PORT')),
     }
 }
 
