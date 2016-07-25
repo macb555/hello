@@ -742,11 +742,15 @@ def sendWelcomeMessage(request, user, activation_code):
     receiver = user.email
     link = settings.SITE_DOMAIN + '/verfication/' +str(receiver)+'/'+ str(activation_code)
     content = """
+    <html>
+    <head>
+    </head>
+    <body>
     [Somali]
     <h1>Haye {name}</h1>
     Kusoo dhawoow Hal Qaran, waad ku mahadsan tahay kusoo biiritaankaaga.</br>
     <p>Fadlan <a  name='confirmation' href="{url}">riix halkan</a> si aad diiwaangelinta u dhameystirto.<br/>
-    ama adeegso qoraalsireedkan: {code}
+    ama adeegso qoraalsireedkan: <b>{code}</b>
     </p>
     <p><b>FG:</b> Waxaan fariintan kuugu soo dirnay in aan hubinno in cinwaankan aad adiga leedahay. Hadii uu qof kale isku dayayo inuu adeegsado cinwaankaaga,
     Haka walwalin, uma fasixi doono inuu u adeegsado, hadii aadan mareegta [link] kore aadan riixin.</p>
@@ -755,14 +759,16 @@ def sendWelcomeMessage(request, user, activation_code):
     [English]
     <h1>Hello {name}</h1>
     Welcome to Hal Qaran, thanks for joining us.</br>
-    <p>Please <a  name=\'confirmation\' href=\'{url}\'>click here</a> to complete your registration.<br/>
-    or use this code: {code}
+    <p>Please <span><a  name=\'confirmation\' href=\'{url}\'>click here</a></span> to complete your registration.<br/>
+    or use this code: <b>{code}</b>
     </p>
     <p><b>NB:</b> We have sent you this email to confirm that it is you who
     used your email addres to register with Hal Qaran. If someone else
     is trying to use your email, just ignore this message because they will not be able to
     complete their registration.</p>
     <p>Thanks for your interest in our effort to rebuild Somalia.</p>
+    </body>
+    </html>
     """.format(name=user.first_name, url=link, code=activation_code)
     from welcome import Welcome
     w = Welcome()
@@ -1006,7 +1012,7 @@ def sendPasswordReset(request, email):
         profile = user[0].profile
         profile.activation_code = str(uuid.uuid4())
         profile.save()
-        sendPasswordEmail(request, user[0], profile.activation_code)
+        sendPasswordResetEmail(request, user[0], profile.activation_code)
         msg = {'type':'info','so':"Mareegti aad u adeegsan laheyd bedelidda ereysireedkaaga waxaa loo diray email-kaaga. Fadlan raac mareegtaas si aad u bedesho ereysireedka", 'en':'A link for resetting your password is sent to your email. Please follow that link to reset your password.'}
         showMessage(request, msg)
     #except:pass
@@ -1067,3 +1073,41 @@ def sendPasswordEmail(request, user, activation_code):
     #except:pass
 
     return 1
+
+def sendPasswordResetEmail(request, user, activation_code):
+    print("PASSWORD RESET EMAIL VIEW")
+    subject = "Welcome to Hal Qaran"
+    sender = settings.EMAIL_HOST_USER
+    receiver = user.email
+    link = settings.SITE_DOMAIN + '/reset/' +str(receiver)+'/'+ str(activation_code)
+    content = """
+    <html>
+    <head>
+    </head>
+
+    <h1>Hello {name}</h1>
+    <p>Welcome to <strong>Hal Qaran</strong>, we are sorry that you forgot your password.</p>
+    <p>but don't worry we have your back. below is the link to reset your password.</p>
+    <p>Link: <strong><a href='{url}'  name='confirmation' id='confirm-code'>{url}</a></strong></p>
+    <p>Activation Code: <b>{code}</b></p>
+    <hr/>
+    <p>Thanks for supporting</p>
+
+    <h1>Haye {name}</h1>
+    <p>Kusoo dhawoow <strong>Hal Qaran</strong>, waan ka xunnahay inaad ilowdo ereysireedkaaga.</p>
+    <p>Balse ha walwalin anagaa halkan kuu joogna, waxaan hoos kuugu soo dirnay mareegta (link) aad ku cusbooneysiisan laheyd ereysireedkaaga.</p>
+    <p>Mareegta: <strong><a href='{url}'  name='confirmation' id='confirm-code'>{url}</a></strong></p>
+    <p>Qoraal Sireedka: <b>{code}</b></p>
+    <hr/>
+    <p>Waad Ku Mahadsantahay in aad nala jirto</p>
+
+    </body>
+    </html>
+    """.format(name=user.first_name, url=link, code=activation_code)
+    from welcome import Welcome
+    w = Welcome()
+    try:
+        w.login()
+        return w.send(subject="Cusbooneysiinta Ereysireedka | Password Reset", to=user.email, content=content, isHtml=True)
+    except:
+        return False
