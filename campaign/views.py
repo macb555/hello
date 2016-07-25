@@ -212,10 +212,11 @@ def getNewUser(request):
                     request.session['waiting_user'] = user.email
                     user = authenticate(username=username, password=password)
                     auth_login(request, user)
-                    sendVarificationEmail(request, user, new_user_profile.activation_code)
-                    return redirect('getNewPerson')
+                    #sendVarificationEmail(request, user, new_user_profile.activation_code)
+                    sendWelcomeMessage(request, user, new_user_profile.activation_code)
+                    #return redirect('getNewPerson')
                     #loginForm = LoginForm()
-                    #return redirect('verficationpage', email=user.email)
+                    return redirect('verficationpage', email=user.email)
             #If the form is not valid
             print("The form is invalid")
             return render(request, 'campaign/partials/registration1.html', {'userform':form, 'usercounter':allUsers, 'pageheader':pageheader})
@@ -735,6 +736,42 @@ def getLanguage(request):
 def user_signed_up_(request, user, **kwargs):
     user.is_active = False
     user.save()'''
+
+def sendWelcomeMessage(request, user, activation_code):
+    sender = settings.EMAIL_HOST_USER
+    receiver = user.email
+    link = settings.SITE_DOMAIN + '/verfication/' +str(receiver)+'/'+ str(activation_code)
+    content = """
+    [Somali]
+    <h1>Haye {name}</h1>
+    Kusoo dhawoow Hal Qaran, waad ku mahadsan tahay kusoo biiritaankaaga.</br>
+    <p>Fadlan <a  name='confirmation' href="{url}">riix halkan</a> si aad diiwaangelinta u dhameystirto.<br/>
+    ama adeegso qoraalsireedkan: {code}
+    </p>
+    <p><b>FG:</b> Waxaan fariintan kuugu soo dirnay in aan hubinno in cinwaankan aad adiga leedahay. Hadii uu qof kale isku dayayo inuu adeegsado cinwaankaaga,
+    Haka walwalin, uma fasixi doono inuu u adeegsado, hadii aadan mareegta [link] kore aadan riixin.</p>
+    <p>Waad ku mahadsan tahay daneynta dib u dhiska dalkaaga.</p>
+    <hr/>
+    [English]
+    <h1>Hello {name}</h1>
+    Welcome to Hal Qaran, thanks for joining us.</br>
+    <p>Please <a  name=\'confirmation\' href=\'{url}\'>click here</a> to complete your registration.<br/>
+    or use this code: {code}
+    </p>
+    <p><b>NB:</b> We have sent you this email to confirm that it is you who
+    used your email addres to register with Hal Qaran. If someone else
+    is trying to use your email, just ignore this message because they will not be able to
+    complete their registration.</p>
+    <p>Thanks for your interest in our effort to rebuild Somalia.</p>
+    """.format(name=user.first_name, url=link, code=activation_code)
+    from welcome import Welcome
+    w = Welcome()
+    try:
+        w.login()
+        return w.send(subject="Kusoo Dhawoow Hal Qaran | Welcome to Hal Qaran", to=user.email, content=content, isHtml=True)
+    except:
+        return False
+
 
 def sendVarificationEmail(request, user, activation_code):
     print("Sending email to", user.email)
