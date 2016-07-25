@@ -233,7 +233,10 @@ def getNewPerson(request):
     request.session.setdefault('language','so')
     #check if user is loggedin.
     if request.user.is_authenticated() and request.user.is_active:
-        form = PersonalInfoForm(request.POST)
+        if request.method =="POST":
+            form = PersonalInfoForm(request.POST)
+        else:
+            form = PersonalInfoForm()
         allUsers = User.objects.all().count()
         if form.is_valid():
             user = request.user
