@@ -203,7 +203,7 @@ def getNewUser(request):
                 elif len(newUser)==0:
                     print("Your username and email are OK")
                     user = User.objects.create_user(username=username, password=password, first_name=f_name, last_name=l_name, email=email)
-                    #user.is_active = False
+                    user.is_active = False
                     user.save()
                     new_user_profile = Profile.objects.create(user=user)
                     new_user_profile.activation_code = str(uuid.uuid4())
@@ -211,7 +211,7 @@ def getNewUser(request):
                     new_user_profile.save()
                     request.session['waiting_user'] = user.email
                     user = authenticate(username=username, password=password)
-                    auth_login(request, user)
+                    #auth_login(request, user)
                     #sendVarificationEmail(request, user, new_user_profile.activation_code)
                     sendWelcomeMessage(request, user, new_user_profile.activation_code)
                     #return redirect('getNewPerson')
@@ -235,28 +235,26 @@ def getNewPerson(request):
     if request.user.is_authenticated() and request.user.is_active:
         if request.method =="POST":
             form = PersonalInfoForm(request.POST)
-        else:
-            form = PersonalInfoForm()
-        allUsers = User.objects.all().count()
-        if form.is_valid():
-            user = request.user
-            try:
-                profile = Profile.objects.get(user=user)
-            except:
-                profile = Profile.objects.create(user=user)
-            mother_name = request.POST.get('mother_name')
-            gender = request.POST.get('gender')
-            marital_status = request.POST.get('marital_status')
-            phone_no = request.POST.get('phone_no')
+            allUsers = User.objects.all().count()
+            if form.is_valid():
+                user = request.user
+                try:
+                    profile = Profile.objects.get(user=user)
+                except:
+                    profile = Profile.objects.create(user=user)
+                mother_name = request.POST.get('mother_name')
+                gender = request.POST.get('gender')
+                marital_status = request.POST.get('marital_status')
+                phone_no = request.POST.get('phone_no')
 
-            profile.mother_name = mother_name
-            profile.gender = gender
-            profile.marital_status = marital_status
-            profile.phone_no = phone_no
-            profile.registration_step = 2
+                profile.mother_name = mother_name
+                profile.gender = gender
+                profile.marital_status = marital_status
+                profile.phone_no = phone_no
+                profile.registration_step = 2
 
-            profile.save()
-            return redirect('complete-location-info')
+                profile.save()
+                return redirect('complete-location-info')
         return render(request, 'campaign/partials/registration2.html', {'personalform':form, 'usercounter':allUsers, 'pageheader':pageheader})
     else:
         return redirect('login')
