@@ -160,7 +160,7 @@ def getNewUser(request):
         pageheader = 'User Registration'
     if request.user.is_authenticated and request.user.is_active:
         return redirect('profile')
-    request.session.setdefault('language','so')
+    language = request.session.get('language', 'so')
     #check if user is logged in
     print("User registration view:")
     allUsers = User.objects.all().count()
@@ -213,6 +213,7 @@ def getNewUser(request):
                     user = authenticate(username=username, password=password)
                     #auth_login(request, user)
                     #sendVarificationEmail(request, user, new_user_profile.activation_code)
+                    request.session['language']=language
                     sendWelcomeMessage(request, user, new_user_profile.activation_code)
                     #return redirect('getNewPerson')
                     #loginForm = LoginForm()
@@ -403,7 +404,7 @@ def getNewLocation(request):
 
                 location.registration_step = 3
                 location.save()
-                msg = {"type":"info","so":"Waad ku guuleystay, dhameystirka buuxinta macluumaadkaaga. Guul wacan ayaan kuu rajeyneynaa.","en":"You have successfully completed your registration steps."}
+                msg = {"type":"info","so":"Hambalyo! Waad ku guuleystay diiwaangelinta.","en":"Congradulations! You have successfully completed registration."}
                 showMessage(request, msg)
                 return redirect('index')
 
