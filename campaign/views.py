@@ -233,9 +233,9 @@ def getNewPerson(request):
     request.session.setdefault('language','so')
     #check if user is loggedin.
     if request.user.is_authenticated() and request.user.is_active:
+        allUsers = User.objects.all().count()
         if request.method =="POST":
             form = PersonalInfoForm(request.POST)
-            allUsers = User.objects.all().count()
             if form.is_valid():
                 user = request.user
                 try:
@@ -255,6 +255,7 @@ def getNewPerson(request):
 
                 profile.save()
                 return redirect('complete-location-info')
+        form = PersonalInfoForm()
         return render(request, 'campaign/partials/registration2.html', {'personalform':form, 'usercounter':allUsers, 'pageheader':pageheader})
     else:
         return redirect('login')
