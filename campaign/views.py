@@ -322,8 +322,8 @@ def directverficationpage(request, email, activation_code):
             #request.session['password']=user.password
             print("successfully activated")
             print("Redirecting to loginpage view.")
-            messages.add_message(request, messages.INFO, 'Congradulations! Activation Succeeded. Login using your cridentials.')
-            messages.add_message(request, messages.INFO, 'Guul! Xaqiijinti waad ku guuleysatay. Ku gal aqoonsigaaga.')
+            msg = {"type":"info","so":"Guul! Xaqiijinti waad ku guuleysatay. Ku gal aqoonsigaaga.","en":"Congradulations! Activation Succeeded. Login using your cridentials."}
+            showMessage(request, msg)
             return redirect('loginpage')
     msg = {"type":"danger", "en":"Sorry, Make sure the varification code you used is correct.", "so":"Waan kaxunnahay, Fadlan iska hubi qoraalsireedka aad gelisay."}
     showMessage(request, msg)
