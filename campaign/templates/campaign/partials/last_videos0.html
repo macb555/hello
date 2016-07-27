@@ -1,0 +1,54 @@
+{% load staticfiles %}
+{% block last_videos %}
+
+    <div class="row">
+      <div class="col-sm-5">
+        {% if latest_videos %}
+          {% for item in latest_videos|slice:"1:3" %}
+            {% if item.type.name == 'Youtube' %}
+              <iframe width="336" height="252" src="https://www.youtube.com/embed/{{item.videoId}}" frameborder="0" allowfullscreen></iframe>
+            {% else %}
+              <iframe class="" src="https://player.vimeo.com/video/{{item.videoId}}" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            {% endif %}
+          {% endfor %}
+          <br/>
+        {% endif %}
+      </div>
+      <div class="col-sm-7">
+        {% if latest_videos %}
+          {% for item in latest_videos|slice:"0:1" %}
+          <div class="videowrapper">
+            {% if item.type.name == 'Youtube' %}
+              <iframe width="378" height="284" src="https://www.youtube.com/embed/{{item.videoId}}" frameborder="0" allowfullscreen></iframe>
+            {% else %}
+              <iframe class="" src="https://player.vimeo.com/video/{{item.videoId}}" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            {% endif %}
+          </div>
+          {% endfor %}
+        {% endif %}
+        <br/>
+        <div class="row">
+          {% if latest_videos %}
+            {% for item in latest_videos|slice:"3:6" %}
+              <div class="post wrap-vid col-sm-3">
+                <div class="zoom-container">
+                  <div class="zoom-caption">
+                    <span class="youtube">Youtube</span>
+                    <a href="/watch/{{item.videoId}}">
+                    <i class="fa fa-play-circle-o fa-3x" style="color: #fff"></i>
+                    </a>
+                    <p>{{item.title|slice:"0:14:"}}</p>
+                  </div>
+                  <img src="http://img.youtube.com/vi/{{item.videoId}}/0.jpg" />
+                </div>
+                <div class="wrapper">
+                  <h5 class="vid-name"><a href="/watch/{{item.videoId}}">{{item.title}}</a></h5>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

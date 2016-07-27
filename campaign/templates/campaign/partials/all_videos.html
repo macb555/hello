@@ -1,9 +1,9 @@
 {% load staticfiles %}
-{% block last_videos %}
+{% block all_videos %}
 
     <div class="row">
       <div class="row container-fluid">
-        {% for video in latest_videos|slice:":4" %}
+        {% for video in latest_videos|slice:":100" %}
         <div class="col-sm-3" style="margin-bottom:2em;">
           <div class="zoom-container">
             <div class="zoom-caption">
