@@ -25,7 +25,7 @@ def index(request):
     else:
         pageheader = 'Home'
     posts = Post.objects.filter(likes__gte=F('dislikes'),language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
-    videos = Video.objects.all()
+    videos = Video.objects.all().order_by('-id')
     loginForm = LoginForm()
     #return render(request, 'campaign/partials/home.html', {'web':web, 'speeches':speeches, 'featured_items':speeches})
     return render(request, 'campaign/partials/home.html', {"loginform":loginForm,"featured_items":posts,"pageheader":pageheader, "latest_videos":videos})
@@ -460,7 +460,7 @@ def videos(request):
     else:
         pageheader = 'Videos'
     request.session.setdefault('language','so')
-    videos = Video.objects.all()
+    videos = Video.objects.all().order_by("-id")
     loginForm = LoginForm()
     return render(request, 'campaign/partials/videos.html', {'videos':videos,'loginform':loginForm,'pageheader':pageheader})
 
@@ -470,7 +470,7 @@ def photos(request):
     else:
         pageheader = 'Photos'
     request.session.setdefault('language','so')
-    photos = Image.objects.all()
+    photos = Image.objects.all().order_by("-id")
     loginForm = LoginForm()
     return render(request, 'campaign/partials/photos.html', {'photos':photos,'loginform':loginForm, 'pageheader':pageheader})
 
