@@ -1,9 +1,9 @@
 {% load staticfiles %}
-{% load analytical %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  {% analytical_head_top %}
+
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -45,11 +45,11 @@
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
     <![endif]-->
-  {% analytical_head_bottom %}
+
 </head>
 
 <body>
-  {% analytical_body_top %}
+
   <!-- ########################## FACEBOOK SDK CODE STARTS HERE ################ -->
   <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -249,6 +249,26 @@ $("document").ready(function($){
     });
 });
 </script>
-{% analytical_body_bottom %}
+
+<!-- Start of StatCounter Code for Default Guide -->
+
+<script type="text/javascript">
+var sc_project=11054532; 
+var sc_invisible=0; 
+var sc_security="d171d4d2"; 
+var scJsHost = (("https:" == document.location.protocol) ?
+"https://secure." : "http://www.");
+document.write("<sc"+"ript type='text/javascript' src='" +
+scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="web counter"
+href="http://statcounter.com/free-hit-counter/"
+target="_blank"><img class="statcounter"
+src="//c.statcounter.com/11054532/0/d171d4d2/0/" alt="web
+counter"></a></div></noscript>
+
+<!-- End of StatCounter Code for Default Guide -->
+
 </body>
 </html>
