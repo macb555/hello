@@ -4,43 +4,44 @@
     <div id="main-content"><!-- background not working -->
       <div id="column-one" class="col-md-12">
         <div class="box wrap-vid column-1">
+          <h1>{{pageheader}}</h1>
+          <br/>
           <div class="post-detail">
-            <h1 class="page-title">Contact Infromation</h1>
-            <h5 class="head-title-2">Emails:</h5>
+            <h5>Emails:</h5>
             <ul>
               {% for email in contacts.emails %}
-                <li>{{email}}</li>
+                <li><a href="mailto:{{email}}">{{email}}</a></li>
               {% endfor %}
             </ul>
-            <h5 class="head-title-2">Social Media:</h5>
+            <h5>Social Media:</h5>
             <strong>facebook</strong>
             <ul>
               {% for item in contacts.facebookPages %}
-                <li>{{item}}</li>
+                <li><a href="{{item}}">{{item}}</a></li>
               {% endfor %}
             </ul>
             <strong>twitter</strong>
             <ul>
               {% for item in contacts.twitter%}
-                <li>{{item}}</li>
+                <li><a href="{{item}}">{{item}}</a></li>
               {% endfor %}
             </ul>
             <strong>youtube</strong>
             <ul>
               {% for item in contacts.youtubeChannels %}
-                <li>{{item}}</li>
+                <li><a href="{{item}}">{{item}}</a></li>
               {% endfor %}
             </ul>
-            <h5 class="head-title-2">Phones:</h5>
+            <h5>Phones:</h5>
             <ul>
               {% for item in contacts.phones %}
-                <li>{{item}}</li>
+                <li><a href="tel:{{item}}">{{item}}</a></li>
               {% endfor %}
             </ul>
-            <h5 class="head-title-2">Websites:</h5>
+            <h5>Websites:</h5>
             <ul>
               {% for item in contacts.websites %}
-                <li>{{item}}</li>
+                <li><a href="{{item}}">{{item}}</a></li>
               {% endfor %}
             </ul>
           </div>

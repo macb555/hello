@@ -1,14 +1,26 @@
 {% load staticfiles %}
 {% block last_item %}
   {% if featured_items.0 %}
-    <div class="row">
-      <div class="col-sm-12">
-        <a href="/post/{{featured_items.0.pk}}">
-          <h6 style="color:#555;">{{featured_items.0.title}}</h6>
-        </a>
-        <p>{{featured_items.0.description|slice:"0:295:"}}...</p>
+  <br/>
+  <div class="row">
+
+    <div class="col-sm-12">
+      <div class="post-item-label" style="border:1px solid lightgray;margin-bottom:.5em;">
+        <img src="media/{{featured_items.0.featured_image.photo.avatar}}" style="margin-right:.5em;float:left;"/>
+        <div style="margin-bottom:.2em;">
+          <a href="/post/post.pk">
+          <h5 style="margin:0;">{{featured_items.0.title|slice:"0:40:"}}..</h5>
+          </a>
+          <p style="margin-bottom:.2em;">
+            {{featured_items.0.description|slice:"0:200:"}}<br/>
+            Date: <strong>{{featured_items.0.published_date}}</strong> | Likes: <strong>{{featured_items.0.likes}}</strong> | By: <strong>{{featured_items.0.author}}</strong>
+          </p>
+        </div>
       </div>
+
     </div>
-    <br/>
+  </div>
+  <br/>
+  <br/>
   {% endif %}
 {% endblock %}

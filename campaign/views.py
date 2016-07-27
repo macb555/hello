@@ -445,12 +445,12 @@ def contact(request):
         pageheader = 'Contact us'
     loginForm = LoginForm()
     contact_info = {
-        "emails":["halqaran@gmail.com",],
-        "phones":["",],
+        "emails":["welcome@halqaran.org","info@halqaran.org"],
+        "phones":["+252-61-9011268","+252-69-9007551"],
         "websites":["halqaran.org",],
-        "facebookPages":["http://facebook.com/halqaran",],
-        "youtubeChannels":["http://youtube.com/halqaran",],
-        "twitter":["http:twitter.com/halqaran",],
+        "facebookPages":["https://www.facebook.com/profile.php?id=100012631158342&ref=br_rs",],
+        "youtubeChannels":["https://www.youtube.com/channel/UCcAKBo1Ll35bIuyHZIc6EQA",],
+        "twitter":["https://twitter.com/halqaran_info",],
     }
     return render(request, 'campaign/partials/contacts.html',{"loginform":loginForm,"contacts":contact_info, "pageheader":pageheader})
 

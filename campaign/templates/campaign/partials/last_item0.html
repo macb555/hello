@@ -1,0 +1,14 @@
+{% load staticfiles %}
+{% block last_item %}
+  {% if featured_items.0 %}
+    <div class="row">
+      <div class="col-sm-12">
+        <a href="/post/{{featured_items.0.pk}}">
+          <h6 style="color:#555;">{{featured_items.0.title}}</h6>
+        </a>
+        <p>{{featured_items.0.description|slice:"0:295:"}}...</p>
+      </div>
+    </div>
+    <br/>
+  {% endif %}
+{% endblock %}
