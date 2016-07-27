@@ -160,7 +160,7 @@ def getNewUser(request):
         pageheader = 'User Registration'
     if request.user.is_authenticated and request.user.is_active:
         return redirect('profile')
-    request.session.setdefault('language','so')
+    language = request.session.get('language', 'so')
     #check if user is logged in
     print("User registration view:")
     allUsers = User.objects.all().count()
@@ -203,7 +203,7 @@ def getNewUser(request):
                 elif len(newUser)==0:
                     print("Your username and email are OK")
                     user = User.objects.create_user(username=username, password=password, first_name=f_name, last_name=l_name, email=email)
-                    #user.is_active = False
+                    user.is_active = False
                     user.save()
                     new_user_profile = Profile.objects.create(user=user)
                     new_user_profile.activation_code = str(uuid.uuid4())
@@ -211,11 +211,13 @@ def getNewUser(request):
                     new_user_profile.save()
                     request.session['waiting_user'] = user.email
                     user = authenticate(username=username, password=password)
-                    auth_login(request, user)
-                    sendVarificationEmail(request, user, new_user_profile.activation_code)
-                    return redirect('getNewPerson')
+                    #auth_login(request, user)
+                    #sendVarificationEmail(request, user, new_user_profile.activation_code)
+                    request.session['language']=language
+                    sendWelcomeMessage(request, user, new_user_profile.activation_code)
+                    #return redirect('getNewPerson')
                     #loginForm = LoginForm()
-                    #return redirect('verficationpage', email=user.email)
+                    return redirect('verficationpage', email=user.email)
             #If the form is not valid
             print("The form is invalid")
             return render(request, 'campaign/partials/registration1.html', {'userform':form, 'usercounter':allUsers, 'pageheader':pageheader})
@@ -232,27 +234,29 @@ def getNewPerson(request):
     request.session.setdefault('language','so')
     #check if user is loggedin.
     if request.user.is_authenticated() and request.user.is_active:
-        form = PersonalInfoForm(request.POST)
         allUsers = User.objects.all().count()
-        if form.is_valid():
-            user = request.user
-            try:
-                profile = Profile.objects.get(user=user)
-            except:
-                profile = Profile.objects.create(user=user)
-            mother_name = request.POST.get('mother_name')
-            gender = request.POST.get('gender')
-            marital_status = request.POST.get('marital_status')
-            phone_no = request.POST.get('phone_no')
+        if request.method =="POST":
+            form = PersonalInfoForm(request.POST)
+            if form.is_valid():
+                user = request.user
+                try:
+                    profile = Profile.objects.get(user=user)
+                except:
+                    profile = Profile.objects.create(user=user)
+                mother_name = request.POST.get('mother_name')
+                gender = request.POST.get('gender')
+                marital_status = request.POST.get('marital_status')
+                phone_no = request.POST.get('phone_no')
 
-            profile.mother_name = mother_name
-            profile.gender = gender
-            profile.marital_status = marital_status
-            profile.phone_no = phone_no
-            profile.registration_step = 2
+                profile.mother_name = mother_name
+                profile.gender = gender
+                profile.marital_status = marital_status
+                profile.phone_no = phone_no
+                profile.registration_step = 2
 
-            profile.save()
-            return redirect('complete-location-info')
+                profile.save()
+                return redirect('complete-location-info')
+        form = PersonalInfoForm()
         return render(request, 'campaign/partials/registration2.html', {'personalform':form, 'usercounter':allUsers, 'pageheader':pageheader})
     else:
         return redirect('login')
@@ -318,8 +322,8 @@ def directverficationpage(request, email, activation_code):
             #request.session['password']=user.password
             print("successfully activated")
             print("Redirecting to loginpage view.")
-            messages.add_message(request, messages.INFO, 'Congradulations! Activation Succeeded. Login using your cridentials.')
-            messages.add_message(request, messages.INFO, 'Guul! Xaqiijinti waad ku guuleysatay. Ku gal aqoonsigaaga.')
+            msg = {"type":"info","so":"Guul! Xaqiijinti waad ku guuleysatay. Ku gal aqoonsigaaga.","en":"Congradulations! Activation Succeeded. Login using your cridentials."}
+            showMessage(request, msg)
             return redirect('loginpage')
     msg = {"type":"danger", "en":"Sorry, Make sure the varification code you used is correct.", "so":"Waan kaxunnahay, Fadlan iska hubi qoraalsireedka aad gelisay."}
     showMessage(request, msg)
@@ -400,7 +404,7 @@ def getNewLocation(request):
 
                 location.registration_step = 3
                 location.save()
-                msg = {"type":"info","so":"Waad ku guuleystay, dhameystirka buuxinta macluumaadkaaga. Guul wacan ayaan kuu rajeyneynaa.","en":"You have successfully completed your registration steps."}
+                msg = {"type":"info","so":"Hambalyo! Waad ku guuleystay diiwaangelinta.","en":"Congradulations! You have successfully completed registration."}
                 showMessage(request, msg)
                 return redirect('index')
 
@@ -736,6 +740,48 @@ def user_signed_up_(request, user, **kwargs):
     user.is_active = False
     user.save()'''
 
+def sendWelcomeMessage(request, user, activation_code):
+    sender = settings.EMAIL_HOST_USER
+    receiver = user.email
+    link = settings.SITE_DOMAIN + '/verfication/' +str(receiver)+'/'+ str(activation_code)
+    content = """
+    <html>
+    <head>
+    </head>
+    <body>
+    [Somali]
+    <h1>Haye {name}</h1>
+    Kusoo dhawoow Hal Qaran, waad ku mahadsan tahay kusoo biiritaankaaga.</br>
+    <p>Fadlan <a  name='confirmation' href="{url}">riix halkan</a> si aad diiwaangelinta u dhameystirto.<br/>
+    ama adeegso qoraalsireedkan: <b>{code}</b>
+    </p>
+    <p><b>FG:</b> Waxaan fariintan kuugu soo dirnay in aan hubinno in cinwaankan aad adiga leedahay. Hadii uu qof kale isku dayayo inuu adeegsado cinwaankaaga,
+    Haka walwalin, uma fasixi doono inuu u adeegsado, hadii aadan mareegta [link] kore aadan riixin.</p>
+    <p>Waad ku mahadsan tahay daneynta dib u dhiska dalkaaga.</p>
+    <hr/>
+    [English]
+    <h1>Hello {name}</h1>
+    Welcome to Hal Qaran, thanks for joining us.</br>
+    <p>Please <span><a  name=\'confirmation\' href=\'{url}\'>click here</a></span> to complete your registration.<br/>
+    or use this code: <b>{code}</b>
+    </p>
+    <p><b>NB:</b> We have sent you this email to confirm that it is you who
+    used your email addres to register with Hal Qaran. If someone else
+    is trying to use your email, just ignore this message because they will not be able to
+    complete their registration.</p>
+    <p>Thanks for your interest in our effort to rebuild Somalia.</p>
+    </body>
+    </html>
+    """.format(name=user.first_name, url=link, code=activation_code)
+    from welcome import Welcome
+    w = Welcome()
+    try:
+        w.login()
+        return w.send(subject="Kusoo Dhawoow Hal Qaran | Welcome to Hal Qaran", to=user.email, content=content, isHtml=True)
+    except:
+        return False
+
+
 def sendVarificationEmail(request, user, activation_code):
     print("Sending email to", user.email)
     subject = "Welcome to Hal Qaran"
@@ -969,7 +1015,7 @@ def sendPasswordReset(request, email):
         profile = user[0].profile
         profile.activation_code = str(uuid.uuid4())
         profile.save()
-        sendPasswordEmail(request, user[0], profile.activation_code)
+        sendPasswordResetEmail(request, user[0], profile.activation_code)
         msg = {'type':'info','so':"Mareegti aad u adeegsan laheyd bedelidda ereysireedkaaga waxaa loo diray email-kaaga. Fadlan raac mareegtaas si aad u bedesho ereysireedka", 'en':'A link for resetting your password is sent to your email. Please follow that link to reset your password.'}
         showMessage(request, msg)
     #except:pass
@@ -1030,3 +1076,41 @@ def sendPasswordEmail(request, user, activation_code):
     #except:pass
 
     return 1
+
+def sendPasswordResetEmail(request, user, activation_code):
+    print("PASSWORD RESET EMAIL VIEW")
+    subject = "Welcome to Hal Qaran"
+    sender = settings.EMAIL_HOST_USER
+    receiver = user.email
+    link = settings.SITE_DOMAIN + '/reset/' +str(receiver)+'/'+ str(activation_code)
+    content = """
+    <html>
+    <head>
+    </head>
+
+    <h1>Hello {name}</h1>
+    <p>Welcome to <strong>Hal Qaran</strong>, we are sorry that you forgot your password.</p>
+    <p>but don't worry we have your back. below is the link to reset your password.</p>
+    <p>Link: <strong><a href='{url}'  name='confirmation' id='confirm-code'>{url}</a></strong></p>
+    <p>Activation Code: <b>{code}</b></p>
+    <hr/>
+    <p>Thanks for supporting</p>
+
+    <h1>Haye {name}</h1>
+    <p>Kusoo dhawoow <strong>Hal Qaran</strong>, waan ka xunnahay inaad ilowdo ereysireedkaaga.</p>
+    <p>Balse ha walwalin anagaa halkan kuu joogna, waxaan hoos kuugu soo dirnay mareegta (link) aad ku cusbooneysiisan laheyd ereysireedkaaga.</p>
+    <p>Mareegta: <strong><a href='{url}'  name='confirmation' id='confirm-code'>{url}</a></strong></p>
+    <p>Qoraal Sireedka: <b>{code}</b></p>
+    <hr/>
+    <p>Waad Ku Mahadsantahay in aad nala jirto</p>
+
+    </body>
+    </html>
+    """.format(name=user.first_name, url=link, code=activation_code)
+    from welcome import Welcome
+    w = Welcome()
+    try:
+        w.login()
+        return w.send(subject="Cusbooneysiinta Ereysireedka | Password Reset", to=user.email, content=content, isHtml=True)
+    except:
+        return False
