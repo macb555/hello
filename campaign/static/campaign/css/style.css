@@ -683,3 +683,5 @@ img.steps-img {max-width: 80%;float: left; margin: auto;}
 
 .sidebar-column {margin-top: 4.7em;}
 .content-side {border-right: 1px groove #EEE;}
+
+.post-item-label a h5:hover {color:#00CCCC;/*text-shadow: 1px 1px 1px gray;*}

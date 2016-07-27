@@ -71,8 +71,17 @@
         <li><a href="/issues"> {% if request.session.language == "so" %}Arimaha{% else %}Issues{% endif %}</a></li>
         <li><a href="/feed"> {% if request.session.language == "so" %}Warbixino{% else %}News Feed{% endif %}</a></li>
         <li><a href="/events"> {% if request.session.language == "so" %}Munaasabado{% else %}Events{% endif %}</a></li>
-        <li><a href="/videos"> {% if request.session.language == "so" %}Fiidiyaal{% else %}Videos{% endif %}</a></li>
 
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Gallery <i class="fa fa-arrow-circle-o-down"></i></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-inner">
+              <ul class="list-unstyled">
+                <li><a href="/videos"> {% if request.session.language == "so" %}Fiidiyaal{% else %}Videos{% endif %}</a></li>
+                <li><a href="/photos"> {% if request.session.language == "so" %}Sawirro{% else %}Images{% endif %}</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
 
         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {% if request.session.language == "so" %}Xubinnimo{% else %}Membership{% endif %} <i class="fa fa-arrow-circle-o-down"></i></a>
           <div class="dropdown-menu">
