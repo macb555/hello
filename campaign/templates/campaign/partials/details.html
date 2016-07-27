@@ -22,6 +22,7 @@
                 {% else %}
                 {% if request.session.language == "so" %}<span class="text text-danger">Cinwaankaaga gal si aad u muujiso inaad kaheshay.</span>{% else %}<span class="text text-danger">Sign in to like</span>{% endif %}
                 {% endif %}
+                <img src="{{post.featured_image.photo.url}}"/>
               </div>
             </div>
 
