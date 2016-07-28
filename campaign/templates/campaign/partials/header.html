@@ -117,10 +117,10 @@
   -->
       </ul>
       <ul class="list-inline navbar-right top-social">
-        <li title="Facebook"><a href="#facebook"><i class="fa fa-facebook"></i></a></li>
-        <li title="Twitter"><a href="#twitter"><i class="fa fa-twitter"></i></a></li>
-        <li title="Google Plus"><a href="#googleplus"><i class="fa fa-google-plus-square"></i></a></li>
-        <li title="Youtube"><a href="#youtube"><i class="fa fa-youtube"></i></a></li>
+        <li title="Facebook"><a target="_blank" href="https://www.facebook.com/profile.php?id=100012631158342"><i class="fa fa-facebook"></i></a></li>
+        <li title="Twitter"><a target="_blank" href="https://twitter.com/halqaran_info"><i class="fa fa-twitter"></i></a></li>
+<!--        <li title="Google Plus"><a target="_blank" href="#googleplus"><i class="fa fa-google-plus-square"></i></a></li> 	-->
+        <li title="Youtube"><a target="_blank" href="https://www.youtube.com/channel/UCcAKBo1Ll35bIuyHZIc6EQA/videos"><i class="fa fa-youtube"></i></a></li>
         {% if user.is_authenticated %}<li title="Logout"><a href="{% url 'logout' %}"><i class="fa fa-user" style="color:red;"></i></a></li>{% else %}<li title="Login"><a href="{% url 'loginpage' %}"><i class="fa fa-user" style="color:green;"></i></a></li>{% endif %}
       </ul>
     </div>
