@@ -15,7 +15,7 @@
                   {% if request.session.language == "so" %} waxaa la baahiyay:{% else %}published{% endif %}<strong>{{post.published_date}}</strong>
                 </p>
               </div>
-              <div class="col-sm-3">
+              <div class="col-sm-3" style="margin-top:-3em;margin-left:-2em;">
 <!--
                 {% if user.is_authenticated and user.is_active %}
                 <button id="btn-like-post-{{post.pk}}" onclick="likePost({{post.pk}}, 'post')" class="btn btn-default btn-block like"> <i class="glyphicon glyphicon-thumbs-up blue-text"></i> like</button><button id="btn-like-post-{{post.pk}}" class="btn btn-default btn-block dislike" onclick="dislike('{{post.pk}}', 'post')"> <i class="glyphicon glyphicon glyphicon-thumbs-down red-text"></i> dislike</button>
@@ -24,7 +24,7 @@
                 {% if request.session.language == "so" %}<span class="text text-danger">Cinwaankaaga gal si aad u muujiso inaad kaheshay.</span>{% else %}<span class="text text-danger">Sign in to like</span>{% endif %}
                 {% endif %}
 -->
-                <img src="{{post.featured_image.photo.url}}"/>
+                <img src="{{post.featured_image.photo.url}}" style="width:100%;"/>
               </div>
             </div>
 
