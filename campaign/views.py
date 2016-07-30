@@ -433,6 +433,8 @@ def details(request, pk):
         pageheader = 'Details'
     loginForm = LoginForm()
     post = get_object_or_404(Post, pk=pk)
+    post.view_counter += 1
+    post.save()
     post_comments = Comment.objects.filter(post=pk, approved=True)
     #posts = Post.objects.all()
     form = CommentForm()
