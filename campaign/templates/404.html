@@ -1,23 +1,16 @@
 {% extends 'campaign/layout.html' %}
 {% load markdown_deux_tags %}
 {% block content %}
-<div id="page-content" class="index-page container">
   <div class="row">
     <div id="main-content"><!-- background not working -->
-      <div id="column-one" class="col-md-9">
-        <div class="box wrap-vid shadowed">
+      <div id="column-one" class="col-md-12">
+        <div class="box wrap-vid">
           <h1>PAGE NOT FOUND (404)</h1>
           <p>Sorry, we didn't find the page you requested. Please make sure the url to the page is correct and try again.</p>
         </div>
       </div>
-      <div id="column-two" class="col-md-3">
-        <div class="box wrap-vid shadowed">
-          {% include "campaign/partials/sidebar.html" %}
-        </div>
-      </div>
     </div>
   </div>
-</div>
 <script>
   comment_url = "/comment/{{post.pk}}"
 </script>
