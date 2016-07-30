@@ -9,7 +9,7 @@
     <meta name="description" content="The official page for Hal Qaran Movement (HQM).">
     <meta name="author" content="Mahdi Ahmed Abdullahi" >
 
-    <title>{{SITE_NAME.so}} | {{request.session.language}}</title>
+    <title>{{SITE_NAME.so}} | {% if request.session.language == "so" %}Af-Soomaali{% else %}English{% endif %}</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="{% static 'campaign/favicon/apple-icon-57x57.png' %}">
     <link rel="apple-touch-icon" sizes="60x60" href="{% static 'campaign/favicon/apple-icon-60x60.png' %}">
