@@ -12,7 +12,8 @@
                 {% if request.session.language = "so" %}{% if message.type = 'danger' %}Cillad{% else %}Fariin{% endif %}:</strong> {{message.so}}{% else %}{% if message.type = 'danger' %}Error{% else %}Info{% endif %}:</strong> {{message.en}}{% endif %}
             </div>
           {% endif %}
-          <h5>{% if request.session.language == "so" %}Halkan Ka Xaqiiji Cinwaankaaga{% else %}Verfy Your Account Here{% endif %}</h5>
+          <h5 class="indent-from-left2">{% if request.session.language == "so" %}Halkan Ka Xaqiiji Cinwaankaaga{% else %}Verfy Your Account Here{% endif %}</h5>
+          <br/>
           {% if verificationform %}
           <form	method="POST" role='form' class="form loginform" id="loginform">{%	csrf_token	%}
             {% if verificationform.errors %}

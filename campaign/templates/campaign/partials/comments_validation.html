@@ -6,7 +6,8 @@
       <div id="column-one" class="col-md-9">
         <div class="box wrap-vid column-1">
           {% if user.is_authenticated and user.is_active %}
-          <h5 class="head-title">{{title}}</h5>
+          <h5 class="indent-from-left2">{{title}}</h5>
+          <br/>
           <ul class="list-unstyled comments" id="comments">
             {% for comment in comments %}
                 <li class="comment" id="comment-{{comment.pk}}">

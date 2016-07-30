@@ -5,11 +5,12 @@
     <div id="main-content"><!-- background not working -->
       <div id="column-one" class="col-md-12">
         <div class="box wrap-vid column-1">
+          <h5 class="indent-from-left2">{{pageheader}}</h5>
+          <br/>
           {% if request.session.language = "so" %}
-            <h5 class="light-header">Munaasabadaha iyo dhacdooyinka</h5>
             {% if not posts %}<p>Wili wax munaasabada ah lama soo gelin.</p>{% endif %}
           {% else %}
-            <h5 class="light-header">Events</h5>
+            <br/>
             {% if not posts %}<p>No events added yet</p>{% endif %}
           {% endif %}
           {% for post in posts %}

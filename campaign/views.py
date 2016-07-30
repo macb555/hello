@@ -458,7 +458,7 @@ def contact(request):
 
 def videos(request):
     if request.session.get('language') == 'so':
-        pageheader = 'Muuqaalada'
+        pageheader = 'Fiidiyayaasha'
     else:
         pageheader = 'Videos'
     request.session.setdefault('language','so')
@@ -545,7 +545,7 @@ def addComment(request, post):
 def feed(request):
     request.session.setdefault('language','so')
     if request.session.get('language') == 'so':
-        pageheader = 'Warbixinada'
+        pageheader = 'Dhamaan Warbixinada'
     else:
         pageheader = 'Feed'
     loginForm = LoginForm()

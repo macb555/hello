@@ -5,7 +5,8 @@
       <div id="column-one" class="col-md-12">
         <div class="box wrap-vid">
           <div class="post-detail">
-            <h1>{% if request.session.language = "so" %}Diiwaangelin{% else %}Register{% endif %}</h1>
+            <h5 class="indent-from-left2">{% if request.session.language = "so" %}Diiwaangelin{% else %}Register{% endif %}</h5>
+            <br/>
 
             {% if user.is_authenticated %}
               {% if locationform %}

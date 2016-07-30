@@ -33,7 +33,8 @@ class LoginForm(ModelForm):
         password = forms.CharField(widget=forms.PasswordInput())
         #username = forms.CharField(widget=forms.CharField(attrs={'placeholder': 'Enter description here'}))
         widgets = {
-            'password': forms.PasswordInput(),
+            'password': forms.PasswordInput(attrs={'placeholder': 'Password'}),
+            'username': forms.TextInput(attrs={'placeholder': 'Username'}),
         }
 class UserRegistrationForm(ModelForm):
     class Meta:

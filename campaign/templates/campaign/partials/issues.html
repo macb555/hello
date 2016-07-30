@@ -6,10 +6,12 @@
       <div id="column-one" class="col-md-12">
         <div class="box wrap-vid">
           {% if request.session.language = "so" %}
-            <h5 class="light-header">Arrimaha</h5>
+            <h5 class="indent-from-left2">Arrimaha</h5>
+            <br/>
             {% if not posts %}<p>Wili waxba lama soo gelin.</p>{% endif %}
           {% else %}
-            <h1>Issues</h1>
+            <h5 class="indent-from-left2">Issues</h5>
+            <br/>
             {% if not posts %}<p>No items added yet</p>{% endif %}
           {% endif %}
 

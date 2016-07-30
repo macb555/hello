@@ -7,7 +7,8 @@
           <div class="post-detail">
 
             {% if not user.is_authenticated %}
-              <h1>{% if request.session.language = "so" %}Gelitaanka{% else %}Login{% endif %}</h1>
+              <h5 class="indent-from-left2">{% if request.session.language = "so" %}Gelitaanka{% else %}Login{% endif %}</h5>
+              <br/>
               {% if loginform %}
               <!-- ############# LOGGIN FORM ############### -->
               <div id="login-area">

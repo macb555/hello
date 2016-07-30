@@ -5,10 +5,11 @@
     <!--<div id="main-content"> background not working -->
 
         <div class="col-sm-12 box wrap-vid column-1 container">
-          <h5 class="light-header">{{pageheader}} ugu danbeeyay</h5>
+          <h5 class="indent-from-left2">{{pageheader}} ugu danbeeyay</h5>
+          <br/>
           <br/>
             <div class="row">
-              <div>
+              <div class="col-sm-12">
                 <img id="wide-image-preview" class='img-responsive preview-image-img' src="media/{{photos.0.photo}}" />
                 <button class="btn btn-default" disabled="true" id="prev-image">Prev</button>
                 <button class="btn btn-default pull-right" id="next-image">Next</button>
@@ -22,11 +23,11 @@
       		          <div class="zoom-container">
       		            <div class="zoom-caption">
       		              <span class="youtube">Image</span>
-      		              <p>{{image.alt|slice:":14"}}</p>
       		            </div>
-      		            <img id="thumb-{{image.pk}}" src="media/{% if image.photo.avatar %}{{image.photo.avatar}}{% else %}{{image.photo}}{% endif %}")/>
+      		            <img id="thumb-{{image.pk}}" class="img-responsive" src="media/{% if image.photo.avatar %}{{image.photo.avatar}}{% else %}{{image.photo}}{% endif %}")/>
                       <span class="hidden" id="image-{{image.pk}}-link" title="media/{{image.photo}}"></span>
       		          </div>
+                    <p style="font-size:.8em; width:8.35em;background-color:lightgray;height:4em;overflow:hidden;">{{image.alt|slice:":34"}}</p>
       						</div>
 
   	              {% endfor %}
