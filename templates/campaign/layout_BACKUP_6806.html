@@ -1,0 +1,284 @@
+{% load staticfiles %}
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="en">
+<head>
+=======
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+>>>>>>> a4a5926f4a18ecfedf947bebc5dd75bc3dd49135
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="description" content="The official page for Hal Qaran Movement (HQM).">
+    <meta name="author" content="Mahdi Ahmed Abdullahi" >
+
+    <title>{{SITE_NAME.so}} | {{request.session.language}}</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="{% static 'campaign/css/bootstrap.min.css' %}"  type="text/css">
+
+	<!-- Owl Carousel Assets -->
+    <link href="{% static 'campaign/owl-carousel/owl.carousel.css' %}" rel="stylesheet">
+    <link href="{% static 'campaign/owl-carousel/owl.theme.css' %}" rel="stylesheet">
+
+	<!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'campaign/css/style.css' %}">
+	 <link href="{% static 'campaign/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen">
+
+	<!-- Custom Fonts -->
+    <link rel="stylesheet" href="{% static 'campaign/font-awesome-4.4.0/css/font-awesome.min.css' %}"  type="text/css">
+  <!--  <link rel="stylesheet" href="{% static 'campaign/css/jquery.bsPhotoGallery.css' %}"  type="text/css"> -->
+
+	<!-- jQuery and Modernizr-->
+	<script src="{% static 'campaign/js/jquery-2.1.1.js' %}"></script>
+
+
+	<!-- Core JavaScript Files -->
+    <script src="{% static 'campaign/js/bootstrap.min.js' %}"></script>
+
+  <!-- My own scripts -->
+    <script src="{% static 'campaign/js/jquery.bsPhotoGallery.js' %}"></script>
+    <script src="{% static 'campaign/js/script.js' %}"></script>
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+  <!-- ########################## FACEBOOK SDK CODE STARTS HERE ################ -->
+  <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.6&appId=544833682306237";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- ########################## FACEBOOK SDK CODE ENDS HERE ################ -->
+
+<header>
+	{% include "campaign/partials/header.html" %}
+</header>
+
+  {% block content %}{% endblock %}
+
+	<footer>
+    <div class="container">
+  		<div class="wrap-footer">
+  			<div class="row">
+          <div class="col-sm-4">
+            <h5><span class='white-text'>Links:</span></h5>
+            <ul class="list-inline">
+              <li>{% if request.session.language == "so" %}<a href="/">Hoyga</a>{% else %}<a href="/">Home</a>{% endif %}</li><span class="white-text"> | </span>
+              <li>{% if request.session.language == "so" %}<a href="/issues">Arimaha</a>{% else %}<a href="/issues">Issues</a>{% endif %}</li><span class="white-text"> | </span>
+              <li>{% if request.session.language == "so" %}<a href="/feed">Dhamaan</a>{% else %}<a href="/feed">Feed</a>{% endif %}</li><span class="white-text"> | </span>
+              <li>{% if request.session.language == "so" %}<a href="/events">Dhacdooyinka</a>{% else %}<a href="/events">Events</a>{% endif %}</li><span class="white-text"> | </span>
+              <li>{% if request.session.language == "so" %}<a href="/about">Ku Saabsan</a>{% else %}<a href="/about">About</a>{% endif %}</li><span class="white-text"> | </span>
+              <li>{% if request.session.language == "so" %}<a href="/contact">Nala Xiriir</a>{% else %}<a href="/contact">Contact us</a>{% endif %}</li><span class="white-text"> | </span>
+              <li>{% if request.session.language == "so" %}<a href="/faq">Su'aalahaaga</a>{% else %}<a href="/contact">FAQ</a>{% endif %}</li><span class="white-text"> | </span>
+            </ul>
+          </div>
+  			</div>
+
+  		</div>
+  		<div class="row copy-right">
+        <div class="col-sm-12">
+          <p>Copyright 2015 - <a href="http://www.365bootstrap.com" target="_blank" rel="nofollow">Bootstrap Themes</a> Designed by 365Bootstrap.com</p>
+        </div>
+  		</div>
+    </div>
+	</footer>
+	<!-- Footer -->
+
+	<!-- JS -->
+	<script src="{% static 'campaign/owl-carousel/owl.carousel.js' %}"></script>
+    <script>
+    $(document).ready(function() {
+      $("#owl-demo-1").owlCarousel({
+        autoPlay: 3000,
+        items : 1,
+        itemsDesktop : [1199,1],
+        itemsDesktopSmall : [400,1]
+      });
+	  $("#owl-demo-2").owlCarousel({
+        autoPlay: 3000,
+        items : 3,
+
+      });
+
+    //comment text input area
+    $('textarea').addClass('form-control');
+    $('input').addClass('form-control');
+    //$('#comment-button').addClass('btn-primary').removeClass('btn-default');
+
+    //comment button event handler
+    $('#commentform').submit(function(event) {
+      event.preventDefault();
+      //console.log("Submitting the comment");
+      if (comment_url == 'undefined'){
+        comment_url = "#"
+      }
+      var $form = $(this), comment = $("#id_text").val(), url = comment_url;
+
+      var posting = $.post(url, {text:comment});
+
+      posting.done(function(data) {
+        //console.log("Getting the comment content result");
+        //console.log(data);
+        var commentElement = '';
+        var commentId;
+        if (data.commentId != 'undefined'){
+          commentId = parseInt(data.commentId);
+        }
+        commentElement += '<li class="comment"><strong>'+ data.username +'</strong> <em>said</em>: <p>'+ $("#id_text").val() +'</p>You added this just now , <strong><span id="comment-'+ commentId +'-likes-counter">'+ 0 +'</span></strong> people liked this.'
+        commentElement += '<button id="btn-like-comment-'+ commentId +'" class="btn btn-default like" onclick="likePost('
+        commentElement += commentId+', "comment")"> <i class="glyphicon glyphicon-heart red-text"></i> like</button>'
+        $('#comments li').eq($('#comments li').size()-2).after(commentElement);
+        //console.log("Updated the comment list");
+      });
+    });
+
+
+    });
+    </script>
+
+
+	<script type="text/javascript" src="{% static 'campaign/js/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
+	<!--<script type="text/javascript" src="{% static 'campaign/js/locales/bootstrap-datetimepicker.fr.js' %}" charset="UTF-8"></script>-->
+	<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+        showMeridian: 1
+    });
+	$('.form_date').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+	$('.form_time').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 1,
+		minView: 0,
+		maxView: 1,
+		forceParse: 0
+    });
+</script>
+<script type="text/javascript">
+//APPROVE COMMENT
+function approveComment(id) {
+  //preventDefault();
+  console.log('called approve button');
+
+
+  //$("#btn-like-"+type+"-"+id).attr('disabled','disabled');
+  $.ajax(location.origin+"/comment/"+id+"/approve", {
+     success: function(data) {
+        $("#comment-"+id).detach();
+        //console.log('got some data');
+     },
+     error: function() {
+        console.log("Error Occurred!");
+     }
+  });
+}
+//UNAPPROVE COMMENT
+function unapproveComment(id) {
+  //preventDefault();
+  console.log('called unapprove button');
+
+
+  //$("#btn-like-"+type+"-"+id).attr('disabled','disabled');
+  $.ajax(location.origin+"/comment/"+id+"/unapprove", {
+     success: function(data) {
+       $("#comment-"+id).detach();
+       //console.log('got some data');
+     },
+     error: function() {
+        console.log("Error Occurred!");
+     }
+  });
+}
+
+
+//DELETE COMMENT
+function deleteComment(id) {
+  //preventDefault();
+  console.log('called approve button');
+  //$("#btn-like-"+type+"-"+id).attr('disabled','disabled');
+  $.ajax(location.origin+"/comment/"+id+"/delete", {
+     success: function(data) {
+        $("#comment-"+id).detach();
+        console.log('got some data');
+     },
+     error: function() {
+        console.log("Error Occurred!");
+     }
+  });
+}
+// fix the menu bar when scrolled down.
+$("document").ready(function($){
+    var nav = $('#menu-container');
+
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 145) {
+            nav.addClass("f-nav");
+        } else {
+            nav.removeClass("f-nav");
+        }
+    });
+});
+</script>
+
+<!-- Start of StatCounter Code for Default Guide -->
+
+<script type="text/javascript">
+var sc_project=11054532; 
+var sc_invisible=0; 
+var sc_security="d171d4d2"; 
+var scJsHost = (("https:" == document.location.protocol) ?
+"https://secure." : "http://www.");
+document.write("<sc"+"ript type='text/javascript' src='" +
+scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="web counter"
+href="http://statcounter.com/free-hit-counter/"
+target="_blank"><img class="statcounter"
+src="//c.statcounter.com/11054532/0/d171d4d2/0/" alt="web
+counter"></a></div></noscript>
+
+<!-- End of StatCounter Code for Default Guide -->
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> a4a5926f4a18ecfedf947bebc5dd75bc3dd49135
+</body>
+</html>
