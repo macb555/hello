@@ -12,20 +12,10 @@
             <h1>Issues</h1>
             {% if not posts %}<p>No items added yet</p>{% endif %}
           {% endif %}
-          {% for post in posts %}
-          <div class="post-item-label" style="border:1px solid lightgray;margin-bottom:.5em;">
-            <img src="media/{{post.featured_image.photo.avatar}}" style="margin-right:.5em;float:left;"/>
-            <div style="margin-bottom:.2em;">
-              <a href="{% url 'details' pk=post.pk %}">
-              <h5 style="margin:0;">{{post.title|slice:"0:40:"}}..</h5>
-              </a>
-              <p style="margin-bottom:.2em;">
-                {{post.description|slice:"0:200:"}}<br/>
-                Date: <strong>{{post.published_date}}</strong> | Likes: <strong>{{post.likes}}</strong> | By: <strong>{{post.author}}</strong>
-              </p>
-            </div>
-          </div>
-          {% endfor %}
+
+	  {% include "campaign/partials/last_issues.html" %}
+	  <!-- end of last issues -->
+
         </div>
       </div>
     </div>

@@ -11,11 +11,12 @@
               <div class='col-sm-9'>
                 <h1>{{post.title}}</h1>
                 <p>
-                  {% if request.session.language == "so" %}Qoraaga:{% else %}Author:{% endif %} <strong>{{post.author}},</strong>
-                  {% if request.session.language == "so" %} waxaa la baahiyay:{% else %}published{% endif %}<strong>{{post.published_date}}</strong>
+                  <i class="fa fa-pencil"></i> <strong>{{post.author}}</strong> &nbsp;&nbsp;&nbsp;&nbsp; 
+                  <i class="fa fa-clock-o"></i> <strong>{{post.published_date}}</strong> &nbsp;&nbsp;&nbsp;&nbsp;
+		  <i class="fa fa-eye"></i> <strong>{{post.view_counter}}</strong>
                 </p>
               </div>
-              <div class="col-sm-3" style="margin-top:-3em;margin-left:-2em;">
+              <div class="col-sm-3" style="margin-top:-3em;">
 <!--
                 {% if user.is_authenticated and user.is_active %}
                 <button id="btn-like-post-{{post.pk}}" onclick="likePost({{post.pk}}, 'post')" class="btn btn-default btn-block like"> <i class="glyphicon glyphicon-thumbs-up blue-text"></i> like</button><button id="btn-like-post-{{post.pk}}" class="btn btn-default btn-block dislike" onclick="dislike('{{post.pk}}', 'post')"> <i class="glyphicon glyphicon glyphicon-thumbs-down red-text"></i> dislike</button>

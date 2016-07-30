@@ -16,15 +16,19 @@
 
 
           <div class="col-sm-12">
-            <div style="border:1px solid lightgray;margin-bottom:.5em;min-height:7em;">
-              <img src="media/{{item.featured_image.photo.avatar}}" style="margin-right:.5em;float:left;"/>
+            <div style="box-shadow:-1px 1px 4px lightgray;margin-bottom:.5em;min-height:7em;">
+              <img src="media/{{item.featured_image.photo.avatar}}" style="border:1px solid black;margin:.2em;margin-right:.5em;float:left;"/>
               <div class="post-item-label" style="margin-bottom:.2em;">
                 <a href="/post/{{item.pk}}">
                 <h5 style="margin:0;">{{item.title|slice:"0:60:"}}..</h5>
                 </a>
                 <p style="margin-bottom:.2em;">
                   {{item.description|slice:"0:200:"}}<br/>
-                  Date: <strong>{{item.published_date}}</strong> | Likes: <strong>{{item.likes}}</strong> | By: <strong>{{item.author}}</strong>
+		 <i class="fa fa-pencil"></i> {{item.author}} &nbsp;&nbsp;&nbsp;&nbsp;
+	         <i class="fa fa-clock-o"></i> {{item.published_date}} &nbsp;&nbsp;&nbsp;&nbsp;
+        	 <i class="fa fa-eye"></i> {{item.view_counter}}
+
+
                 </p>
               </div>
             </div>
