@@ -1,15 +1,16 @@
 {% load staticfiles %}
 {% block last_issues %}
 <!-- start of last issues -->
+  <br/>
      {% for item in posts %}
       <div class="row">
 	<!-- item {{item.pk}} -->
           <div class="col-sm-12">
-            <div style="border:1px solid lightgray;margin-bottom:.5em;min-height:7em;">
+            <div style="margin-bottom:.5em;min-height:7em;">
               <img src="media/{{item.featured_image.photo.avatar}}" style="margin-right:.5em;float:left;"/>
               <div class="post-item-label" style="margin-bottom:.2em;">
                 <a href="/post/{{item.pk}}">
-                <h5 style="margin:0;">{{item.title|slice:"0:60:"}}..</h5>
+                <h6 style="margin:0;">{{item.title|slice:"0:60:"}}..</h6>
                 </a>
                 <p style="margin-bottom:.2em;">
                   {{item.description|slice:"0:200:"}}<br/>

@@ -6,10 +6,10 @@
       <div id="column-one" class="col-md-12">
         <div class="box wrap-vid column-1">
           {% if request.session.language = "so" %}
-            <h1>Munaasabadaha</h1>
+            <h5 class="light-header">Munaasabadaha iyo dhacdooyinka</h5>
             {% if not posts %}<p>Wili wax munaasabada ah lama soo gelin.</p>{% endif %}
           {% else %}
-            <h1>Events</h1>
+            <h5 class="light-header">Events</h5>
             {% if not posts %}<p>No events added yet</p>{% endif %}
           {% endif %}
           {% for post in posts %}

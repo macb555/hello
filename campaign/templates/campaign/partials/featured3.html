@@ -1,0 +1,46 @@
+{% load staticfiles %}
+{% block featured %}
+<div class="featured2">
+  <div class="row">
+    <div class="col-sm-12">
+      <!-- Carousel -->
+      {% if featured_items %}
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+          {% for item in featured_items|slice:"0:3" %}
+          <div class="item {% if item == featured_items.0 %}active{% endif %}" style="height:20em;">
+            <a href="/post/{{item.pk}}">
+              <div class="carsl-image image-container" style="background: url(media/{{item.featured_image.photo}}) no-repeat left center;background-size:100%;">
+                <!--<img src="media/{{item.featured_image.photo}}" alt="First slide">-->
+              </div>
+            </a>
+            <!-- Static Header -->
+            <div class="header-text hidden-xs">
+              <div class="col-md-12 text-center">
+
+              </div>
+            </div><!-- /header-text -->
+          </div>
+          {% endfor %}
+        </div>
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+      </div><!-- /carousel -->
+      {% endif %}
+    </div>
+  </div>
+</div>
+<br/>
+{% endblock %}

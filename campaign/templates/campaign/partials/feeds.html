@@ -6,10 +6,10 @@
       <div id="column-one" class="col-md-12">
         <div class="box wrap-vid column-1">
           {% if request.session.language = "so" %}
-            <h1>Dhamaan</h1>
+            <h5 class="light-header">Warbixinadi ugu danbeeyay</h5>
             {% if not posts %}<p>Wili wax warbixinno ah lama soo gelin.</p>{% endif %}
           {% else %}
-            <h1>Feed</h1>
+            <h5 class="light-header">Latest News</h5>
             {% if not posts %}<p>No posts added into the feed yet</p>{% endif %}
           {% endif %}
 <!--
