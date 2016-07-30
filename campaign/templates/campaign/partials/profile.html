@@ -22,8 +22,8 @@
               </div>
               {% endif %}
             {% else %}
-              <h5>{% if request.session.language = "so" %}Macluumaadka {{user}}!{% else %}{{user}}'s Profile{% endif %}</h5>
-
+              <h5 class="indent-from-left2">{% if request.session.language = "so" %}Macluumaadka {{user|title}}!{% else %}{{user|title}}'s Profile{% endif %}</h5>
+              <br/>
               <div class="row">
                 <div class="col-sm-4">
                   <p>

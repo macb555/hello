@@ -591,8 +591,10 @@ def about(request):
     loginForm = LoginForm()
     posts = Post.objects.filter(category__name="About", language=request.session.get('language'))
     if posts:
-        posts = posts[0]
-    return render(request, 'campaign/partials/about.html',{"loginform":loginForm,"post":posts, 'pageheader':pageheader})
+        post = posts[0]
+        post.view_counter += 1
+        post.save()
+    return render(request, 'campaign/partials/about.html',{"loginform":loginForm,"post":post, 'pageheader':pageheader})
 
 def issues(request):
     if request.session.get('language') == 'so':
