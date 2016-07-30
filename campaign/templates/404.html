@@ -5,8 +5,14 @@
     <div id="main-content"><!-- background not working -->
       <div id="column-one" class="col-md-12">
         <div class="box wrap-vid">
-          <h1>PAGE NOT FOUND (404)</h1>
-          <p>Sorry, we didn't find the page you requested. Please make sure the url to the page is correct and try again.</p>
+	  <br/>
+          <h1>{% if request.session.language == "so" %}BOGGAN WAA LA WAAYAY {% else %}PAGE NOT FOUND (404){% endif %}</h1>
+          <p>{% if request.session.language == "so" %}
+		Sorry, we didn't find the page you requested. Please make sure the url to the page is correct and try again.
+	     {% else %}
+		Waan ka xunnahay, bogga aad codsatay waa la waayay. Fadlan iska hubi url-ka in uu saxan yahay ee markale tijaabi.
+	     {% endif %}
+	  </p>
         </div>
       </div>
     </div>
