@@ -480,8 +480,8 @@ def videos(request):
     request.session.setdefault('language','so')
     videos = Video.objects.all().order_by("-id")
     loginForm = LoginForm()
-    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
-    return render(request, 'campaign/partials/videos.html', {'magshots':magshots,'videos':videos,'loginform':loginForm,'pageheader':pageheader})
+    #magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/videos.html', {'videos':videos,'loginform':loginForm,'pageheader':pageheader})
 
 def photos(request):
     if request.session.get('language') == 'so':
