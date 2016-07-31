@@ -12,7 +12,7 @@
             </div>
           {% endif %}
           {% if verificationform %}
-          <h5>{% if request.session.language == "so" %}Halkan Ka Xaqiiji Cinwaankaaga{% else %}Verfy Your Account Here{% endif %}</h5>
+          <h5 class="indent-from-left2 light-header">{% if request.session.language == "so" %}Halkan Ka Xaqiiji Cinwaankaaga{% else %}Verfy Your Account Here{% endif %}</h5>
           <p>
             {% if request.session.language == "so" %}
               Waxaan kuu dirnay fariin email-ah oo ay kujirto mareeg hadii aad riixdo xaqiijinta aad ku guuleysan doonto, hadii kale qoraalsireedka ku jira soo guuri oo halkan hoose geli. Waad ku mahadsantahay booqashadaada Hal Qaran.
@@ -20,6 +20,19 @@
               We have sent you an email containing a link if you click will automatically verify your email, if you like you can also copy the verification code to the box below. Thanks for visiting Hal Qaran.
             {% endif %}
           </p>
+
+	  <div class="alert alert-warning">
+                <strong>
+                {% if request.session.language = "so" %}
+                Hadii fariinteena aad ka weyso Inbox-kaaga, waxaad ka raadin kartaa Junk ama Spam folder.
+                {% else %}
+                If you don't get our email in your Inbox, look in your Junk or Spam folder.
+                {% endif %}
+                </strong>
+          </div>
+
+
+
 
           <form	method="POST" role='form' class="form loginform" id="loginform">{%	csrf_token	%}
             {% if verificationform.errors %}
@@ -94,5 +107,4 @@
         </div>
 
       </div>
-    </div>
 {% endblock %}
