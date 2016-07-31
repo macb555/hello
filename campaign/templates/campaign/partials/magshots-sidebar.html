@@ -1,0 +1,23 @@
+{% load staticfiles %}
+{% block sidebar %}
+{% if magshots %}
+
+<h5></h5>
+{% for mag in magshots|slice:":10" %}
+<p>
+         <div class="zoom-container">
+            <div class="zoom-caption">
+              <span class="youtube">Youtube</span>
+              <a href="/watch/{{mag.videoId}}">
+                <i class="fa fa-play icon-play" style="color: #fff"></i>
+              </a>
+            </div>
+            <img src="http://img.youtube.com/vi/{{mag.videoId}}/0.jpg" />
+	    <p>{{mag.title|slice:":32"}}..</p>
+          </div>
+</p>
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}

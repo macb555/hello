@@ -25,10 +25,11 @@ def index(request):
     else:
         pageheader = 'Home'
     posts = Post.objects.filter(likes__gte=F('dislikes'),language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
-    videos = Video.objects.all().order_by('-id')
+    videos = Video.objects.all().exclude(type__name='Magshots').order_by('-id')
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
     loginForm = LoginForm()
     #return render(request, 'campaign/partials/home.html', {'web':web, 'speeches':speeches, 'featured_items':speeches})
-    return render(request, 'campaign/partials/home.html', {"loginform":loginForm,"featured_items":posts,"pageheader":pageheader, "latest_videos":videos})
+    return render(request, 'campaign/partials/home.html', {"magshots":magshots,"loginform":loginForm,"featured_items":posts,"pageheader":pageheader, "latest_videos":videos})
 
 
 def loginPage(request):
