@@ -125,7 +125,8 @@ def register(request):
     userform = UserRegistrationForm()
     profileForm = ProfileForm(initial={'country': 'SO'})
     print("Rendering the form")
-    return render(request, 'campaign/partials/registration.html', {'userform':userform, 'profileForm':profileForm})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/registration.html', {'magshots':magshots,'userform':userform, 'profileForm':profileForm})
 
 def register_profile(request):
     request.session.setdefault('language','so')
@@ -151,10 +152,12 @@ def register_profile(request):
                     return redirect('index')
     else:
         profileForm = profileForm(instance=profile)
-        return render(request, 'campaign/partials/register_profile.html', {'profileForm':profileForm,'profile':profile})
+        magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+        return render(request, 'campaign/partials/register_profile.html', {'magshots':magshots,'profileForm':profileForm,'profile':profile})
 
     profileForm = profileForm(initial={'country': 'SO'})
-    return render(request, 'campaign/partials/register_profile.html', {'profileForm':profileForm})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/register_profile.html', {'magshots':magshots,'profileForm':profileForm})
 
 def getNewUser(request):
     if request.session.get('language') == 'so':
@@ -223,11 +226,13 @@ def getNewUser(request):
                     return redirect('verficationpage', email=user.email)
             #If the form is not valid
             print("The form is invalid")
-            return render(request, 'campaign/partials/registration1.html', {'userform':form, 'usercounter':allUsers, 'pageheader':pageheader})
+            magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+            return render(request, 'campaign/partials/registration1.html', {'magshots':magshots,'userform':form, 'usercounter':allUsers, 'pageheader':pageheader})
     #If the user requested a form
     userform=UserInfoForm()
     print("Rendering a fresh user registration form")
-    return render(request, 'campaign/partials/registration1.html', {'userform':userform, 'usercounter':allUsers, 'pageheader':pageheader})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/registration1.html', {'magshtos':magshots,'userform':userform, 'usercounter':allUsers, 'pageheader':pageheader})
 
 def getNewPerson(request):
     if request.session.get('language') == 'so':
@@ -260,7 +265,8 @@ def getNewPerson(request):
                 profile.save()
                 return redirect('complete-location-info')
         form = PersonalInfoForm()
-        return render(request, 'campaign/partials/registration2.html', {'personalform':form, 'usercounter':allUsers, 'pageheader':pageheader})
+        magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+        return render(request, 'campaign/partials/registration2.html', {'magshots':magshots,'personalform':form, 'usercounter':allUsers, 'pageheader':pageheader})
     else:
         return redirect('login')
 
@@ -293,10 +299,12 @@ def verficationpage(request, email):
                     return redirect('loginpage')
                 print("The activation code is not correct")
         print("User didn't give a valid data")
-        return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form, 'pageheader':pageheader})
+        magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+        return render(request, 'campaign/partials/verficationpage.html', {'magshots':magshots,'verificationform':form, 'pageheader':pageheader})
     print("Sending a fresh form")
     form = VerficationForm()
-    return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form,'pageheader':pageheader})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/verficationpage.html', {'magshots':magshots,'verificationform':form,'pageheader':pageheader})
 
 def directverficationpage(request, email, activation_code):
     if request.session.get('language') == 'so':
@@ -330,7 +338,8 @@ def directverficationpage(request, email, activation_code):
             return redirect('loginpage')
     msg = {"type":"danger", "en":"Sorry, Make sure the varification code you used is correct.", "so":"Waan kaxunnahay, Fadlan iska hubi qoraalsireedka aad gelisay."}
     showMessage(request, msg)
-    return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form,'pageheader':pageheader})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/verficationpage.html', {'magshots':magshots,'verificationform':form,'pageheader':pageheader})
     #print("Sending a fresh form")
     #form = VerficationForm()
     #return render(request, 'campaign/partials/verficationpage.html', {'verificationform':form})
@@ -373,13 +382,15 @@ def varifyUser(request, pk, activation_code):
                         msg = {"type":"danger","so":"Waan ka xunnahay, lambarka xaqiijinta aad isticmaashay ma ahan mid sax ah. Hadii aad u aragto arintan cillad fadlan la xiriir maamulka boggan.","en":"Sorry, you have used an invalid activation number. If you think this is related to some other problem, please contact the this page's administrator."}
                         showMessage(request, msg)
                         #return redirect(reverse('verficationpage',kwargs={'email':user[0].email}))
-                        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+                        magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+                        return render(request, 'campaign/partials/message.html',{'magshots':magshots,"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
             print("Didnt't provide a valid form")
         print("Didn't get any user with this id")
         loginForm = LoginForm()
         msg = {"type":"danger","so":"Waan ka xunnahay, aqoonsiga qofka aad soo dalbatay ma ahan mid jira.","en":"Sorry, The id number for this user is invalid."}
         showMessage(request, msg)
-        return render(request, 'campaign/partials/message.html',{"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
+        magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+        return render(request, 'campaign/partials/message.html',{'magshots':magshots,"loginform":loginForm, "no_twitter":True,"message":msg, "post":{"pk":0}})
 
 
 def getNewLocation(request):
@@ -414,7 +425,8 @@ def getNewLocation(request):
             else:
                 print("return to the same form because the step is not the second.")
                 form = LocationInfoForm()
-                return render(request, 'campaign/partials/registration3.html', {'locationform':form, 'usercounter':allUsers, 'pageheader':pageheader})
+                magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+                return render(request, 'campaign/partials/registration3.html', {'magshots':magshots,'locationform':form, 'usercounter':allUsers, 'pageheader':pageheader})
     print("user is not logged in or is not active")
     return redirect('profile')
 
@@ -441,7 +453,8 @@ def details(request, pk):
     post_comments = Comment.objects.filter(post=pk, approved=True)
     #posts = Post.objects.all()
     form = CommentForm()
-    return render(request, 'campaign/partials/details.html',{"loginform":loginForm,"post":post, "latest_posts":"posts", "post_comments":post_comments,"form":form, 'pageheader':pageheader})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/details.html',{'magshots':magshots,"loginform":loginForm,"post":post, "latest_posts":"posts", "post_comments":post_comments,"form":form, 'pageheader':pageheader})
 
 def contact(request):
     if request.session.get('language') == 'so':
@@ -467,7 +480,8 @@ def videos(request):
     request.session.setdefault('language','so')
     videos = Video.objects.all().order_by("-id")
     loginForm = LoginForm()
-    return render(request, 'campaign/partials/videos.html', {'videos':videos,'loginform':loginForm,'pageheader':pageheader})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/videos.html', {'magshots':magshots,'videos':videos,'loginform':loginForm,'pageheader':pageheader})
 
 def photos(request):
     if request.session.get('language') == 'so':
@@ -477,7 +491,8 @@ def photos(request):
     request.session.setdefault('language','so')
     photos = Image.objects.all().order_by("-id")
     loginForm = LoginForm()
-    return render(request, 'campaign/partials/photos.html', {'photos':photos,'loginform':loginForm, 'pageheader':pageheader})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/photos.html', {'magshots':magshots,'photos':photos,'loginform':loginForm, 'pageheader':pageheader})
 
 
 def watch(request, pk):
@@ -490,7 +505,8 @@ def watch(request, pk):
     loginForm = LoginForm()
     video = get_object_or_404(Video,videoId=pk)
     post =  post = Post.objects.filter(video_id=video.pk)
-    return render(request, 'campaign/partials/watch.html',{"loginform":loginForm,"no_twitter":True,"video":video, "pageheader":pageheader})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/watch.html',{'magshots':magshots,"loginform":loginForm,"no_twitter":True,"video":video, "pageheader":pageheader})
 
 def comments(request, status=None):
     if request.session.get('language') == 'so':
@@ -553,7 +569,8 @@ def feed(request):
         pageheader = 'Feed'
     loginForm = LoginForm()
     posts = Post.objects.filter(language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
-    return render(request, 'campaign/partials/feeds.html',{"loginform":loginForm,"posts":posts, "pageheader":pageheader})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/feeds.html',{'magshots':magshots,"loginform":loginForm,"posts":posts, "pageheader":pageheader})
 
 def feedback(request):
     request.session.setdefault('language','so')
@@ -574,7 +591,8 @@ def feedback(request):
             #return JsonResponse({"feedback":feedback})
     else:
         form = FeedbackForm()
-        return render(request, 'campaign/partials/feedback.html',{"loginform":loginForm,'form':form, "pageheader":pageheader})
+        magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+        return render(request, 'campaign/partials/feedback.html',{'magshots':magshots,"loginform":loginForm,'form':form, "pageheader":pageheader})
 
 
 def events(request):
@@ -584,7 +602,8 @@ def events(request):
         pageheader = 'Events'
     loginForm = LoginForm()
     posts = Post.objects.filter(category__name="Events",language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
-    return render(request, 'campaign/partials/events.html',{"loginform":loginForm,"posts":posts, "pageheader":pageheader})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/events.html',{'magshots':magshots,"loginform":loginForm,"posts":posts, "pageheader":pageheader})
 
 def about(request):
     if request.session.get('language') == 'so':
@@ -597,7 +616,8 @@ def about(request):
         post = posts[0]
         post.view_counter += 1
         post.save()
-    return render(request, 'campaign/partials/about.html',{"loginform":loginForm,"post":post, 'pageheader':pageheader})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/about.html',{'magshots':magshots,"loginform":loginForm,"post":post, 'pageheader':pageheader})
 
 def issues(request):
     if request.session.get('language') == 'so':
@@ -607,7 +627,8 @@ def issues(request):
     loginForm = LoginForm()
     #posts = get_object_or_404(Post, category__name="issues")
     posts = Post.objects.filter(category__name="Issues",language=request.session.get('language')).exclude(category__name='About').order_by('-date_added')
-    return render(request, 'campaign/partials/issues.html',{"loginform":loginForm,"posts":posts, "pageheader":pageheader})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/issues.html',{'magshots':magshots, "loginform":loginForm,"posts":posts, "pageheader":pageheader})
 
 def faq(request):
     if request.session.get('language') == 'so':
@@ -616,7 +637,8 @@ def faq(request):
         pageheader = 'Frequently Asked Questions'
     loginForm = LoginForm()
     posts = get_object_or_404(Post, category__name="faq")
-    return render(request, 'campaign/partials/details.html',{"loginform":loginForm,"post":posts, 'pageheader':pageheader})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/details.html',{'magshots':magshots,"loginform":loginForm,"post":posts, 'pageheader':pageheader})
 
 
 ##############################
@@ -838,7 +860,8 @@ def resendVarificationCode(request, email):
                 'en':'You activation code is resent to your email. If you don\'t get this email it means your email was not correct. If you think this another error, please contact us to help you activate your account.'
                 }
             showMessage(request, msg)
-            return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "loginform":loginForm, 'pageheader':pageheader})
+            magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+            return render(request, 'campaign/partials/message.html',{'magshots':magshots,"no_twitter":True,"message":msg, "loginform":loginForm, 'pageheader':pageheader})
         else:
             loginForm = LoginForm()
             msg = {
@@ -847,7 +870,8 @@ def resendVarificationCode(request, email):
                 'en':'Sorry, this email does\'t belong to any of our users. Please make sure you have written the correct email and try again.'
                 }
             showMessage(request, msg)
-            return render(request, 'campaign/partials/message.html',{"no_twitter":True,"message":msg, "loginform":loginForm, 'pageheader':pageheader})
+            magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+            return render(request, 'campaign/partials/message.html',{'magshots':magshots,"no_twitter":True,"message":msg, "loginform":loginForm, 'pageheader':pageheader})
     except:
         loginForm = LoginForm()
         msg = {
@@ -911,7 +935,8 @@ def profile(request):
                 print("user is in the second step of registration")
                 #take user to last step registration
                 return redirect('complete-location-info')
-        return render(request, 'campaign/partials/profile.html', {'profile':profile, 'pageheader':pageheader})
+        magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+        return render(request, 'campaign/partials/profile.html', {'magshots':magshots,'profile':profile, 'pageheader':pageheader})
             #    #show profile
             #return redirect('getNewPerson')
             #    return render(request, 'campaign/partials/profile.html', {'profile':profile})
@@ -970,7 +995,8 @@ def forgotpassword(request):
             print("The data is invalid")
         form = ForgotPasswordForm()
         print("Sending a fresh Fortgot Password Form")
-        return render(request, 'campaign/partials/forgotpassword.html', {'forgotpasswordform':form, 'pageheader':pageheader})
+        magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+        return render(request, 'campaign/partials/forgotpassword.html', {'magshots':magshots,'forgotpasswordform':form, 'pageheader':pageheader})
     msg = {'type':'danger','so':"Waxaaba kuu furan cinwaankaaga.", 'en':'You are already loged in.'}
     showMessage(request, msg)
     print("You are already logged in")
@@ -1009,7 +1035,8 @@ def resetPassword(request, email, activation_code):
                 showMessage(request, msg)
                 #return redirect('resetPassword', email=request.POST.get('email'))
     form = ResetPasswordForm()
-    return render(request, 'campaign/partials/resetpassword.html', {'resetpasswordform':form, 'pageheader':pageheader})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/resetpassword.html', {'magshots':magshots,'resetpasswordform':form, 'pageheader':pageheader})
 
 def sendPasswordReset(request, email):
     print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
