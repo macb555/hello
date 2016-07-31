@@ -38,13 +38,15 @@ def loginPage(request):
     else:
         pageheader = 'Login Page'
     loginForm = LoginForm()
-    return render(request, 'campaign/partials/login.html', {"nosidebarlogin":True,"loginform":loginForm,"pageheader":pageheader})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/login.html', {"magshots":magshots,"nosidebarlogin":True,"loginform":loginForm,"pageheader":pageheader})
 
 def loginPage2(request):
     username = request.session.get('username',None)
     password = request.session.get('password',None)
     loginForm = LoginForm(username=username, password=password)
-    return render(request, 'campaign/partials/login.html', {"nosidebarlogin":True,"loginform":loginForm,"post":{"pk":0}})
+    magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
+    return render(request, 'campaign/partials/login.html', {"magshots":magshots,"nosidebarlogin":True,"loginform":loginForm,"post":{"pk":0}})
 
 
 def login(request):
