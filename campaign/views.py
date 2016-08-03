@@ -639,6 +639,8 @@ def faq(request):
         pageheader = 'Frequently Asked Questions'
     loginForm = LoginForm()
     posts = get_object_or_404(Post, category__name="faq")
+    posts.view_counter += 1
+    posts.save()
     magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
     return render(request, 'campaign/partials/details.html',{'magshots':magshots,"loginform":loginForm,"post":posts, 'pageheader':pageheader})
 
