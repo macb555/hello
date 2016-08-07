@@ -642,7 +642,7 @@ def faq(request):
     posts.view_counter += 1
     posts.save()
     magshots = Video.objects.filter(type__name='Magshots').order_by('-id')
-    return render(request, 'campaign/partials/details.html',{'magshots':magshots,"loginform":loginForm,"post":posts, 'pageheader':pageheader})
+    return render(request, 'campaign/partials/about.html',{'magshots':magshots,"loginform":loginForm,"post":posts, 'pageheader':pageheader})
 
 
 ##############################
