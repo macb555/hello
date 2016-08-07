@@ -25,8 +25,10 @@ SECRET_KEY = 'kts+d%(k4wh7pag%g2ss4^_cb31#%5w6)9x%w!+9#ky=91px@%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False #True
+ADMINS = [('Mahdi Bolow', 'boolow5@gmail.com'), ('Mahdi Ahmed', 'mahdi@halqaran.org')]
 
-ALLOWED_HOSTS = ["*"]
+
+ALLOWED_HOSTS = ["halqaran.org","li1487-184.members.linode.com"]
 
 
 # Application definition
