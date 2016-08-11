@@ -669,7 +669,7 @@ span.white-text {color:#fff;}
 	-moz-transition: max-height 0.8s;
 	transition: max-height 1.8s;
 }
-.thumbnail-container {max-height: 10;margin: -1em;margin-right: -6em;}
+/*.thumbnail-container {max-height: 10;margin: -1em;margin-right: -6em;}*/
 .preview-image-img {height: 25em;margin: auto;box-shadow: 1px 2px 10px black;border-radius: .3em;margin-bottom: .2em;}
 
 

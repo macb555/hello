@@ -19,15 +19,14 @@
 
                 <div class="row container-fluid">
                   {% for image in photos|slice:":50" %}
-                  <div class="col-sm-4 thumbnail-container" style="margin-bottom:2em;"  onclick="showImage('media/{{image.photo}}')">
-      		          <div class="zoom-container">
-      		            <div class="zoom-caption">
-      		              <span class="youtube">Image</span>
+                  <div class="col-sm-4 thumbnail-container" style="margin-bottom:0;padding:0;"  onclick="showImage('media/{{image.photo}}')">
+      		          <div class="">
+      		            <div class="">
       		            </div>
-      		            <img id="thumb-{{image.pk}}" class="img-responsive" src="media/{% if image.photo.avatar %}{{image.photo.avatar}}{% else %}{{image.photo}}{% endif %}")/>
+      		            <img id="thumb-{{image.pk}}" class="img-responsive"   onclick="showImage('media/{{image.photo}}')" style="min-width:10em;max-width:12.5em;" src="media/{% if image.photo.avatar %}{{image.photo.avatar}}{% else %}{{image.photo}}{% endif %}")/>
                       <span class="hidden" id="image-{{image.pk}}-link" title="media/{{image.photo}}"></span>
       		          </div>
-                    <p style="font-size:.8em; width:8.35em;background-color:lightgray;height:4em;overflow:hidden;">{{image.alt|slice:":34"}}</p>
+                    <p style="font-size:.8em; min-width:10em;max-width:12.5em;background-color:lightgray;height:4em;overflow:hidden;">{{image.alt|slice:":34"}}</p>
       						</div>
 
   	              {% endfor %}

@@ -18,19 +18,21 @@
           <br/>
 		<div class="row container-fluid">
 	      	    {% for video in videos|slice:":24" %}
-			<div class="col-sm-3" style="margin-bottom:2em;">
+			<div class="col-sm-4" style="margin-bottom:2em;">
   		          <div class="zoom-container">
   		            <div class="zoom-caption">
-  		              <span class="youtube">Youtube</span>
   		              <a href="/watch/{{video.videoId}}">
   		                <i class="fa fa-play icon-play" style="color: #fff"></i>
   		              </a>
-  		              <p>{{video.title}}</p>
   		            </div>
   		            <img src="http://img.youtube.com/vi/{{video.videoId}}/0.jpg" />
-
   		          </div>
-  						</div>
+			<div class="post-item-label" style="min-height:5em;">
+	                  <a href="/watch/{{video.videoId}}">
+  	    	            <h6>{{video.title|slice:":50"}}</h6>
+			  </a>
+			</div>
+  			</div>
   	          {% endfor %}
   					</div>
             {% endif %}
