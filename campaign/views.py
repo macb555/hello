@@ -614,6 +614,7 @@ def about(request):
         pageheader = 'Feed'
     loginForm = LoginForm()
     posts = Post.objects.filter(category__name="About", language=request.session.get('language'))
+    post = None
     if posts:
         post = posts[0]
         post.view_counter += 1
