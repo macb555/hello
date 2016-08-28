@@ -1,0 +1,29 @@
+{% load staticfiles %}
+{% block last_item %}
+  {% if declaration %}
+  <br/>
+  <div class="row">
+
+    <div class="col-sm-12">
+      <div class="post-item-label" style="margin-bottom:.5em;">
+        <img src="media/{{declaration.0.featured_image.photo.avatar}}" style="border:1px solid black;margin:.2em;margin-right:.5em;float:left;"/>
+        <div style="margin-bottom:.2em;">
+          <a href="/post/{{declaration.0.pk}}">
+          <h5 style="margin:0;">{{declaration.0.title|slice:"0:40:"}}..</h5>
+          </a>
+          <p style="margin-bottom:.2em;">
+            {{declaration.0.description|slice:"0:200:"}}<br/>
+	    <i class="fa fa-pencil"></i> {{declaration.0.author}} &nbsp;&nbsp;&nbsp;&nbsp;
+            <i class="fa fa-clock-o"></i> {{declaration.0.published_date}} &nbsp;&nbsp;&nbsp;&nbsp;
+            <i class="fa fa-eye"></i> {{declaration.0.view_counter}}
+
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <br/>
+  <br/>
+  {% endif %}
+{% endblock %}
